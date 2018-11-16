@@ -1,0 +1,364 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Camera">
+      <UniqueIdentifier>{18d3badb-5940-4e16-b34a-d28922f2ccd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Collision">
+      <UniqueIdentifier>{cbed28df-db77-4ebc-9d8d-dafd5f7fb59a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Input">
+      <UniqueIdentifier>{76f7dace-8644-472e-97b4-54276d70cf91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Others">
+      <UniqueIdentifier>{ce3bcfd7-0f3b-4b40-a5b3-016be614816e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TMXMapLoader">
+      <UniqueIdentifier>{2c1283a6-bdf6-4550-bc66-121f1732b1c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\World">
+      <UniqueIdentifier>{ad188794-4d9b-4cdc-8e0a-4a46b9755b31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Camera">
+      <UniqueIdentifier>{de834a01-c1b1-40d1-82e0-9df7db356cd8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Collision">
+      <UniqueIdentifier>{011fc63b-2419-4a68-9f20-c0fb92fe6600}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Input">
+      <UniqueIdentifier>{f2b0d9e6-5ae2-450c-8b86-0466b3e628a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\RapidXML">
+      <UniqueIdentifier>{dc89287d-4011-406e-a5ac-802db66026a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\World">
+      <UniqueIdentifier>{b458f2a9-51d7-4d90-a7a7-56c840f16ba4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\TMXMapLoader">
+      <UniqueIdentifier>{98457965-02c1-4c84-a7f1-2842c261a63d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Others">
+      <UniqueIdentifier>{2e4cf4bf-6797-4d19-9254-a0fd684e10ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Sound">
+      <UniqueIdentifier>{0e4b0346-d05a-469c-9174-8ca9e6d4f44e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Sound">
+      <UniqueIdentifier>{71a6997d-48b7-40e1-ada1-2887c2caa017}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Drawable">
+      <UniqueIdentifier>{ad192472-a20f-4983-b485-32c36dcee8bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Drawable">
+      <UniqueIdentifier>{f546245d-5483-42bd-a5aa-f9e2e2ace8fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\_Header">
+      <UniqueIdentifier>{67ce05bc-2fc1-42f7-ba80-e0c24cf90cc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\SpaceDivisionQuadTree">
+      <UniqueIdentifier>{d6592761-6e0b-412c-8ede-8b44d734680f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\SpaceDivisionQuadTree">
+      <UniqueIdentifier>{da7babbf-e7c7-4326-a3e8-860f27f9157f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\CollisionQuadTree">
+      <UniqueIdentifier>{3f27d63c-78e0-4efa-ac48-c6168a7c9fc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\CollisionQuadTree">
+      <UniqueIdentifier>{dc0fd21f-c607-454b-af41-d293ab2b0988}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\others\Utility.h">
+      <Filter>Header Files\Others</Filter>
+    </ClInclude>
+    <ClInclude Include="extensions\rapidxml\rapidxml.hpp">
+      <Filter>Header Files\RapidXML</Filter>
+    </ClInclude>
+    <ClInclude Include="extensions\rapidxml\rapidxml_iterators.hpp">
+      <Filter>Header Files\RapidXML</Filter>
+    </ClInclude>
+    <ClInclude Include="extensions\rapidxml\rapidxml_print.hpp">
+      <Filter>Header Files\RapidXML</Filter>
+    </ClInclude>
+    <ClInclude Include="extensions\rapidxml\rapidxml_utils.hpp">
+      <Filter>Header Files\RapidXML</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sound\DirectSound.h">
+      <Filter>Header Files\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GameObject.h">
+      <Filter>Header Files\Others</Filter>
+    </ClInclude>
+    <ClInclude Include="include\stdafx.h">
+      <Filter>Header Files\Others</Filter>
+    </ClInclude>
+    <ClInclude Include="src\world\Body.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\world\BodyDef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\world\World.h">
+      <Filter>Header Files\World</Filter>
+    </ClInclude>
+    <ClInclude Include="src\world\WorldContactListener.h">
+      <Filter>Header Files\World</Filter>
+    </ClInclude>
+    <ClInclude Include="src\world\Collision.h">
+      <Filter>Header Files\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tmxmaploader\TMXMap.h">
+      <Filter>Header Files\TMXMapLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tmxmaploader\TMXLoader.h">
+      <Filter>Header Files\TMXMapLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tmxmaploader\TMXObjectGroup.h">
+      <Filter>Header Files\TMXMapLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tmxmaploader\TMXTileLayer.h">
+      <Filter>Header Files\TMXMapLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tmxmaploader\TMXTileSet.h">
+      <Filter>Header Files\TMXMapLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sound\MySound.h">
+      <Filter>Header Files\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="src\drawable\Animation.h">
+      <Filter>Header Files\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="src\drawable\SpriteBatch.h">
+      <Filter>Header Files\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="src\drawable\Sprite.h">
+      <Filter>Header Files\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="src\drawable\Texture.h">
+      <Filter>Header Files\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="src\drawable\TexturePacker.h">
+      <Filter>Header Files\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="src\drawable\TextureRegion.h">
+      <Filter>Header Files\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\label\Font.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\label\Label.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\shape\Rectangle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\others\Global.h">
+      <Filter>Header Files\Others</Filter>
+    </ClInclude>
+    <ClInclude Include="src\camera\Camera.h">
+      <Filter>Header Files\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="src\input\Input.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\Vector2.h">
+      <Filter>Header Files\Others</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scene\Scene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\console\Console.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\statemanager\StateManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\HanabiWorld.h">
+      <Filter>Header Files\_Header</Filter>
+    </ClInclude>
+    <ClInclude Include="include\HanabiStateManager.h">
+      <Filter>Header Files\_Header</Filter>
+    </ClInclude>
+    <ClInclude Include="include\HanabiSprite.h">
+      <Filter>Header Files\_Header</Filter>
+    </ClInclude>
+    <ClInclude Include="include\HanabiSound.h">
+      <Filter>Header Files\_Header</Filter>
+    </ClInclude>
+    <ClInclude Include="include\HanabiShape.h">
+      <Filter>Header Files\_Header</Filter>
+    </ClInclude>
+    <ClInclude Include="include\HanabiMath.h">
+      <Filter>Header Files\_Header</Filter>
+    </ClInclude>
+    <ClInclude Include="include\HanabiScene.h">
+      <Filter>Header Files\_Header</Filter>
+    </ClInclude>
+    <ClInclude Include="include\HanabiMap.h">
+      <Filter>Header Files\_Header</Filter>
+    </ClInclude>
+    <ClInclude Include="include\HanabiLabel.h">
+      <Filter>Header Files\_Header</Filter>
+    </ClInclude>
+    <ClInclude Include="include\HanabiGame.h">
+      <Filter>Header Files\_Header</Filter>
+    </ClInclude>
+    <ClInclude Include="include\HanabiConsole.h">
+      <Filter>Header Files\_Header</Filter>
+    </ClInclude>
+    <ClInclude Include="include\HanabiCamera.h">
+      <Filter>Header Files\_Header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\spacedivisionquadtree\SpaceDivisionQuadTree.h">
+      <Filter>Header Files\SpaceDivisionQuadTree</Filter>
+    </ClInclude>
+    <ClInclude Include="include\HanabiSpaceDivisionQuadTree.h">
+      <Filter>Header Files\_Header</Filter>
+    </ClInclude>
+    <ClInclude Include="include\HanabiBody.h">
+      <Filter>Header Files\_Header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\collisionquadtree\QuadTree.h">
+      <Filter>Header Files\CollisionQuadTree</Filter>
+    </ClInclude>
+    <ClInclude Include="include\HanabiInput.h">
+      <Filter>Header Files\_Header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\effect\Effect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\HanabiCollisionQuadTree.h">
+      <Filter>Header Files\_Header</Filter>
+    </ClInclude>
+    <ClInclude Include="include\HanabiEffect.h">
+      <Filter>Header Files\_Header</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="extensions\rapidxml\license.txt">
+      <Filter>Header Files\RapidXML</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="extensions\rapidxml\manual.html">
+      <Filter>Header Files\RapidXML</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\camera\Camera.cpp">
+      <Filter>Source Files\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="src\input\Input.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\world\World.cpp">
+      <Filter>Source Files\World</Filter>
+    </ClCompile>
+    <ClCompile Include="src\world\WorldContactListener.cpp">
+      <Filter>Source Files\World</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tmxmaploader\TMXLoader.cpp">
+      <Filter>Source Files\TMXMapLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tmxmaploader\TMXMap.cpp">
+      <Filter>Source Files\TMXMapLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tmxmaploader\TMXObjectGroup.cpp">
+      <Filter>Source Files\TMXMapLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tmxmaploader\TMXTileLayer.cpp">
+      <Filter>Source Files\TMXMapLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tmxmaploader\TMXTileSet.cpp">
+      <Filter>Source Files\TMXMapLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\others\Global.cpp">
+      <Filter>Source Files\Others</Filter>
+    </ClCompile>
+    <ClCompile Include="src\others\Utility.cpp">
+      <Filter>Source Files\Others</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sound\DirectSound.cpp">
+      <Filter>Source Files\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sound\MySound.cpp">
+      <Filter>Source Files\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="src\drawable\Animation.cpp">
+      <Filter>Source Files\Drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="src\drawable\Sprite.cpp">
+      <Filter>Source Files\Drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="src\drawable\SpriteBatch.cpp">
+      <Filter>Source Files\Drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="src\drawable\Texture.cpp">
+      <Filter>Source Files\Drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="src\drawable\TexturePacker.cpp">
+      <Filter>Source Files\Drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="src\drawable\TextureRegion.cpp">
+      <Filter>Source Files\Drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="src\world\Body.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\world\BodyDef.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\world\Collision.cpp">
+      <Filter>Source Files\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\label\Label.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\label\Font.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\shape\Rectangle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\math\Vector2.cpp">
+      <Filter>Source Files\Others</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene\Scene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\console\Console.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\statemanager\StateManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\spacedivisionquadtree\SpaceDivisionQuadTree.cpp">
+      <Filter>Source Files\SpaceDivisionQuadTree</Filter>
+    </ClCompile>
+    <ClCompile Include="src\collisionquadtree\QuadTree.cpp">
+      <Filter>Source Files\CollisionQuadTree</Filter>
+    </ClCompile>
+    <ClCompile Include="src\effect\Effect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
