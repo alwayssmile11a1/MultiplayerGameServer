@@ -79,6 +79,60 @@
     <Filter Include="Source Files\CollisionQuadTree">
       <UniqueIdentifier>{dc0fd21f-c607-454b-af41-d293ab2b0988}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Effect">
+      <UniqueIdentifier>{a473220c-f5e4-4915-b687-4b73deabb2c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ConsoleLog">
+      <UniqueIdentifier>{130d9710-fd62-4637-8c56-115373c1b06b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\UI">
+      <UniqueIdentifier>{808ef48d-464c-4eae-986a-51e1b4320c0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game">
+      <UniqueIdentifier>{6e5efe8f-3446-407e-875c-b9f6f9fd2fd7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Shape">
+      <UniqueIdentifier>{e67d36c1-c349-4c67-8c1a-5e595f6933c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scene">
+      <UniqueIdentifier>{8d59d25b-4cfa-434f-86a5-65ec5fa542a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\StateManager">
+      <UniqueIdentifier>{9be31669-85e4-4f72-a406-c37efa950a0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\UI">
+      <UniqueIdentifier>{38094c79-c5a4-4c4e-bee7-6978fc64400a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Shape">
+      <UniqueIdentifier>{15bb1cbe-4fd0-4956-b385-5c84cb0b636e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Effect">
+      <UniqueIdentifier>{0d5525e2-1a47-45ba-ba6a-a4c1f764000a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ConsoleLog">
+      <UniqueIdentifier>{4b0d3c01-201e-4ed6-8d0e-6307a569748c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game">
+      <UniqueIdentifier>{cf8de294-2f59-4ee6-a17f-d16216e4bd4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scene">
+      <UniqueIdentifier>{9a10c37b-a10c-4d52-9b7c-c5bec8f065c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\StateManager">
+      <UniqueIdentifier>{f1cb3d7b-4e04-488c-93be-1a4825f9156d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\MultiplayerCore">
+      <UniqueIdentifier>{9073d09d-f68f-44a2-82c3-17e5342ffad6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\MultiplayerCore">
+      <UniqueIdentifier>{ed5ce41f-6154-446e-b5b9-7ff4093cbf9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Math">
+      <UniqueIdentifier>{84e41d35-89d7-4fd6-874f-bc2fefc0fe76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Math">
+      <UniqueIdentifier>{60dcbcdd-4ca1-42bf-9db9-d4884c332fbc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\others\Utility.h">
@@ -104,12 +158,6 @@
     </ClInclude>
     <ClInclude Include="include\stdafx.h">
       <Filter>Header Files\Others</Filter>
-    </ClInclude>
-    <ClInclude Include="src\world\Body.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\world\BodyDef.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\world\World.h">
       <Filter>Header Files\World</Filter>
@@ -156,18 +204,6 @@
     <ClInclude Include="src\drawable\TextureRegion.h">
       <Filter>Header Files\Drawable</Filter>
     </ClInclude>
-    <ClInclude Include="src\game\Game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\label\Font.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\label\Label.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\shape\Rectangle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\others\Global.h">
       <Filter>Header Files\Others</Filter>
     </ClInclude>
@@ -176,18 +212,6 @@
     </ClInclude>
     <ClInclude Include="src\input\Input.h">
       <Filter>Header Files\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="src\math\Vector2.h">
-      <Filter>Header Files\Others</Filter>
-    </ClInclude>
-    <ClInclude Include="src\scene\Scene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\console\Console.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\statemanager\StateManager.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\HanabiWorld.h">
       <Filter>Header Files\_Header</Filter>
@@ -240,14 +264,56 @@
     <ClInclude Include="include\HanabiInput.h">
       <Filter>Header Files\_Header</Filter>
     </ClInclude>
-    <ClInclude Include="src\effect\Effect.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\HanabiCollisionQuadTree.h">
       <Filter>Header Files\_Header</Filter>
     </ClInclude>
     <ClInclude Include="include\HanabiEffect.h">
       <Filter>Header Files\_Header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\effect\Effect.h">
+      <Filter>Header Files\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="src\world\Body.h">
+      <Filter>Header Files\World</Filter>
+    </ClInclude>
+    <ClInclude Include="src\world\BodyDef.h">
+      <Filter>Header Files\World</Filter>
+    </ClInclude>
+    <ClInclude Include="src\console\Console.h">
+      <Filter>Header Files\ConsoleLog</Filter>
+    </ClInclude>
+    <ClInclude Include="src\label\Font.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\label\Label.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\Game.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\shape\Rectangle.h">
+      <Filter>Header Files\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scene\Scene.h">
+      <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\statemanager\StateManager.h">
+      <Filter>Header Files\StateManager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\multiplayercore\MemoryBitStream.h">
+      <Filter>Header Files\MultiplayerCore</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\Vector2.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\multiplayercore\UDPSocket.h">
+      <Filter>Header Files\MultiplayerCore</Filter>
+    </ClInclude>
+    <ClInclude Include="src\multiplayercore\SocketAddress.h">
+      <Filter>Header Files\MultiplayerCore</Filter>
+    </ClInclude>
+    <ClInclude Include="src\multiplayercore\StringUtils.h">
+      <Filter>Header Files\MultiplayerCore</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -318,38 +384,8 @@
     <ClCompile Include="src\drawable\TextureRegion.cpp">
       <Filter>Source Files\Drawable</Filter>
     </ClCompile>
-    <ClCompile Include="src\world\Body.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\world\BodyDef.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\world\Collision.cpp">
       <Filter>Source Files\Collision</Filter>
-    </ClCompile>
-    <ClCompile Include="src\game\Game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\label\Label.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\label\Font.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\shape\Rectangle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\math\Vector2.cpp">
-      <Filter>Source Files\Others</Filter>
-    </ClCompile>
-    <ClCompile Include="src\scene\Scene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\console\Console.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\statemanager\StateManager.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\spacedivisionquadtree\SpaceDivisionQuadTree.cpp">
       <Filter>Source Files\SpaceDivisionQuadTree</Filter>
@@ -357,8 +393,50 @@
     <ClCompile Include="src\collisionquadtree\QuadTree.cpp">
       <Filter>Source Files\CollisionQuadTree</Filter>
     </ClCompile>
+    <ClCompile Include="src\world\Body.cpp">
+      <Filter>Source Files\World</Filter>
+    </ClCompile>
+    <ClCompile Include="src\world\BodyDef.cpp">
+      <Filter>Source Files\World</Filter>
+    </ClCompile>
+    <ClCompile Include="src\label\Font.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\label\Label.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\shape\Rectangle.cpp">
+      <Filter>Source Files\Shape</Filter>
+    </ClCompile>
     <ClCompile Include="src\effect\Effect.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="src\console\Console.cpp">
+      <Filter>Source Files\ConsoleLog</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\Game.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene\Scene.cpp">
+      <Filter>Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\statemanager\StateManager.cpp">
+      <Filter>Source Files\StateManager</Filter>
+    </ClCompile>
+    <ClCompile Include="src\multiplayercore\MemoryBitStream.cpp">
+      <Filter>Source Files\MultiplayerCore</Filter>
+    </ClCompile>
+    <ClCompile Include="src\math\Vector2.cpp">
+      <Filter>Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\multiplayercore\UDPSocket.cpp">
+      <Filter>Source Files\MultiplayerCore</Filter>
+    </ClCompile>
+    <ClCompile Include="src\multiplayercore\SocketAddress.cpp">
+      <Filter>Source Files\MultiplayerCore</Filter>
+    </ClCompile>
+    <ClCompile Include="src\multiplayercore\StringUtils.cpp">
+      <Filter>Source Files\MultiplayerCore</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

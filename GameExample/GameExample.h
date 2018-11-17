@@ -1,6 +1,8 @@
 #pragma once
 
+
 #include "HanabiGame.h"
+
 
 class GameExample : public Game
 {

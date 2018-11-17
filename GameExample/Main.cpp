@@ -1,3 +1,4 @@
+#pragma once
 #include "GameExample.h"
 
 // application title
@@ -20,7 +21,6 @@
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	wstring title = APPTITLE;
-
 	GameExample game(hInstance, &title[0], SCREEN_WIDTH, SCREEN_HEIGHT, FULLSCREENMODE, FRAME_RATE);
 	game.RunGame();
 	game.Release();
