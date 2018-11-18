@@ -173,7 +173,10 @@
     <ClInclude Include="src\collisionquadtree\QuadTree.h" />
     <ClInclude Include="src\multiplayercore\MemoryBitStream.h" />
     <ClInclude Include="src\multiplayercore\SocketAddress.h" />
+    <ClInclude Include="src\multiplayercore\SocketAddressFactory.h" />
+    <ClInclude Include="src\multiplayercore\SocketUtils.h" />
     <ClInclude Include="src\multiplayercore\StringUtils.h" />
+    <ClInclude Include="src\multiplayercore\TCPSocket.h" />
     <ClInclude Include="src\multiplayercore\UDPSocket.h" />
     <ClInclude Include="src\spacedivisionquadtree\SpaceDivisionQuadTree.h" />
     <ClInclude Include="src\world\BodyDef.h" />
@@ -224,7 +227,10 @@
     <ClCompile Include="src\collisionquadtree\QuadTree.cpp" />
     <ClCompile Include="src\multiplayercore\MemoryBitStream.cpp" />
     <ClCompile Include="src\multiplayercore\SocketAddress.cpp" />
+    <ClCompile Include="src\multiplayercore\SocketAddressFactory.cpp" />
+    <ClCompile Include="src\multiplayercore\SocketUtils.cpp" />
     <ClCompile Include="src\multiplayercore\StringUtils.cpp" />
+    <ClCompile Include="src\multiplayercore\TCPSocket.cpp" />
     <ClCompile Include="src\multiplayercore\UDPSocket.cpp" />
     <ClCompile Include="src\spacedivisionquadtree\SpaceDivisionQuadTree.cpp" />
     <ClCompile Include="src\world\BodyDef.cpp" />

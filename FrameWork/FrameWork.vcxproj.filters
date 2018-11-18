@@ -315,6 +315,15 @@
     <ClInclude Include="src\multiplayercore\StringUtils.h">
       <Filter>Header Files\MultiplayerCore</Filter>
     </ClInclude>
+    <ClInclude Include="src\multiplayercore\SocketAddressFactory.h">
+      <Filter>Header Files\MultiplayerCore</Filter>
+    </ClInclude>
+    <ClInclude Include="src\multiplayercore\SocketUtils.h">
+      <Filter>Header Files\MultiplayerCore</Filter>
+    </ClInclude>
+    <ClInclude Include="src\multiplayercore\TCPSocket.h">
+      <Filter>Header Files\MultiplayerCore</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="extensions\rapidxml\license.txt">
@@ -436,6 +445,15 @@
       <Filter>Source Files\MultiplayerCore</Filter>
     </ClCompile>
     <ClCompile Include="src\multiplayercore\StringUtils.cpp">
+      <Filter>Source Files\MultiplayerCore</Filter>
+    </ClCompile>
+    <ClCompile Include="src\multiplayercore\SocketAddressFactory.cpp">
+      <Filter>Source Files\MultiplayerCore</Filter>
+    </ClCompile>
+    <ClCompile Include="src\multiplayercore\SocketUtils.cpp">
+      <Filter>Source Files\MultiplayerCore</Filter>
+    </ClCompile>
+    <ClCompile Include="src\multiplayercore\TCPSocket.cpp">
       <Filter>Source Files\MultiplayerCore</Filter>
     </ClCompile>
   </ItemGroup>

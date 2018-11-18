@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SocketAddress.h"
+#include "SocketUtils.h"
 
 class UDPSocket
 {
