@@ -318,10 +318,22 @@
     <ClInclude Include="src\multiplayercore\SocketAddressFactory.h">
       <Filter>Header Files\MultiplayerCore</Filter>
     </ClInclude>
-    <ClInclude Include="src\multiplayercore\SocketUtils.h">
+    <ClInclude Include="src\multiplayercore\TCPSocket.h">
       <Filter>Header Files\MultiplayerCore</Filter>
     </ClInclude>
-    <ClInclude Include="src\multiplayercore\TCPSocket.h">
+    <ClInclude Include="include\HanabiMultiplayer.h">
+      <Filter>Header Files\_Header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\multiplayercore\NetworkManager.h">
+      <Filter>Header Files\MultiplayerCore</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\EntryPoint.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\multiplayercore\SocketUtil.h">
+      <Filter>Header Files\MultiplayerCore</Filter>
+    </ClInclude>
+    <ClInclude Include="src\multiplayercore\SocketInclude.h">
       <Filter>Header Files\MultiplayerCore</Filter>
     </ClInclude>
   </ItemGroup>
@@ -450,10 +462,13 @@
     <ClCompile Include="src\multiplayercore\SocketAddressFactory.cpp">
       <Filter>Source Files\MultiplayerCore</Filter>
     </ClCompile>
-    <ClCompile Include="src\multiplayercore\SocketUtils.cpp">
+    <ClCompile Include="src\multiplayercore\TCPSocket.cpp">
       <Filter>Source Files\MultiplayerCore</Filter>
     </ClCompile>
-    <ClCompile Include="src\multiplayercore\TCPSocket.cpp">
+    <ClCompile Include="src\multiplayercore\NetworkManager.cpp">
+      <Filter>Source Files\MultiplayerCore</Filter>
+    </ClCompile>
+    <ClCompile Include="src\multiplayercore\SocketUtil.cpp">
       <Filter>Source Files\MultiplayerCore</Filter>
     </ClCompile>
   </ItemGroup>

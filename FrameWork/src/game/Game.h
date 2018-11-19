@@ -71,6 +71,7 @@ public:
 	Game(HINSTANCE hInstance, LPWSTR windowName, int screenWidth, int screenHeight, bool isFullScreen, int frameRate);
 	~Game();
 
+	//void SetInstance(HINSTANCE hInstance);
 
 	//RECOMMEND: don't modify this function, just call it in the main function
 	//do things in the updateGame function

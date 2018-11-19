@@ -1,10 +1,8 @@
-#pragma once
+#ifndef SOCKETADDRESS_H
+#define SOCKETADDRESS_H
 
-#include <cstdint>
-#include <cstdlib>
+#include "SocketInclude.h"
 #include <string>
-#include <WinSock2.h>
-#include <WS2tcpip.h>
 #include "StringUtils.h"
 
 class SocketAddress
@@ -78,3 +76,5 @@ namespace std
 		}
 	};
 }
+
+#endif

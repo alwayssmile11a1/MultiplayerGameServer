@@ -2,7 +2,7 @@
 
 
 #include "HanabiGame.h"
-
+#include "HanabiMultiplayer.h"
 
 class GameExample : public Game
 {

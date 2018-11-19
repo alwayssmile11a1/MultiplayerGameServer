@@ -1,7 +1,9 @@
-#pragma once
+#ifndef STRINGUTILS_H
+#define STRINGUTILS_H
+
+
 #include <string>
-#include <debugapi.h>
-#include <stdarg.h>
+#include "SocketInclude.h"
 
 namespace StringUtils
 {
@@ -14,3 +16,5 @@ namespace StringUtils
 }
 
 #define LOG( ... ) StringUtils::Log( __VA_ARGS__ );
+
+#endif

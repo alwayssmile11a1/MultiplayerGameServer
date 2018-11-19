@@ -1,5 +1,7 @@
-#pragma once
-#include <ws2def.h>
+#ifndef SOCKETUTIL_H
+#define SOCKETUTIL_H
+
+#include "SocketInclude.h"
 #include <vector>
 #include "UDPSocket.h"
 #include "TCPSocket.h"
@@ -35,3 +37,5 @@ private:
 	inline static fd_set* FillSetFromVector(fd_set& outSet, const std::vector< TCPSocketPtr >* inSockets, int& ioNaxNfds);
 	inline static void FillVectorFromSet(std::vector< TCPSocketPtr >* outSockets, const std::vector< TCPSocketPtr >* inSockets, const fd_set& inSet);
 };
+
+#endif

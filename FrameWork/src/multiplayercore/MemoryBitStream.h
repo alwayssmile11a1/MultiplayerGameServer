@@ -1,12 +1,10 @@
-#pragma once
-#include <cstdint>
-#include <cstdlib>
+#ifndef MEMORYBITSTREAM_H
+#define MEMORYBITSTREAM_H
+
 #include <string>
 #include <algorithm>
 #include "../math/Vector2.h"
 
-class GameObject;
-class LinkingContext;
 
 inline uint32_t ConvertToFixed(float inNumber, float inMin, float inPrecision)
 {
@@ -161,3 +159,4 @@ private:
 
 };
 
+#endif

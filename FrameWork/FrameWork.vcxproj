@@ -29,7 +29,7 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -153,6 +153,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\HanabiEffect.h" />
+    <ClInclude Include="include\HanabiMultiplayer.h" />
     <ClInclude Include="src\effect\Effect.h" />
     <ClInclude Include="include\HanabiInput.h" />
     <ClInclude Include="include\HanabiBody.h" />
@@ -171,10 +172,13 @@
     <ClInclude Include="include\HanabiStateManager.h" />
     <ClInclude Include="include\HanabiWorld.h" />
     <ClInclude Include="src\collisionquadtree\QuadTree.h" />
+    <ClInclude Include="src\game\EntryPoint.h" />
     <ClInclude Include="src\multiplayercore\MemoryBitStream.h" />
+    <ClInclude Include="src\multiplayercore\NetworkManager.h" />
     <ClInclude Include="src\multiplayercore\SocketAddress.h" />
     <ClInclude Include="src\multiplayercore\SocketAddressFactory.h" />
-    <ClInclude Include="src\multiplayercore\SocketUtils.h" />
+    <ClInclude Include="src\multiplayercore\SocketInclude.h" />
+    <ClInclude Include="src\multiplayercore\SocketUtil.h" />
     <ClInclude Include="src\multiplayercore\StringUtils.h" />
     <ClInclude Include="src\multiplayercore\TCPSocket.h" />
     <ClInclude Include="src\multiplayercore\UDPSocket.h" />
@@ -226,9 +230,10 @@
     <ClCompile Include="src\effect\Effect.cpp" />
     <ClCompile Include="src\collisionquadtree\QuadTree.cpp" />
     <ClCompile Include="src\multiplayercore\MemoryBitStream.cpp" />
+    <ClCompile Include="src\multiplayercore\NetworkManager.cpp" />
     <ClCompile Include="src\multiplayercore\SocketAddress.cpp" />
     <ClCompile Include="src\multiplayercore\SocketAddressFactory.cpp" />
-    <ClCompile Include="src\multiplayercore\SocketUtils.cpp" />
+    <ClCompile Include="src\multiplayercore\SocketUtil.cpp" />
     <ClCompile Include="src\multiplayercore\StringUtils.cpp" />
     <ClCompile Include="src\multiplayercore\TCPSocket.cpp" />
     <ClCompile Include="src\multiplayercore\UDPSocket.cpp" />

@@ -1,6 +1,9 @@
-#pragma once
+#ifndef TCPSOCKET_H
+#define TCPSOCKET_H
+
 #include "SocketAddress.h"
-#include "SocketUtils.h"
+//#include "SocketUtil.h"
+
 class TCPSocket
 {
 public:
@@ -17,3 +20,5 @@ private:
 	SOCKET		mSocket;
 };
 typedef std::shared_ptr< TCPSocket > TCPSocketPtr;
+
+#endif

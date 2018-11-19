@@ -22,6 +22,11 @@ Game::Game(HINSTANCE hInstance, LPWSTR windowName, int _screenWidth, int _screen
 	_Background = NULL;
 }
 
+//void Game::SetInstance(HINSTANCE hInstance)
+//{
+//	this->_HInstance = hInstance;
+//}
+
 Game::~Game()
 {
 	////free the backbuffer

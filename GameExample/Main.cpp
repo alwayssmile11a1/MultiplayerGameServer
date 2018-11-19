@@ -16,6 +16,11 @@
 //frame rate 
 #define FRAME_RATE 60
 
+//Game* GetApplication() 
+//{
+//	wstring title = APPTITLE;
+//	GameExample* game = new GameExample(&title[0], SCREEN_WIDTH, SCREEN_HEIGHT, FULLSCREENMODE, FRAME_RATE);
+//}
 
 //The entry point for any Windows program
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)

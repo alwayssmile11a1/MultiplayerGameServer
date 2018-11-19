@@ -1,7 +1,8 @@
-#pragma once
+#ifndef UDPSOCKET_H
+#define UDPSOCKET_H
 
 #include "SocketAddress.h"
-#include "SocketUtils.h"
+//#include "SocketUtil.h"
 
 class UDPSocket
 {
@@ -28,3 +29,5 @@ private:
 };
 
 typedef std::shared_ptr< UDPSocket >	UDPSocketPtr;
+
+#endif
