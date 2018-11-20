@@ -3,10 +3,15 @@
 
 #include "HanabiGame.h"
 #include "HanabiMultiplayer.h"
+#include "PlayScene.h"
 
 class GameExample : public Game
 {
 private:
+
+	PlayScene playScene;
+	SpriteBatch batch;
+
 
 protected:
 	//create all the things of a game here, such as world, object, ...
@@ -18,5 +23,6 @@ protected:
 public:
 	GameExample(HINSTANCE hInstance, LPWSTR windowName, int screenWidth, int screenHeight, bool isFullScreen, int frameRate);
 	~GameExample();
+
 	void Release() override;
 };

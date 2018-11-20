@@ -9,7 +9,7 @@ private:
 
 public:
 	Scene();
-	~Scene();
+	virtual ~Scene();
 	virtual void Create() = 0;
 	virtual void Update(float dt) = 0;
 	virtual void Release() = 0;

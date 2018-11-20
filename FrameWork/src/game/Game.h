@@ -69,7 +69,7 @@ public:
 	//constructor and destructor
 	Game();
 	Game(HINSTANCE hInstance, LPWSTR windowName, int screenWidth, int screenHeight, bool isFullScreen, int frameRate);
-	~Game();
+	virtual ~Game();
 
 	//void SetInstance(HINSTANCE hInstance);
 

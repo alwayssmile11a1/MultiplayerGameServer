@@ -89,7 +89,7 @@ public:
 
 	Body();
 	Body(float x, float y, float width, float height, float vx, float vy);
-	~Body();
+	virtual ~Body();
 
 	void SetVelocity(float vx, float vy);
 	void SetSize(float width, float height);

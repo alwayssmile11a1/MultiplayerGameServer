@@ -116,11 +116,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Cat.cpp" />
     <ClCompile Include="GameExample.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="PlayScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Cat.h" />
     <ClInclude Include="GameExample.h" />
+    <ClInclude Include="PlayScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FrameWork\FrameWork.vcxproj">
