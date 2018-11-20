@@ -10,6 +10,7 @@ Cat::~Cat()
 
 void Cat::Init(World* world)
 {
+
 	//Setup sprite 
 	texture = Texture("../Resources/mouse.png");
 	SetTexture(&texture);
@@ -36,7 +37,6 @@ void Cat::Render(SpriteBatch *batch)
 
 void Cat::Update(float dt)
 {
-
 	if (Input::GetKey(DIK_RIGHT))
 	{
 		mainBody->SetVelocity(5, mainBody->GetVelocity().y);

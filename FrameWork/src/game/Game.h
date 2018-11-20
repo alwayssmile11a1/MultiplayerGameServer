@@ -9,6 +9,7 @@
 #include "..\sound\MySound.h"
 #include "..\input\Input.h"
 #include "..\others\Utility.h"
+#include "..\console\ConsoleWindowLog.h"
 
 	//this abstract class manages game structure, such as DirectX, game run, etc... 
 class Game : public GameObject
@@ -77,6 +78,8 @@ public:
 	//do things in the updateGame function
 	//and this function will take care the rest for you
 	int RunGame();
+
+	void ShowGUILog();
 
 	//Release game
 	void virtual Release() = 0;

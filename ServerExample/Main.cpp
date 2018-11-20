@@ -1,10 +1,10 @@
 #pragma once
-#include "GameExample.h"
+#include "ServerExample.h"
 
 // application title
 //(since we use Unicode character set, //we have to put L before "GameExample". 
 //This means the "GameExample" should be made of 16 bit Unicode characters, rather than 8 bit)
-#define APPTITLE L"GameExample"
+#define APPTITLE L"ServerExample"
 
 //Full screen or not
 #define FULLSCREENMODE FALSE
@@ -26,8 +26,7 @@
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	wstring title = APPTITLE;
-	GameExample game(hInstance, &title[0], SCREEN_WIDTH, SCREEN_HEIGHT, FULLSCREENMODE, FRAME_RATE);
-	game.ShowGUILog();
+	ServerExample game(hInstance, &title[0], SCREEN_WIDTH, SCREEN_HEIGHT, FULLSCREENMODE, FRAME_RATE);
 	game.RunGame();
 	game.Release();
 }

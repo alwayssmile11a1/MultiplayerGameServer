@@ -102,6 +102,13 @@ void Game::Release()
 
 }
 
+void Game::ShowGUILog()
+{
+#ifdef _DEBUG
+	RedirectIOToConsole();
+#endif
+}
+
 void Game::SetBackGroundColor(D3DCOLOR color)
 {
 	_BackGroundColor = color;

@@ -336,6 +336,9 @@
     <ClInclude Include="src\multiplayercore\SocketInclude.h">
       <Filter>Header Files\MultiplayerCore</Filter>
     </ClInclude>
+    <ClInclude Include="src\console\ConsoleWindowLog.h">
+      <Filter>Header Files\ConsoleLog</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="extensions\rapidxml\license.txt">
@@ -470,6 +473,9 @@
     </ClCompile>
     <ClCompile Include="src\multiplayercore\SocketUtil.cpp">
       <Filter>Source Files\MultiplayerCore</Filter>
+    </ClCompile>
+    <ClCompile Include="src\console\ConsoleWindowLog.cpp">
+      <Filter>Source Files\ConsoleLog</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
