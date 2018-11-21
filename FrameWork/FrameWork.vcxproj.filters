@@ -339,6 +339,9 @@
     <ClInclude Include="src\console\ConsoleWindowLog.h">
       <Filter>Header Files\ConsoleLog</Filter>
     </ClInclude>
+    <ClInclude Include="src\math\Time.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="extensions\rapidxml\license.txt">
@@ -476,6 +479,9 @@
     </ClCompile>
     <ClCompile Include="src\console\ConsoleWindowLog.cpp">
       <Filter>Source Files\ConsoleLog</Filter>
+    </ClCompile>
+    <ClCompile Include="src\math\Time.cpp">
+      <Filter>Source Files\Math</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

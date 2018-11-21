@@ -4,6 +4,7 @@
 #include "SocketAddress.h"
 //#include "SocketUtil.h"
 
+//A wrapper class for SOCKET 
 class UDPSocket
 {
 public:
@@ -22,7 +23,7 @@ public:
 	int SetNonBlockingMode(bool inShouldBeNonBlocking);
 
 private:
-	friend class SocketUtil;
+	//friend class SocketUtil;
 	UDPSocket(SOCKET inSocket) : mSocket(inSocket) {}
 	SOCKET mSocket;
 

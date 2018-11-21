@@ -174,6 +174,7 @@
     <ClInclude Include="include\HanabiWorld.h" />
     <ClInclude Include="src\collisionquadtree\QuadTree.h" />
     <ClInclude Include="src\game\EntryPoint.h" />
+    <ClInclude Include="src\math\Time.h" />
     <ClInclude Include="src\multiplayercore\MemoryBitStream.h" />
     <ClInclude Include="src\multiplayercore\NetworkManager.h" />
     <ClInclude Include="src\multiplayercore\SocketAddress.h" />
@@ -231,6 +232,7 @@
     <ClCompile Include="src\console\ConsoleWindowLog.cpp" />
     <ClCompile Include="src\effect\Effect.cpp" />
     <ClCompile Include="src\collisionquadtree\QuadTree.cpp" />
+    <ClCompile Include="src\math\Time.cpp" />
     <ClCompile Include="src\multiplayercore\MemoryBitStream.cpp" />
     <ClCompile Include="src\multiplayercore\NetworkManager.cpp" />
     <ClCompile Include="src\multiplayercore\SocketAddress.cpp" />
