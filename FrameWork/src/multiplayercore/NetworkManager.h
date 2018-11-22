@@ -12,15 +12,21 @@
 //Hold a UDPSocket (for now) and manage sending and receiving packets
 class NetworkManager
 {
-private:
-	int mMaxPacketsPerFrameCount = 10;
+protected:
+	static const uint32_t	kHelloCC = 'HELO';
+	static const uint32_t	kWelcomeCC = 'WLCM';
+	static const uint32_t	kStateCC = 'STAT';
+	static const uint32_t	kInputCC = 'INPT';
 
+private:
+
+	int mMaxPacketsPerFrameCount = 10;
 
 	//UDPSocket of current client 
 	UDPSocketPtr mUDPSocket;
 	
 	//A queue of packet received from somewhere (server, another client)
-	std::queue< ReceivedPacket, std::list< ReceivedPacket > >	mReceivedPacketQueue;
+	std::queue< ReceivedPacket, std::list< ReceivedPacket > > mReceivedPacketQueue;
 
 	//some helper functions 
 	void ReadIncomingPacketsIntoQueue();
@@ -29,6 +35,15 @@ private:
 	//for debug purpose only
 	float mDropPacketChance = 0;
 	float mSimulatedLatency = 0;
+
+protected:
+
+	//Port closed on other end, so do something (this function might be called on server side only)
+	virtual void OnConnectionReset(const SocketAddress& inFromAddress) {}
+	//Call back when a packet is received
+	virtual void OnPacketReceived(InputMemoryBitStream& inputMemoryStream, const SocketAddress& fromAddress) = 0;
+	//Process and send neccessary packets inside this function
+	virtual void OnSendPackets() = 0;
 
 public:
 	NetworkManager();
@@ -42,12 +57,10 @@ public:
 
 	//Call this function on Update or somewhere similar to receive incoming packets
 	//If any packet is received, OnPacketReceived will be called
-	void ProcessIncomingPackets();
+	void ReceiveIncomingPackets();
 
-	//Port closed on other end, so do something (this function might be called on server side only)
-	virtual void OnConnectionReset(const SocketAddress& inFromAddress) {}
-	//Call back when a packet is received
-	virtual void OnPacketReceived(InputMemoryBitStream& inputMemoryStream, const SocketAddress& fromAddress) = 0;
+	//Cal this function on Update or somewhere similar to send outgoing packets
+	void SendOutgoingPackets();
 
 	//Default is 10 
 	void SetMaxPacketsPerFrame(float inMaxPacketsPerFrame) { mMaxPacketsPerFrameCount = inMaxPacketsPerFrame;  }

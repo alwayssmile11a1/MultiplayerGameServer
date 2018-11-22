@@ -1,6 +1,7 @@
 #include "Time.h"
 
-float Time::GetCurrentTime()
+float Time::GetTime()
 {
-	return GetTickCount();
+	float time = GetTickCount() / 1000.0;
+	return time;
 }

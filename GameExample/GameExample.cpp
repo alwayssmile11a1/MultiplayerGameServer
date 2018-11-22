@@ -24,6 +24,9 @@ void GameExample::CreateGame()
 	//Set scene to render
 	SetScene(&playScene);
 
+	clientNetworkManager.Init("127.0.0.1:8080", "MyName");
+
+
 }
 
 //update game here
@@ -31,6 +34,8 @@ void GameExample::UpdateGame(float dt)
 {
 	Game::UpdateGame(dt);
 
+	clientNetworkManager.ReceiveIncomingPackets();
+	clientNetworkManager.SendOutgoingPackets();
 }
 
 //remember to release everything

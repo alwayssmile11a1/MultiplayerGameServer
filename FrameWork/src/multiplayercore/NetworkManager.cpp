@@ -2,7 +2,7 @@
 
 NetworkManager::NetworkManager()
 {
-
+	
 }
 NetworkManager::~NetworkManager()
 {
@@ -35,12 +35,18 @@ void NetworkManager::SendPacket(const OutputMemoryBitStream& outputMemoryStream,
 	int sentByteCount = mUDPSocket->SendTo(outputMemoryStream.GetBufferPtr(), outputMemoryStream.GetByteLength(), destinationAddress);
 }
 
-void NetworkManager::ProcessIncomingPackets()
+void NetworkManager::ReceiveIncomingPackets()
 {
 	ReadIncomingPacketsIntoQueue();
 
 	ProcessQueuedPackets();
 }
+
+void NetworkManager::SendOutgoingPackets()
+{
+	OnSendPackets();
+}
+
 
 void NetworkManager::ReadIncomingPacketsIntoQueue()
 {

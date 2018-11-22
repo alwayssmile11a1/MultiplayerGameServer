@@ -13,14 +13,15 @@ ServerExample::~ServerExample()
 //Create game here
 void ServerExample::CreateGame()
 {
-	
+	serverNetworkManager.Init(8080);
 }
 
 //update game here
 void ServerExample::UpdateGame(float dt)
 {
 	Game::UpdateGame(dt);
-
+	serverNetworkManager.ReceiveIncomingPackets();
+	serverNetworkManager.SendOutgoingPackets();
 }
 
 //remember to release everything

@@ -27,6 +27,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 {
 	wstring title = APPTITLE;
 	ServerExample game(hInstance, &title[0], SCREEN_WIDTH, SCREEN_HEIGHT, FULLSCREENMODE, FRAME_RATE);
+	game.ShowGUILog();
 	game.RunGame();
 	game.Release();
 }

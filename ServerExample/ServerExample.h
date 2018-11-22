@@ -2,12 +2,12 @@
 
 
 #include "HanabiGame.h"
-
+#include "ServerNetworkManager.h"
 
 class ServerExample : public Game
 {
 private:
-
+	ServerNetworkManager serverNetworkManager;
 
 protected:
 	//create all the things of a game here, such as world, object, ...

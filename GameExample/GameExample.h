@@ -4,10 +4,14 @@
 #include "HanabiGame.h"
 #include "HanabiMultiplayer.h"
 #include "PlayScene.h"
+#include "ClientNetworkManager.h"
+
 
 class GameExample : public Game
 {
 private:
+
+	ClientNetworkManager clientNetworkManager;
 
 	PlayScene playScene;
 	SpriteBatch batch;
