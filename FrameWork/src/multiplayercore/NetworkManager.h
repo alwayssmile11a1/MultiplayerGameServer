@@ -4,10 +4,19 @@
 #include "MemoryBitStream.h"
 #include "SocketAddress.h"
 #include "UDPSocket.h"
-#include "SocketUtil.h"
+#include "TCPSocket.h"
+#include "NetworkHelper.h"
 #include <queue>
 #include <list>
 #include "../src/math/Time.h"
+
+
+enum SocketAddressFamily
+{
+	INET = AF_INET,
+	INET6 = AF_INET6
+};
+
 
 //Hold a UDPSocket (for now) and manage sending and receiving packets
 class NetworkManager
@@ -24,7 +33,30 @@ private:
 
 	//UDPSocket of current client 
 	UDPSocketPtr mUDPSocket;
-	
+
+	//Just a wrapper class for packets received from somewhere (server, other clients)
+	class ReceivedPacket
+	{
+	public:
+		ReceivedPacket(float inReceivedTime, InputMemoryBitStream& ioInputMemoryBitStream, const SocketAddress& inFromAddress) :
+			mReceivedTime(inReceivedTime),
+			mFromAddress(inFromAddress),
+			mPacketBuffer(ioInputMemoryBitStream)
+		{
+		}
+
+		const	SocketAddress&			GetFromAddress()	const { return mFromAddress; }
+		float					GetReceivedTime()	const { return mReceivedTime; }
+		InputMemoryBitStream&	GetPacketBuffer() { return mPacketBuffer; }
+
+	private:
+
+		float					mReceivedTime;
+		InputMemoryBitStream	mPacketBuffer;
+		SocketAddress			mFromAddress;
+
+	};
+
 	//A queue of packet received from somewhere (server, another client)
 	std::queue< ReceivedPacket, std::list< ReceivedPacket > > mReceivedPacketQueue;
 
@@ -68,29 +100,17 @@ public:
 	void SetDropPacketChance(float inChance) { mDropPacketChance = inChance; }
 	//For debug purpose only
 	void SetSimulatedLatency(float inLatency) { mSimulatedLatency = inLatency; }
+
+
+	//helper function
+	static UDPSocketPtr	CreateUDPSocket(SocketAddressFamily inFamily);
+	static TCPSocketPtr	CreateTCPSocket(SocketAddressFamily inFamily);
+
+	//this function needs to be called first before doing any networking-related stuff
+	static bool	StaticInit();
+	//remember to call this on game end 
+	static void	CleanUp();
 };
 
-//Just a wrapper class for packets received from somewhere (server, other clients)
-class ReceivedPacket
-{
-public:
-	ReceivedPacket(float inReceivedTime, InputMemoryBitStream& ioInputMemoryBitStream, const SocketAddress& inFromAddress) :
-		mReceivedTime(inReceivedTime),
-		mFromAddress(inFromAddress),
-		mPacketBuffer(ioInputMemoryBitStream)
-	{
-	}
-
-	const	SocketAddress&			GetFromAddress()	const { return mFromAddress; }
-	float					GetReceivedTime()	const { return mReceivedTime; }
-	InputMemoryBitStream&	GetPacketBuffer() { return mPacketBuffer; }
-
-private:
-
-	float					mReceivedTime;
-	InputMemoryBitStream	mPacketBuffer;
-	SocketAddress			mFromAddress;
-
-};
 
 #endif

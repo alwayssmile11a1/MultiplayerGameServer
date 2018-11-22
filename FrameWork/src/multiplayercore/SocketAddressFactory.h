@@ -2,7 +2,7 @@
 #define SOCKETADDRESSFACTORY_H
 
 #include "SocketAddress.h"
-#include "SocketUtil.h"
+#include "NetworkHelper.h"
 
 class SocketAddressFactory
 {

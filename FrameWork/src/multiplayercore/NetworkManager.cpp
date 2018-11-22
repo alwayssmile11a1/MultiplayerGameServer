@@ -10,7 +10,7 @@ NetworkManager::~NetworkManager()
 
 bool NetworkManager::InitUDPSocket(uint16_t inPort)
 {
-	mUDPSocket = SocketUtil::CreateUDPSocket(INET);
+	mUDPSocket = CreateUDPSocket(INET);
 	SocketAddress ownAddress(INADDR_ANY, inPort);
 	mUDPSocket->Bind(ownAddress);
 
@@ -84,7 +84,7 @@ void NetworkManager::ReadIncomingPacketsIntoQueue()
 			//{
 			//	//we made it
 				//float simulatedReceivedTime = Timing::sInstance.GetTimef() + mSimulatedLatency;
-				mReceivedPacketQueue.emplace(Time::GetCurrentTime(), inputStream, fromAddress);
+				mReceivedPacketQueue.emplace(Time::GetTime(), inputStream, fromAddress);
 			//}
 			//else
 			//{
@@ -116,4 +116,55 @@ void NetworkManager::ProcessQueuedPackets()
 		//}
 
 	}
+}
+
+UDPSocketPtr NetworkManager::CreateUDPSocket(SocketAddressFamily inFamily)
+{
+	SOCKET s = socket(inFamily, SOCK_DGRAM, IPPROTO_UDP);
+
+	if (s != INVALID_SOCKET)
+	{
+		return UDPSocketPtr(new UDPSocket(s));
+	}
+	else
+	{
+		NetworkHelper::ReportError("SocketUtil::CreateUDPSocket");
+		return nullptr;
+	}
+}
+
+TCPSocketPtr NetworkManager::CreateTCPSocket(SocketAddressFamily inFamily)
+{
+	SOCKET s = socket(inFamily, SOCK_STREAM, IPPROTO_TCP);
+
+	if (s != INVALID_SOCKET)
+	{
+		return TCPSocketPtr(new TCPSocket(s));
+	}
+	else
+	{
+		NetworkHelper::ReportError("SocketUtil::CreateTCPSocket");
+		return nullptr;
+	}
+}
+
+bool NetworkManager::StaticInit()
+{
+#if _WIN32
+	WSADATA wsaData;
+	int iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
+	if (iResult != NO_ERROR)
+	{
+		NetworkHelper::ReportError("Starting Up");
+		return false;
+	}
+#endif
+	return true;
+}
+
+void NetworkManager::CleanUp()
+{
+#if _WIN32
+	WSACleanup();
+#endif
 }

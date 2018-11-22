@@ -330,9 +330,6 @@
     <ClInclude Include="src\game\EntryPoint.h">
       <Filter>Header Files\Game</Filter>
     </ClInclude>
-    <ClInclude Include="src\multiplayercore\SocketUtil.h">
-      <Filter>Header Files\MultiplayerCore</Filter>
-    </ClInclude>
     <ClInclude Include="src\multiplayercore\SocketInclude.h">
       <Filter>Header Files\MultiplayerCore</Filter>
     </ClInclude>
@@ -341,6 +338,9 @@
     </ClInclude>
     <ClInclude Include="src\math\Time.h">
       <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\multiplayercore\NetworkHelper.h">
+      <Filter>Header Files\MultiplayerCore</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -474,14 +474,14 @@
     <ClCompile Include="src\multiplayercore\NetworkManager.cpp">
       <Filter>Source Files\MultiplayerCore</Filter>
     </ClCompile>
-    <ClCompile Include="src\multiplayercore\SocketUtil.cpp">
-      <Filter>Source Files\MultiplayerCore</Filter>
-    </ClCompile>
     <ClCompile Include="src\console\ConsoleWindowLog.cpp">
       <Filter>Source Files\ConsoleLog</Filter>
     </ClCompile>
     <ClCompile Include="src\math\Time.cpp">
       <Filter>Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\multiplayercore\NetworkHelper.cpp">
+      <Filter>Source Files\MultiplayerCore</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

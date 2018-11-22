@@ -1,6 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include "..\multiplayercore\NetworkManager.h"
 #include <time.h>
 #include <Windows.h>
 #include "GameObject.h"

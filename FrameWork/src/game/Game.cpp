@@ -100,6 +100,8 @@ void Game::Release()
 	//shut down for sure
 	Sound::DirectSound_Shutdown();
 
+	//Clean networking stuff
+	NetworkManager::CleanUp();
 }
 
 void Game::ShowGUILog()
@@ -294,7 +296,11 @@ bool Game::InitGame()
 	//init input manager
 	Input::Init(_HInstance, _HWnd);
 
+	//Init sound
 	Sound::DirectSound_Init(_HWnd);
+
+	//Init networking 
+	NetworkManager::StaticInit();
 
 	//create game
 	CreateGame();
@@ -406,7 +412,10 @@ int Game::RunGame()
 
 void Game::UpdateGame(float dt)
 {
-	_CurrentScene->Update(dt);
+	if (_CurrentScene != nullptr)
+	{
+		_CurrentScene->Update(dt);
+	}
 }
 
 void Game::SetScene(Scene *scene)

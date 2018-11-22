@@ -2,7 +2,7 @@
 #define UDPSOCKET_H
 
 #include "SocketAddress.h"
-//#include "SocketUtil.h"
+#include "NetworkHelper.h"
 
 //A wrapper class for SOCKET 
 class UDPSocket
@@ -23,7 +23,7 @@ public:
 	int SetNonBlockingMode(bool inShouldBeNonBlocking);
 
 private:
-	//friend class SocketUtil;
+	friend class NetworkManager;
 	UDPSocket(SOCKET inSocket) : mSocket(inSocket) {}
 	SOCKET mSocket;
 

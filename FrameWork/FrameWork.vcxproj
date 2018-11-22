@@ -89,7 +89,7 @@
     </ClCompile>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)framework\extensions\directX9\Lib\x86;</AdditionalLibraryDirectories>
-      <AdditionalDependencies>dxerr.lib;legacy_stdio_definitions.lib;dsound.lib;Winmm.lib;d3d9.lib;d3dx9.lib;dinput8.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ws2_32.lib;dxerr.lib;legacy_stdio_definitions.lib;dsound.lib;Winmm.lib;d3d9.lib;d3dx9.lib;dinput8.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -180,7 +180,7 @@
     <ClInclude Include="src\multiplayercore\SocketAddress.h" />
     <ClInclude Include="src\multiplayercore\SocketAddressFactory.h" />
     <ClInclude Include="src\multiplayercore\SocketInclude.h" />
-    <ClInclude Include="src\multiplayercore\SocketUtil.h" />
+    <ClInclude Include="src\multiplayercore\NetworkHelper.h" />
     <ClInclude Include="src\multiplayercore\StringUtils.h" />
     <ClInclude Include="src\multiplayercore\TCPSocket.h" />
     <ClInclude Include="src\multiplayercore\UDPSocket.h" />
@@ -237,7 +237,7 @@
     <ClCompile Include="src\multiplayercore\NetworkManager.cpp" />
     <ClCompile Include="src\multiplayercore\SocketAddress.cpp" />
     <ClCompile Include="src\multiplayercore\SocketAddressFactory.cpp" />
-    <ClCompile Include="src\multiplayercore\SocketUtil.cpp" />
+    <ClCompile Include="src\multiplayercore\NetworkHelper.cpp" />
     <ClCompile Include="src\multiplayercore\StringUtils.cpp" />
     <ClCompile Include="src\multiplayercore\TCPSocket.cpp" />
     <ClCompile Include="src\multiplayercore\UDPSocket.cpp" />
