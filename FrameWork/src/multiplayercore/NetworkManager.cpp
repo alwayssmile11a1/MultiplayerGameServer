@@ -14,8 +14,7 @@ bool NetworkManager::InitUDPSocket(uint16_t inPort)
 	SocketAddress ownAddress(INADDR_ANY, inPort);
 	mUDPSocket->Bind(ownAddress);
 
-	LOG("Initializing NetworkManager at port %d", inPort);
-
+	Debug::Log("Initializing NetworkManager at port %d\n", inPort);
 	//did we bind okay?
 	if (mUDPSocket == nullptr)
 	{

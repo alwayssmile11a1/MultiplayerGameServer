@@ -46,7 +46,7 @@ void ServerNetworkManager::OnPacketReceived(InputMemoryBitStream& inputMemoryStr
 	inputMemoryStream.Read(packetType);
 	if (packetType == kHelloCC)
 	{
-		DebugLog("Received from you");
+		Debug::Log("Received from you\n");
 
 		//read the name
 		std::string name;

@@ -154,7 +154,7 @@
   <ItemGroup>
     <ClInclude Include="include\HanabiEffect.h" />
     <ClInclude Include="include\HanabiMultiplayer.h" />
-    <ClInclude Include="src\console\ConsoleWindowLog.h" />
+    <ClInclude Include="src\console\Debug.h" />
     <ClInclude Include="src\effect\Effect.h" />
     <ClInclude Include="include\HanabiInput.h" />
     <ClInclude Include="include\HanabiBody.h" />
@@ -229,7 +229,7 @@
     <None Include="extensions\rapidxml\manual.html" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\console\ConsoleWindowLog.cpp" />
+    <ClCompile Include="src\console\Debug.cpp" />
     <ClCompile Include="src\effect\Effect.cpp" />
     <ClCompile Include="src\collisionquadtree\QuadTree.cpp" />
     <ClCompile Include="src\math\Time.cpp" />

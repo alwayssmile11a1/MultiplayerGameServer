@@ -10,7 +10,7 @@
 #include "..\sound\MySound.h"
 #include "..\input\Input.h"
 #include "..\others\Utility.h"
-#include "..\console\ConsoleWindowLog.h"
+#include "..\console\Debug.h"
 
 	//this abstract class manages game structure, such as DirectX, game run, etc... 
 class Game : public GameObject

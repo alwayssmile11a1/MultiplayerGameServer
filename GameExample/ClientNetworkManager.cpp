@@ -75,7 +75,7 @@ void ClientNetworkManager::OnPacketReceived(InputMemoryBitStream& inputMemoryStr
 	switch (packetType)
 	{
 	case kWelcomeCC:
-		DebugLog("Thanks");
+		Debug::Log("Thanks\n");
 		break;
 	case kStateCC:
 		

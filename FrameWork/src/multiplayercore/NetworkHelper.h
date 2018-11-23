@@ -4,6 +4,7 @@
 #include "SocketInclude.h"
 #include <vector>
 #include "StringUtils.h"
+#include "../console/Debug.h"
 
 class NetworkHelper
 {
