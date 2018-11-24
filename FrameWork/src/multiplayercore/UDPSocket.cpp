@@ -55,7 +55,7 @@ int UDPSocket::ReceiveFrom(void* inToReceive, int inMaxLength, SocketAddress& ou
 		{
 			//this can happen if a client closed and we haven't DC'd yet.
 			//this is the ICMP message being sent back saying the port on that computer is closed
-			Debug::Log("Connection reset from %s\n", outFromAddress.ToString().c_str());
+			NetworkHelper::Log("Connection reset from %s\n", outFromAddress.ToString().c_str());
 			return -WSAECONNRESET;
 		}
 		else

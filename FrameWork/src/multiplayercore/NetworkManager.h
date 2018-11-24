@@ -9,14 +9,14 @@
 #include <queue>
 #include <list>
 #include "../src/math/Time.h"
-
+#include <unordered_map>
+#include "NetworkGameObject.h"
 
 enum SocketAddressFamily
 {
 	INET = AF_INET,
 	INET6 = AF_INET6
 };
-
 
 //Hold a UDPSocket (for now) and manage sending and receiving packets
 class NetworkManager
@@ -60,6 +60,8 @@ private:
 	//A queue of packet received from somewhere (server, another client)
 	std::queue< ReceivedPacket, std::list< ReceivedPacket > > mReceivedPacketQueue;
 
+	std::unordered_map< int, NetworkGameObjectPtr > mNetworkIdToGameObjectMap;
+
 	//some helper functions 
 	void ReadIncomingPacketsIntoQueue();
 	void ProcessQueuedPackets();
@@ -101,6 +103,9 @@ public:
 	//For debug purpose only
 	void SetSimulatedLatency(float inLatency) { mSimulatedLatency = inLatency; }
 
+	NetworkGameObjectPtr	GetGameObject(int inNetworkId) const;
+	void	AddToNetworkIdToGameObjectMap(NetworkGameObjectPtr inGameObject);
+	void	RemoveFromNetworkIdToGameObjectMap(NetworkGameObjectPtr inGameObject);
 
 	//helper function
 	static UDPSocketPtr	CreateUDPSocket(SocketAddressFamily inFamily);

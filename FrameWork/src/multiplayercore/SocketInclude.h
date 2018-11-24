@@ -1,5 +1,4 @@
 #ifndef SOCKETINCLUDE_H
-
 #define SOCKETINCLUDE_H
 
 #ifdef _WIN32

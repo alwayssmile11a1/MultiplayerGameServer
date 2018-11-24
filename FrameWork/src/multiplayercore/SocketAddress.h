@@ -5,6 +5,7 @@
 #include <string>
 #include "StringUtils.h"
 
+//a wrapper class for SockAddr
 class SocketAddress
 {
 public:

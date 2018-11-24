@@ -14,7 +14,7 @@ bool NetworkManager::InitUDPSocket(uint16_t inPort)
 	SocketAddress ownAddress(INADDR_ANY, inPort);
 	mUDPSocket->Bind(ownAddress);
 
-	Debug::Log("Initializing NetworkManager at port %d\n", inPort);
+	NetworkHelper::Log("Initializing NetworkManager at port %d\n", inPort);
 	//did we bind okay?
 	if (mUDPSocket == nullptr)
 	{
@@ -115,6 +115,29 @@ void NetworkManager::ProcessQueuedPackets()
 		//}
 
 	}
+}
+
+NetworkGameObjectPtr NetworkManager::GetGameObject(int inNetworkId) const
+{
+	auto gameObjectIt = mNetworkIdToGameObjectMap.find(inNetworkId);
+	if (gameObjectIt != mNetworkIdToGameObjectMap.end())
+	{
+		return gameObjectIt->second;
+	}
+	else
+	{
+		return nullptr;
+	}
+}
+
+void NetworkManager::AddToNetworkIdToGameObjectMap(NetworkGameObjectPtr inGameObject)
+{
+	mNetworkIdToGameObjectMap[inGameObject->GetNetworkId()] = inGameObject;
+}
+
+void NetworkManager::RemoveFromNetworkIdToGameObjectMap(NetworkGameObjectPtr inGameObject)
+{
+	mNetworkIdToGameObjectMap.erase(inGameObject->GetNetworkId());
 }
 
 UDPSocketPtr NetworkManager::CreateUDPSocket(SocketAddressFamily inFamily)

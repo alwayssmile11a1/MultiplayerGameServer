@@ -9,9 +9,9 @@
 class NetworkHelper
 {
 public:
-
-	static void			ReportError(const char* inOperationDesc);
-	static int			GetLastError();
+	static void Log(const char* message, ...);
+	static void	ReportError(const char* message);
+	static int GetLastError();
 
 	//this function is really helpful when a large number of users connects to server, but we don't need to use this for now 
 	//static int Select(const std::vector< TCPSocketPtr >* inReadSet,

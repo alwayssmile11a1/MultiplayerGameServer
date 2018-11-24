@@ -2,7 +2,7 @@
 
 
 
-void NetworkHelper::ReportError(const char* inOperationDesc)
+void NetworkHelper::ReportError(const char* message)
 {
 //#if _WIN32
 //	LPVOID lpMsgBuf;
@@ -23,8 +23,17 @@ void NetworkHelper::ReportError(const char* inOperationDesc)
 //#else
 //	LOG("Error: %hs", inOperationDesc);
 //#endif
-	Debug::Log("ERROR %s: %d \n", inOperationDesc, GetLastError());
+	Debug::Log("NETWORK ERROR: %s: %d\n", message, GetLastError());
 
+}
+
+void NetworkHelper::Log(const char* message, ...)
+{
+	va_list args;
+	va_start(args, message);
+	Debug::Log("NETWORK INFO: ");
+	Debug::Log(message, args);
+	va_end(args);
 }
 
 int NetworkHelper::GetLastError()
