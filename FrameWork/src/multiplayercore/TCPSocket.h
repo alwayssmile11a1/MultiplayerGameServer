@@ -1,9 +1,10 @@
 #ifndef TCPSOCKET_H
 #define TCPSOCKET_H
 
+#include "SocketInclude.h"
 #include "SocketAddress.h"
 #include "NetworkHelper.h"
-
+#include <memory>
 //A wrapper class for SOCKET
 class TCPSocket
 {

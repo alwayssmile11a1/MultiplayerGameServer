@@ -1,10 +1,10 @@
 #pragma once
 
-
-#include "HanabiGame.h"
-#include "HanabiMultiplayer.h"
-#include "PlayScene.h"
 #include "ClientNetworkManager.h"
+#include "HanabiMultiplayer.h"
+#include "HanabiGame.h"
+#include "PlayScene.h"
+
 
 
 class GameExample : public Game

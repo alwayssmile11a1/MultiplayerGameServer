@@ -70,12 +70,13 @@ void ClientNetworkManager::SendGamePackets()
 
 void ClientNetworkManager::OnPacketReceived(InputMemoryBitStream& inputMemoryStream, const SocketAddress& fromAddress)
 {
-	uint32_t	packetType;
+	uint32_t packetType;
 	inputMemoryStream.Read(packetType);
 	switch (packetType)
 	{
 	case kWelcomeCC:
 		Debug::Log("Thanks\n");
+		mState = Welcomed;
 		break;
 	case kStateCC:
 		

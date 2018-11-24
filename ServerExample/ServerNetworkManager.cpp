@@ -29,9 +29,17 @@ void ServerNetworkManager::OnSendPackets()
 	}
 }
 
-void ServerNetworkManager::SendWelcomePacket()
+void ServerNetworkManager::SendWelcomePacket(InputMemoryBitStream& inputMemoryStream, const SocketAddress& toAddress)
 {
-	
+	//read the name
+	std::string name;
+	inputMemoryStream.Read(name);
+	Debug::Log("Received from %s\n", name);
+
+	//send welcome packet
+	OutputMemoryBitStream welcomePacket;
+	welcomePacket.Write(kWelcomeCC);
+	SendPacket(welcomePacket, toAddress);
 }
 
 void ServerNetworkManager::SendPackets()
@@ -46,16 +54,7 @@ void ServerNetworkManager::OnPacketReceived(InputMemoryBitStream& inputMemoryStr
 	inputMemoryStream.Read(packetType);
 	if (packetType == kHelloCC)
 	{
-		Debug::Log("Received from you\n");
-
-		//read the name
-		std::string name;
-		inputMemoryStream.Read(name);
-
-		//send welcome packet
-		OutputMemoryBitStream welcomePacket;
-		welcomePacket.Write(kWelcomeCC);
-		SendPacket(welcomePacket, fromAddress);
+		SendWelcomePacket(inputMemoryStream, fromAddress);
 	}
 	else
 	{

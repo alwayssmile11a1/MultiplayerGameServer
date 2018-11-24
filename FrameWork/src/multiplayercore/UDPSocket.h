@@ -1,9 +1,10 @@
 #ifndef UDPSOCKET_H
 #define UDPSOCKET_H
 
+#include "SocketInclude.h"
 #include "SocketAddress.h"
 #include "NetworkHelper.h"
-
+#include <memory>
 //A wrapper class for SOCKET 
 class UDPSocket
 {

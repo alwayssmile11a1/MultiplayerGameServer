@@ -1,6 +1,6 @@
 #ifndef SOCKETADDRESSFACTORY_H
 #define SOCKETADDRESSFACTORY_H
-
+#include "SocketInclude.h"
 #include "SocketAddress.h"
 #include "NetworkHelper.h"
 

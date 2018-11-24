@@ -1,5 +1,6 @@
 #pragma once
 
+#include "HanabiMultiplayer.h"
 #include "HanabiSprite.h"
 #include "HanabiInput.h"
 #include "HanabiBody.h"

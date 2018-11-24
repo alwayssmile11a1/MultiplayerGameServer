@@ -32,6 +32,10 @@ bool NetworkManager::InitUDPSocket(uint16_t inPort)
 void NetworkManager::SendPacket(const OutputMemoryBitStream& outputMemoryStream, const SocketAddress& destinationAddress)
 {
 	int sentByteCount = mUDPSocket->SendTo(outputMemoryStream.GetBufferPtr(), outputMemoryStream.GetByteLength(), destinationAddress);
+	if (sentByteCount > 0)
+	{
+		mBytesSentThisFrame += sentByteCount;
+	}
 }
 
 void NetworkManager::ReceiveIncomingPackets()
@@ -95,6 +99,11 @@ void NetworkManager::ReadIncomingPacketsIntoQueue()
 		{
 			//uhoh, error? exit or just keep going?
 		}
+	}
+
+	if (totalReadByteCount > 0)
+	{
+		//do something
 	}
 
 }

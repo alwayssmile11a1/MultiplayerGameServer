@@ -1,6 +1,7 @@
 #ifndef NETWORKMANAGER_H
 #define NETWORKMANAGER_H
 
+#include "SocketInclude.h"
 #include "MemoryBitStream.h"
 #include "SocketAddress.h"
 #include "UDPSocket.h"
@@ -33,6 +34,8 @@ private:
 
 	//UDPSocket of current client 
 	UDPSocketPtr mUDPSocket;
+
+	int mBytesSentThisFrame;
 
 	//Just a wrapper class for packets received from somewhere (server, other clients)
 	class ReceivedPacket

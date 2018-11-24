@@ -16,7 +16,7 @@ private:
 	NetworkServerState mState;
 
 
-	void SendWelcomePacket();
+	void SendWelcomePacket(InputMemoryBitStream& inputMemoryStream, const SocketAddress& fromAddress);
 	void SendPackets();
 
 public:

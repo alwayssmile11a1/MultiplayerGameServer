@@ -47,6 +47,7 @@ public:
 
 	std::string					ToString()			const;
 
+
 private:
 	friend class UDPSocket;
 	friend class TCPSocket;

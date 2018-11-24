@@ -4,7 +4,7 @@
 #include <string>
 #include <algorithm>
 #include "../math/Vector2.h"
-
+#include "SocketInclude.h"
 
 //inline uint32_t ConvertToFixed(float inNumber, float inMin, float inPrecision)
 //{

@@ -1,3 +1,5 @@
+//#ifndef LINKINGCONTEXT_h
+//#define LINKINGCONTEXT_h
 //
 //class DeliveryNotificationManager
 //{
@@ -70,3 +72,5 @@
 //	}
 //	return toRet;
 //}
+//
+//#endif
