@@ -3,6 +3,7 @@
 #include "HanabiMultiplayer.h"
 #include "HanabiMath.h"
 #include "HanabiConsole.h"
+#include "ClientProxy.h"
 
 class ServerNetworkManager : public NetworkManager
 {
@@ -14,9 +15,14 @@ private:
 	};
 
 	NetworkServerState mState;
+	int mNewPlayerId;
 
 
-	void SendWelcomePacket(InputMemoryBitStream& inputMemoryStream, const SocketAddress& fromAddress);
+	std::unordered_map<SocketAddress, ClientProxyPtr> mSocketAddressToClientMap;
+
+	void HandleHelloPacket(InputMemoryBitStream& inputMemoryStream, const SocketAddress& fromAddress);
+	void HandleGamePacket(InputMemoryBitStream& inputMemoryStream, const SocketAddress& fromAddress);
+
 	void SendPackets();
 
 public:

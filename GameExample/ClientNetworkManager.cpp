@@ -24,6 +24,7 @@ void ClientNetworkManager::Init(const std::string &destination, const std::strin
 	mState = NetworkClientState::SayingHello;
 }
 
+
 void ClientNetworkManager::OnSendPackets()
 {
 	switch (mState)
@@ -68,6 +69,10 @@ void ClientNetworkManager::SendGamePackets()
 	}
 }
 
+
+
+
+
 void ClientNetworkManager::OnPacketReceived(InputMemoryBitStream& inputMemoryStream, const SocketAddress& fromAddress)
 {
 	uint32_t packetType;
@@ -75,11 +80,28 @@ void ClientNetworkManager::OnPacketReceived(InputMemoryBitStream& inputMemoryStr
 	switch (packetType)
 	{
 	case kWelcomeCC:
-		Debug::Log("Thanks\n");
-		mState = Welcomed;
+		HandleWelcomePacket(inputMemoryStream, fromAddress);
 		break;
 	case kStateCC:
-		
+		HandleGamePacket(inputMemoryStream, fromAddress);
 		break;
 	}
+}
+
+void ClientNetworkManager::HandleWelcomePacket(InputMemoryBitStream& inputMemoryStream, const SocketAddress& fromAddress)
+{
+	//Read playerId
+	inputMemoryStream.Read(mPlayerId);
+	Debug::Log("MyPlayerId is: %d", mPlayerId);
+	//Read server world state
+
+
+
+	//Change state to welcome
+	mState = Welcomed;
+}
+
+void ClientNetworkManager::HandleGamePacket(InputMemoryBitStream& inputMemoryStream, const SocketAddress& fromAddress)
+{
+
 }

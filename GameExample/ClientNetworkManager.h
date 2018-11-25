@@ -22,7 +22,8 @@ private:
 		Welcomed
 	};
 
-
+	//Id of current client (received from server)
+	int mPlayerId;
 	std::string mPlayerName;
 	SocketAddress mDestinationAddress;
 	NetworkClientState mState;
@@ -30,7 +31,8 @@ private:
 
 	void SendHelloPacket();
 	void SendGamePackets();
-
+	void HandleWelcomePacket(InputMemoryBitStream& inputMemoryStream, const SocketAddress& fromAddress);
+	void HandleGamePacket(InputMemoryBitStream& inputMemoryStream, const SocketAddress& fromAddress);
 public:
 	ClientNetworkManager();
 	~ClientNetworkManager();
