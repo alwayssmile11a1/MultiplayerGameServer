@@ -63,8 +63,6 @@ private:
 	//A queue of packet received from somewhere (server, another client)
 	std::queue< ReceivedPacket, std::list< ReceivedPacket > > mReceivedPacketQueue;
 
-	std::unordered_map< int, NetworkGameObjectPtr > mNetworkIdToGameObjectMap;
-
 	//some helper functions 
 	void ReadIncomingPacketsIntoQueue();
 	void ProcessQueuedPackets();
@@ -74,6 +72,7 @@ private:
 	float mSimulatedLatency = 0;
 
 protected:
+	std::unordered_map< int, NetworkGameObjectPtr > networkIdToGameObjectMap;
 
 	//Port closed on other end, so do something (this function might be called on server side only)
 	virtual void OnConnectionReset(const SocketAddress& inFromAddress) {}

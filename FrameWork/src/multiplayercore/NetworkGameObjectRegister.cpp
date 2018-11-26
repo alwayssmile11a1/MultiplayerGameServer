@@ -1,5 +1,6 @@
 #include "NetworkGameObjectRegister.h"
 
+std::unordered_map< uint32_t, GameObjectCreationFunc > NetworkGameObjectRegister::mNameToGameObjectCreationFunctionMap;
 
 void NetworkGameObjectRegister::RegisterCreationFunction(uint32_t inFourCCName, GameObjectCreationFunc inCreationFunction)
 {

@@ -75,7 +75,11 @@ void ServerNetworkManager::HandleHelloPacket(InputMemoryBitStream& inputMemorySt
 		//send to client
 		SendPacket(welcomePacket, fromAddress);
 
+		//increase playerId
 		mNewPlayerId++;
+
+		//
+
 	}
 }
 

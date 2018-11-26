@@ -13,19 +13,20 @@ GameExample::~GameExample()
 //Create game here
 void GameExample::CreateGame()
 {
+	//init network manager
+	clientNetworkManager.Init("127.0.0.1:8080", "MyName");
+
 	//create batch to draw everything
 	batch.Create();
 
 	//play scene
-	playScene.Create();
-	playScene.SetBatch(&batch);
-	
+	PlayScene::Init();
+	PlayScene::Instance->Create();
+	PlayScene::Instance->SetBatch(&batch);
+	PlayScene::Instance->SetClientNetworkManager(&clientNetworkManager);
 
 	//Set scene to render
-	SetScene(&playScene);
-
-	clientNetworkManager.Init("127.0.0.1:8080", "MyName");
-
+	SetScene(PlayScene::Instance.get());
 
 }
 
@@ -42,7 +43,7 @@ void GameExample::UpdateGame(float dt)
 void GameExample::Release()
 {
 	Game::Release();
-	playScene.Release();
+	PlayScene::Instance->Release();
 	batch.Release();
 }
 

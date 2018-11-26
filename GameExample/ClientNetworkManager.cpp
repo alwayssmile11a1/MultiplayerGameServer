@@ -20,6 +20,9 @@ void ClientNetworkManager::Init(const std::string &destination, const std::strin
 	//Init in port 0
 	NetworkManager::InitUDPSocket(0);
 
+	//Init Register 
+	NetworkGameObjectRegister::RegisterCreationFunction(Cat::GetClassId(), Cat::CreateInstance);
+
 	//init done, now prepare to send hello packet
 	mState = NetworkClientState::SayingHello;
 }
@@ -93,9 +96,6 @@ void ClientNetworkManager::HandleWelcomePacket(InputMemoryBitStream& inputMemory
 	//Read playerId
 	inputMemoryStream.Read(mPlayerId);
 	Debug::Log("MyPlayerId is: %d", mPlayerId);
-	//Read server world state
-
-
 
 	//Change state to welcome
 	mState = Welcomed;
@@ -103,5 +103,42 @@ void ClientNetworkManager::HandleWelcomePacket(InputMemoryBitStream& inputMemory
 
 void ClientNetworkManager::HandleGamePacket(InputMemoryBitStream& inputMemoryStream, const SocketAddress& fromAddress)
 {
+	std::string a;
+	inputMemoryStream.Read(a);
 
+	if (a == "Create")
+	{
+		//read networkId
+		int networkId;
+		inputMemoryStream.Read(networkId);
+		//read classId
+		int classId;
+		inputMemoryStream.Read(classId);
+		//create new network game object from classId
+		NetworkGameObjectPtr gameObject = NetworkGameObjectRegister::CreateGameObject(classId);
+		gameObject->SetNetworkId(networkId);
+
+		//Add to map
+		AddToNetworkIdToGameObjectMap(gameObject);
+	}
+	else
+	{
+
+	}
+}
+
+void ClientNetworkManager::Update(float dt)
+{
+	for (auto pair : networkIdToGameObjectMap)
+	{
+		pair.second->Update(dt);
+	}
+}
+
+void ClientNetworkManager::Render(SpriteBatch* spriteBatch)
+{
+	for (auto pair : networkIdToGameObjectMap)
+	{
+		pair.second->Render(spriteBatch);
+	}
 }

@@ -3,26 +3,32 @@
 #include "HanabiScene.h"
 #include "HanabiCamera.h"
 #include "HanabiSprite.h"
-#include "Cat.h"
 #include "HanabiWorld.h"
+#include "ClientNetworkManager.h"
 
 class PlayScene : public Scene
 {
 private:
+	
+	World world;
 	SpriteBatch * batch;
 	Camera camera;
 
-	World world;
+	ClientNetworkManager networkManager;
 
-	Cat cat;
-
+	PlayScene();
 
 public:
-	PlayScene();
+
 	~PlayScene();
 
-	void SetBatch(SpriteBatch* batch);
+	static void Init();
+	static std::unique_ptr<PlayScene> Instance;
 
+	World* GetWorld() { return &world; };
+
+	void SetBatch(SpriteBatch* batch);
+	void SetClientNetworkManager(ClientNetworkManager* networkManager);
 	void Render();
 
 	void Create() override;

@@ -13,10 +13,10 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\Scenes">
+    <Filter Include="Header Files\PlayScene">
       <UniqueIdentifier>{af236c11-fdad-42bf-83f4-4446fad48a63}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Scenes">
+    <Filter Include="Source Files\PlayScene">
       <UniqueIdentifier>{47e856f4-a79f-466f-891d-dd1458c037cd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -31,7 +31,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PlayScene.cpp">
-      <Filter>Source Files\Scenes</Filter>
+      <Filter>Source Files\PlayScene</Filter>
     </ClCompile>
     <ClCompile Include="ClientNetworkManager.cpp">
       <Filter>Source Files</Filter>
@@ -45,7 +45,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PlayScene.h">
-      <Filter>Header Files\Scenes</Filter>
+      <Filter>Header Files\PlayScene</Filter>
     </ClInclude>
     <ClInclude Include="ClientNetworkManager.h">
       <Filter>Header Files</Filter>

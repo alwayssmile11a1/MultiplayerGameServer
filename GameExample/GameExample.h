@@ -12,8 +12,6 @@ class GameExample : public Game
 private:
 
 	ClientNetworkManager clientNetworkManager;
-
-	PlayScene playScene;
 	SpriteBatch batch;
 
 

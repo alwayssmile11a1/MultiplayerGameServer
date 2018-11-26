@@ -5,16 +5,15 @@
 #include "GameObject.h"
 #include "../multiplayercore/MemoryBitStream.h"
 #include "SocketInclude.h"
+#include "../drawable/SpriteBatch.h"
 
 #define CLASS_IDENTIFICATION( inId, inClass ) \
-virtual uint32_t GetClassId() const { return inId; } \
-static NetworkGameObject* CreateInstance() { return static_cast< NetworkGameObject* >( new inClass() ); } \
+static uint32_t GetClassId() { return inId; } \
+static NetworkGameObjectPtr CreateInstance() {  return NetworkGameObjectPtr( new inClass());  } \
 
 class NetworkGameObject: public GameObject
 {
 public:
-
-	CLASS_IDENTIFICATION('GOBJ', GameObject)
 
 	NetworkGameObject();
 	virtual ~NetworkGameObject();
@@ -24,6 +23,8 @@ public:
 
 	virtual uint32_t Write(OutputMemoryBitStream& inOutputStream, uint32_t inDirtyState) const = 0;
 	virtual void Read(InputMemoryBitStream& inInputStream) = 0;
+	virtual void Render(SpriteBatch *batch) = 0;
+	virtual void Update(float dt) = 0;
 
 private:
 

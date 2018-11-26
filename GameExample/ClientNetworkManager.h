@@ -3,6 +3,8 @@
 #include "HanabiMultiplayer.h"
 #include "HanabiMath.h"
 #include "HanabiConsole.h"
+#include "Cat.h"
+
 class ClientNetworkManager: public NetworkManager
 {
 private:
@@ -28,7 +30,6 @@ private:
 	SocketAddress mDestinationAddress;
 	NetworkClientState mState;
 
-
 	void SendHelloPacket();
 	void SendGamePackets();
 	void HandleWelcomePacket(InputMemoryBitStream& inputMemoryStream, const SocketAddress& fromAddress);
@@ -37,8 +38,11 @@ public:
 	ClientNetworkManager();
 	~ClientNetworkManager();
 
-
 	void Init(const std::string &destination, const std::string &playerName);
 	void OnPacketReceived(InputMemoryBitStream& inputMemoryStream, const SocketAddress& fromAddress) override;
 	void OnSendPackets() override;
+
+	void Update(float dt);
+	void Render(SpriteBatch* spriteBatch);
+
 };

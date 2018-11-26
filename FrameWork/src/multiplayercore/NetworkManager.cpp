@@ -128,8 +128,8 @@ void NetworkManager::ProcessQueuedPackets()
 
 NetworkGameObjectPtr NetworkManager::GetGameObject(int inNetworkId) const
 {
-	auto gameObjectIt = mNetworkIdToGameObjectMap.find(inNetworkId);
-	if (gameObjectIt != mNetworkIdToGameObjectMap.end())
+	auto gameObjectIt = networkIdToGameObjectMap.find(inNetworkId);
+	if (gameObjectIt != networkIdToGameObjectMap.end())
 	{
 		return gameObjectIt->second;
 	}
@@ -141,12 +141,12 @@ NetworkGameObjectPtr NetworkManager::GetGameObject(int inNetworkId) const
 
 void NetworkManager::AddToNetworkIdToGameObjectMap(NetworkGameObjectPtr inGameObject)
 {
-	mNetworkIdToGameObjectMap[inGameObject->GetNetworkId()] = inGameObject;
+	networkIdToGameObjectMap[inGameObject->GetNetworkId()] = inGameObject;
 }
 
 void NetworkManager::RemoveFromNetworkIdToGameObjectMap(NetworkGameObjectPtr inGameObject)
 {
-	mNetworkIdToGameObjectMap.erase(inGameObject->GetNetworkId());
+	networkIdToGameObjectMap.erase(inGameObject->GetNetworkId());
 }
 
 UDPSocketPtr NetworkManager::CreateUDPSocket(SocketAddressFamily inFamily)

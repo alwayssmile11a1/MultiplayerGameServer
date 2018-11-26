@@ -12,6 +12,7 @@ class NetworkGameObjectRegister
 {
 public:
 
+	//custom register
 	static void RegisterCreationFunction(uint32_t inFourCCName, GameObjectCreationFunc inCreationFunction);
 
 	static NetworkGameObjectPtr CreateGameObject(uint32_t inFourCCName);
