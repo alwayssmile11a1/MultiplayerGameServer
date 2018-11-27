@@ -3,7 +3,7 @@
 #include "HanabiMultiplayer.h"
 #include "HanabiMath.h"
 #include "HanabiConsole.h"
-#include "Cat.h"
+#include "Player.h"
 
 class ClientNetworkManager: public NetworkManager
 {
@@ -23,6 +23,7 @@ private:
 		SayingHello,
 		Welcomed
 	};
+
 
 	//Id of current client (received from server)
 	int mPlayerId;

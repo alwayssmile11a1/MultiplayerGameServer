@@ -27,13 +27,13 @@
     <ClCompile Include="GameExample.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Cat.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="PlayScene.cpp">
       <Filter>Source Files\PlayScene</Filter>
     </ClCompile>
     <ClCompile Include="ClientNetworkManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -41,13 +41,13 @@
     <ClInclude Include="GameExample.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Cat.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="PlayScene.h">
       <Filter>Header Files\PlayScene</Filter>
     </ClInclude>
     <ClInclude Include="ClientNetworkManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

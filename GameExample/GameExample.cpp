@@ -5,6 +5,7 @@ GameExample::GameExample(HINSTANCE hInstance, LPWSTR windowName, int screenWidth
 {
 
 }
+
 GameExample::~GameExample()
 {
 
@@ -20,13 +21,12 @@ void GameExample::CreateGame()
 	batch.Create();
 
 	//play scene
-	PlayScene::Init();
-	PlayScene::Instance->Create();
-	PlayScene::Instance->SetBatch(&batch);
-	PlayScene::Instance->SetClientNetworkManager(&clientNetworkManager);
+	playScene.Create();
+	playScene.SetBatch(&batch);
+	playScene.SetClientNetworkManager(&clientNetworkManager);
 
 	//Set scene to render
-	SetScene(PlayScene::Instance.get());
+	SetScene(&playScene);
 
 }
 
@@ -43,7 +43,7 @@ void GameExample::UpdateGame(float dt)
 void GameExample::Release()
 {
 	Game::Release();
-	PlayScene::Instance->Release();
+	playScene.Release();
 	batch.Release();
 }
 

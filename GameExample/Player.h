@@ -5,24 +5,25 @@
 #include "HanabiInput.h"
 #include "HanabiBody.h"
 #include "HanabiWorld.h"
-#include "PlayScene.h"
 
-class Cat : public NetworkGameObject
+class Player : public NetworkGameObject
 {
 private:
-	Texture texture;
-	Sprite sprite;
-	Body *mainBody;
+	int mPlayerId;
+	Texture mTexture;
+	Sprite mSprite;
+	Body *mMainBody;
 
 public:
-	CLASS_IDENTIFICATION('CAT',Cat);
+	CLASS_IDENTIFICATION('PL', Player);
 
-	Cat();
-	~Cat();
+	Player();
+	~Player();
+
+	void SetPlayerId(int playerId) { mPlayerId = playerId; };
 
 	void Render(SpriteBatch *batch) override;
 	void Update(float dt) override;
-
 	uint32_t Write(OutputMemoryBitStream & inOutputStream, uint32_t inDirtyState) const override;
 	void Read(InputMemoryBitStream & inInputStream) override;
 

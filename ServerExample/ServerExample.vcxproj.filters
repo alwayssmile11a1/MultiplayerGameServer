@@ -21,10 +21,10 @@
     <ClInclude Include="ServerNetworkManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ServerReplicationManager.h">
+    <ClInclude Include="ClientProxy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ClientProxy.h">
+    <ClInclude Include="Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -38,10 +38,10 @@
     <ClCompile Include="ServerNetworkManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ServerReplicationManager.cpp">
+    <ClCompile Include="ClientProxy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ClientProxy.cpp">
+    <ClCompile Include="Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

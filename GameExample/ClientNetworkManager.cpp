@@ -21,7 +21,7 @@ void ClientNetworkManager::Init(const std::string &destination, const std::strin
 	NetworkManager::InitUDPSocket(0);
 
 	//Init Register 
-	NetworkGameObjectRegister::RegisterCreationFunction(Cat::GetClassId(), Cat::CreateInstance);
+	NetworkGameObjectRegister::RegisterCreationFunction(Player::GetId(), Player::CreateInstance);
 
 	//init done, now prepare to send hello packet
 	mState = NetworkClientState::SayingHello;
@@ -51,7 +51,7 @@ void ClientNetworkManager::SendHelloPacket()
 	if (currentTime > mTimeOfLastHello + kTimeBetweenSendingHelloPacket)
 	{
 		OutputMemoryBitStream helloPacket;
-		helloPacket.Write(kHelloCC);
+		helloPacket.Write(PacketType::PT_Hello, 2); //only need 2 bits
 		helloPacket.Write(mPlayerName);
 
 		SendPacket(helloPacket, mDestinationAddress);
@@ -78,14 +78,16 @@ void ClientNetworkManager::SendGamePackets()
 
 void ClientNetworkManager::OnPacketReceived(InputMemoryBitStream& inputMemoryStream, const SocketAddress& fromAddress)
 {
-	uint32_t packetType;
-	inputMemoryStream.Read(packetType);
+	//Read packet type
+	PacketType packetType;
+	inputMemoryStream.Read(packetType, 2);
+
 	switch (packetType)
 	{
-	case kWelcomeCC:
+	case PacketType::PT_Welcome:
 		HandleWelcomePacket(inputMemoryStream, fromAddress);
 		break;
-	case kStateCC:
+	case PacketType::PT_State:
 		HandleGamePacket(inputMemoryStream, fromAddress);
 		break;
 	}
@@ -103,27 +105,29 @@ void ClientNetworkManager::HandleWelcomePacket(InputMemoryBitStream& inputMemory
 
 void ClientNetworkManager::HandleGamePacket(InputMemoryBitStream& inputMemoryStream, const SocketAddress& fromAddress)
 {
-	std::string a;
-	inputMemoryStream.Read(a);
+	//read networkId
+	int networkId;
+	inputMemoryStream.Read(networkId);
 
-	if (a == "Create")
+	//read action
+	ReplicationAction action;
+	inputMemoryStream.Read(action, 2);
+
+	switch (action)
 	{
-		//read networkId
-		int networkId;
-		inputMemoryStream.Read(networkId);
-		//read classId
-		int classId;
-		inputMemoryStream.Read(classId);
-		//create new network game object from classId
-		NetworkGameObjectPtr gameObject = NetworkGameObjectRegister::CreateGameObject(classId);
-		gameObject->SetNetworkId(networkId);
+		case ReplicationAction::RA_Create:
+		{
+			//read classId
+			uint32_t classId;
+			inputMemoryStream.Read(classId);
+			//create new network game object from classId
+			NetworkGameObjectPtr gameObject = NetworkGameObjectRegister::CreateGameObject(classId);
+			gameObject->SetNetworkId(networkId);
 
-		//Add to map
-		AddToNetworkIdToGameObjectMap(gameObject);
-	}
-	else
-	{
-
+			//Add to map
+			AddToNetworkIdToGameObjectMap(gameObject);
+			break;
+		}
 	}
 }
 

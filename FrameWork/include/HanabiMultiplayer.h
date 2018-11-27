@@ -6,5 +6,7 @@
 #include "../src/multiplayercore/NetworkManager.h"
 #include "../src/multiplayercore/NetworkGameObject.h"
 #include "../src/multiplayercore/NetworkGameObjectRegister.h"
+#include "../src/multiplayercore/ReplicationCommand.h"
+#include "../src/multiplayercore/ServerReplicationManager.h"
 
 #endif

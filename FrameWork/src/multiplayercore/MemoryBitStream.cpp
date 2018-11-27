@@ -36,6 +36,7 @@ void OutputMemoryBitStream::WriteBits( uint8_t inData,
 void OutputMemoryBitStream::WriteBits( const void* inData, uint32_t inBitCount )
 {
 	const char* srcByte = static_cast< const char* >( inData );
+	
 	//write all the bytes
 	while( inBitCount > 8 )
 	{

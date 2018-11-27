@@ -342,13 +342,7 @@
     <ClInclude Include="src\console\Debug.h">
       <Filter>Header Files\ConsoleLog</Filter>
     </ClInclude>
-    <ClInclude Include="src\multiplayercore\LinkingContext.h">
-      <Filter>Header Files\MultiplayerCore</Filter>
-    </ClInclude>
     <ClInclude Include="src\multiplayercore\NetworkGameObject.h">
-      <Filter>Header Files\MultiplayerCore</Filter>
-    </ClInclude>
-    <ClInclude Include="src\multiplayercore\ReplicationManager.h">
       <Filter>Header Files\MultiplayerCore</Filter>
     </ClInclude>
     <ClInclude Include="src\multiplayercore\DeliveryNotificationManager.h">
@@ -358,6 +352,12 @@
       <Filter>Header Files\MultiplayerCore</Filter>
     </ClInclude>
     <ClInclude Include="src\multiplayercore\InFlightPacket.h">
+      <Filter>Header Files\MultiplayerCore</Filter>
+    </ClInclude>
+    <ClInclude Include="src\multiplayercore\ReplicationCommand.h">
+      <Filter>Header Files\MultiplayerCore</Filter>
+    </ClInclude>
+    <ClInclude Include="src\multiplayercore\ServerReplicationManager.h">
       <Filter>Header Files\MultiplayerCore</Filter>
     </ClInclude>
   </ItemGroup>
@@ -501,19 +501,19 @@
     <ClCompile Include="src\console\Debug.cpp">
       <Filter>Source Files\ConsoleLog</Filter>
     </ClCompile>
-    <ClCompile Include="src\multiplayercore\LinkingContext.cpp">
-      <Filter>Source Files\MultiplayerCore</Filter>
-    </ClCompile>
     <ClCompile Include="src\multiplayercore\NetworkGameObject.cpp">
-      <Filter>Source Files\MultiplayerCore</Filter>
-    </ClCompile>
-    <ClCompile Include="src\multiplayercore\ReplicationManager.cpp">
       <Filter>Source Files\MultiplayerCore</Filter>
     </ClCompile>
     <ClCompile Include="src\multiplayercore\DeliveryNotificationManager.cpp">
       <Filter>Source Files\MultiplayerCore</Filter>
     </ClCompile>
     <ClCompile Include="src\multiplayercore\NetworkGameObjectRegister.cpp">
+      <Filter>Source Files\MultiplayerCore</Filter>
+    </ClCompile>
+    <ClCompile Include="src\multiplayercore\ReplicationCommand.cpp">
+      <Filter>Source Files\MultiplayerCore</Filter>
+    </ClCompile>
+    <ClCompile Include="src\multiplayercore\ServerReplicationManager.cpp">
       <Filter>Source Files\MultiplayerCore</Filter>
     </ClCompile>
   </ItemGroup>

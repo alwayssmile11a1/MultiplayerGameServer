@@ -10,6 +10,7 @@ private:
 	int mPlayerId;
 	std::string mPlayerName;
 
+	ServerReplicationManager  serverReplicationManager;
 
 public:
 
@@ -17,8 +18,8 @@ public:
 
 	int GetPlayerId() const { return mPlayerId; }
 	const std::string& GetPlayerName() const{ return mPlayerName; }
-
-
+	ServerReplicationManager& GetServerReplicationManager() { return serverReplicationManager; }
+	
 
 
 };

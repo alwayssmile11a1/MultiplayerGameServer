@@ -19,14 +19,22 @@ enum SocketAddressFamily
 	INET6 = AF_INET6
 };
 
+enum PacketType
+{
+	PT_Hello,
+	PT_Welcome,
+	PT_State,
+	PT_Input
+};
+
 //Hold a UDPSocket (for now) and manage sending and receiving packets
 class NetworkManager
 {
-protected:
-	static const uint32_t	kHelloCC = 'HELO';
-	static const uint32_t	kWelcomeCC = 'WLCM';
-	static const uint32_t	kStateCC = 'STAT';
-	static const uint32_t	kInputCC = 'INPT';
+//protected:
+//	static const uint32_t	kHelloCC = 'HELO';
+//	static const uint32_t	kWelcomeCC = 'WLCM';
+//	static const uint32_t	kStateCC = 'STAT';
+//	static const uint32_t	kInputCC = 'INPT';
 
 private:
 

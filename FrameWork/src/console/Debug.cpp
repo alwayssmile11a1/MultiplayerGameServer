@@ -47,7 +47,7 @@ void Debug::Log(const char* message, ...)
 {
 	va_list args;
 	va_start(args, message);
-	printf(message, args);
+	vprintf(message, args);
 	va_end(args);
 }
 

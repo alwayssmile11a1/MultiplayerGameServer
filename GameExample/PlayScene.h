@@ -9,23 +9,19 @@
 class PlayScene : public Scene
 {
 private:
-	
-	World world;
+	WorldPtr world;
 	SpriteBatch * batch;
 	Camera camera;
 
 	ClientNetworkManager networkManager;
 
-	PlayScene();
-
 public:
 
+	PlayScene();
 	~PlayScene();
 
-	static void Init();
-	static std::unique_ptr<PlayScene> Instance;
-
-	World* GetWorld() { return &world; };
+	//static void Init();
+	//static std::unique_ptr<PlayScene> Instance;
 
 	void SetBatch(SpriteBatch* batch);
 	void SetClientNetworkManager(ClientNetworkManager* networkManager);

@@ -33,11 +33,6 @@ World::World(float gravity)
 
 World::~World()
 {
-	
-}
-
-void World::Release()
-{
 	if (_QuadTree != NULL)
 	{
 		_QuadTree->Clear();
@@ -53,20 +48,39 @@ void World::Release()
 			(*obj) = NULL;
 		}
 	}
-
-	//for (std::vector<Body*>::iterator obj = _SDQBodies.begin(); obj != _SDQBodies.end(); ++obj)
-	//{
-	//	//just for sure
-	//	if (*obj != NULL)
-	//	{
-	//		delete *obj;
-	//		(*obj) = NULL;
-	//	}
-	//}
-
-
-
 }
+
+//void World::Release()
+//{
+//	if (_QuadTree != NULL)
+//	{
+//		_QuadTree->Clear();
+//		delete _QuadTree;
+//	}
+//
+//	for (std::vector<Body*>::iterator obj = _Bodies.begin(); obj != _Bodies.end(); ++obj)
+//	{
+//		//just for sure
+//		if (*obj != NULL)
+//		{
+//			delete *obj;
+//			(*obj) = NULL;
+//		}
+//	}
+//
+//	//for (std::vector<Body*>::iterator obj = _SDQBodies.begin(); obj != _SDQBodies.end(); ++obj)
+//	//{
+//	//	//just for sure
+//	//	if (*obj != NULL)
+//	//	{
+//	//		delete *obj;
+//	//		(*obj) = NULL;
+//	//	}
+//	//}
+//
+//
+//
+//}
 
 //World::World(const World &world)
 //{
@@ -620,4 +634,31 @@ void World::RenderBodiesDebug(SpriteBatch *batch)
 void World::SetSpaceDivisionQuadTree(SpaceDivisionQuadTree *sdQuadTree)
 {
 	this->_SDQuadTree = sdQuadTree;
+}
+
+
+std::unordered_map<int, WorldPtr> WorldCollector::mNameToWorldMap;
+WorldPtr WorldCollector::CreateWorld(int id)
+{
+	WorldPtr world = std::shared_ptr<World>(new World());
+	mNameToWorldMap[id] = world;
+	return world;
+}
+
+WorldPtr WorldCollector::GetWorld(int id)
+{
+	auto it = mNameToWorldMap.find(id);
+	if (it != mNameToWorldMap.end())
+	{
+		return it->second;
+	}
+	else
+	{
+		return nullptr;
+	}
+}
+
+void WorldCollector::RemoveWorld(int id)
+{
+	mNameToWorldMap.erase(id);
 }

@@ -7,24 +7,28 @@
 #include "SocketInclude.h"
 #include "../drawable/SpriteBatch.h"
 
-#define CLASS_IDENTIFICATION( inId, inClass ) \
-static uint32_t GetClassId() { return inId; } \
+//just a quick macro to define this class 
+#define CLASS_IDENTIFICATION( inId, inClass) \
+virtual uint32_t GetClassId() const { return inId; } \
+static uint32_t GetId() { return inId; } \
 static NetworkGameObjectPtr CreateInstance() {  return NetworkGameObjectPtr( new inClass());  } \
 
 class NetworkGameObject: public GameObject
 {
 public:
-
 	NetworkGameObject();
 	virtual ~NetworkGameObject();
 
 	int GetNetworkId() const;
 	void SetNetworkId(int inNetworkId);
 
+	virtual uint32_t GetAllStateMask() const { return 0; };
+	virtual uint32_t GetClassId() const = 0;
+	virtual void Render(SpriteBatch *batch) {};
+	virtual void Update(float dt) {};
+
 	virtual uint32_t Write(OutputMemoryBitStream& inOutputStream, uint32_t inDirtyState) const = 0;
 	virtual void Read(InputMemoryBitStream& inInputStream) = 0;
-	virtual void Render(SpriteBatch *batch) = 0;
-	virtual void Update(float dt) = 0;
 
 private:
 

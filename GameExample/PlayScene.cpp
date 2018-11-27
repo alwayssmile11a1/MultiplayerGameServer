@@ -8,12 +8,12 @@ PlayScene::~PlayScene()
 {
 }
 
-std::unique_ptr<PlayScene>PlayScene:: Instance;
-
-void PlayScene::Init()
-{
-	Instance.reset(new PlayScene());
-}
+//std::unique_ptr<PlayScene>PlayScene:: Instance;
+//
+//void PlayScene::Init()
+//{
+//	Instance.reset(new PlayScene());
+//}
 
 void PlayScene::SetBatch(SpriteBatch* batch)
 {
@@ -29,9 +29,12 @@ void PlayScene::SetClientNetworkManager(ClientNetworkManager* networkManager)
 //create stuff here
 void PlayScene::Create()
 {
+	//setup camera
 	camera.SetPosition(0, 0);
 
-	world.SetGravity(0);
+	//create world
+	world = WorldCollector::CreateWorld('PS');
+	world->SetGravity(0);
 
 }
 
@@ -39,7 +42,7 @@ void PlayScene::Create()
 void PlayScene::Update(float dt)
 {
 
-	world.Update(dt);
+	world->Update(dt);
 
 	//draw everything
 	Render();
@@ -60,5 +63,5 @@ void PlayScene::Render()
 //release scene here
 void PlayScene::Release()
 {
-	world.Release();
+	
 }

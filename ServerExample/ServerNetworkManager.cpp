@@ -2,8 +2,8 @@
 
 ServerNetworkManager::ServerNetworkManager()
 {
-	mState = NetworkServerState::Uninitialized;
 	mNewPlayerId = 1;
+	mNetworkId = 1;
 }
 
 ServerNetworkManager::~ServerNetworkManager()
@@ -13,40 +13,45 @@ ServerNetworkManager::~ServerNetworkManager()
 void ServerNetworkManager::Init(uint16_t inPort)
 {
 	NetworkManager::InitUDPSocket(inPort);
-	mState = NetworkServerState::GoodToGo;
+
+	//Register function
+	NetworkGameObjectRegister::RegisterCreationFunction(Player::GetId(), Player::CreateInstance);
 }
 
 void ServerNetworkManager::OnSendPackets()
 {
-	switch (mState)
+	for (const auto& pair : mSocketAddressToClientMap)
 	{
-	case Uninitialized:
+		//first write packet type
+		OutputMemoryBitStream packet;
+		packet.Write(PacketType::PT_State, 2);
 
-		break;
-	case GoodToGo:
-		SendPackets();
-		break;
+		//then write world state
+		pair.second->GetServerReplicationManager().Write(packet);
+
+		//Send ..
+		SendPacket(packet, pair.first);
 	}
 }
 
-
-void ServerNetworkManager::SendPackets()
-{
-}
 
 void ServerNetworkManager::OnPacketReceived(InputMemoryBitStream& inputMemoryStream, const SocketAddress& fromAddress)
 {
-	uint32_t packetType;
-	inputMemoryStream.Read(packetType);
-
+	uint8_t packetType;
+	inputMemoryStream.Read(packetType, 2);
 	//this is a hello packet, means a new player
-	if (packetType == kHelloCC)
+	switch (packetType)
 	{
-		HandleHelloPacket(inputMemoryStream, fromAddress);
-	}
-	else
-	{
-		HandleGamePacket(inputMemoryStream, fromAddress);
+		case PacketType::PT_Hello:
+		{
+			HandleHelloPacket(inputMemoryStream, fromAddress);
+			break;
+		}
+		case PacketType::PT_State:
+		{
+			HandleGamePacket(inputMemoryStream, fromAddress);
+			break;
+		}
 	}
 
 }
@@ -62,28 +67,92 @@ void ServerNetworkManager::HandleHelloPacket(InputMemoryBitStream& inputMemorySt
 		//read the name
 		std::string playerName;
 		inputMemoryStream.Read(playerName);
-		Debug::Log("Received from %s\n", playerName);
+		Debug::Log("Received from %s\n", playerName.c_str());
 
 		//create a new client proxy to store necessary info about new client
 		ClientProxyPtr newClientProxy = std::make_shared< ClientProxy >(mNewPlayerId, playerName);
 		mSocketAddressToClientMap[fromAddress] = newClientProxy;
+		mPlayerIdToClientMap[mNewPlayerId] = newClientProxy;
 
-		//write welcome packet
-		OutputMemoryBitStream welcomePacket;
-		welcomePacket.Write(kWelcomeCC);
-		welcomePacket.Write(mNewPlayerId);
-		//send to client
-		SendPacket(welcomePacket, fromAddress);
+		//Tell this player to create current world state
+		for (const auto& pair : networkIdToGameObjectMap)
+		{
+			newClientProxy->GetServerReplicationManager().ReplicateCreate(pair.second, pair.second->GetAllStateMask());
+		}
+
+		//create new player
+		CreateNewPlayer(mNewPlayerId);
 
 		//increase playerId
 		mNewPlayerId++;
 
-		//
-
+		//And finally write welcome packet
+		OutputMemoryBitStream welcomePacket;
+		welcomePacket.Write(PacketType::PT_Welcome, 2);
+		welcomePacket.Write(mNewPlayerId);
+		//send to client
+		SendPacket(welcomePacket, fromAddress);
 	}
+}
+
+void ServerNetworkManager::CreateNewPlayer(int playerId)
+{
+	//Create player
+	NetworkGameObjectPtr gameObject = NetworkGameObjectRegister::CreateGameObject('PL');
+	Player* player = (Player*)gameObject.get();
+	player->SetPlayerId(playerId);
+	//Register this player
+	RegisterGameObject(gameObject);
 }
 
 void ServerNetworkManager::HandleGamePacket(InputMemoryBitStream& inputMemoryStream, const SocketAddress& fromAddress)
 {
 
+}
+
+void ServerNetworkManager::OnConnectionReset(const SocketAddress& inFromAddress)
+{
+	
+}
+
+void ServerNetworkManager::Update(float dt)
+{
+	for (auto pair : networkIdToGameObjectMap)
+	{
+		pair.second->Update(dt);
+	}
+}
+
+int ServerNetworkManager::GetNewNetworkId()
+{
+	return mNetworkId++;
+}
+
+void ServerNetworkManager::RegisterGameObject(NetworkGameObjectPtr inGameObject)
+{
+	//assign network id
+	int newNetworkId = GetNewNetworkId();
+	inGameObject->SetNetworkId(newNetworkId);
+
+	//add mapping from network id to game object
+	AddToNetworkIdToGameObjectMap(inGameObject);
+
+	//tell all players this is new...
+	for (const auto& pair : mPlayerIdToClientMap)
+	{
+		pair.second->GetServerReplicationManager().ReplicateCreate(inGameObject, inGameObject->GetAllStateMask());
+	}
+}
+
+
+void ServerNetworkManager::UnregisterGameObject(NetworkGameObjectPtr inGameObject)
+{
+	int networkId = inGameObject->GetNetworkId();
+	networkIdToGameObjectMap.erase(networkId);
+
+	//tell all players to remove this
+	for (const auto& pair : mPlayerIdToClientMap)
+	{
+		pair.second->GetServerReplicationManager().ReplicateDestroy(inGameObject);
+	}
 }

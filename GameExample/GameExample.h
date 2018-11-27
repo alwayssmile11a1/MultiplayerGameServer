@@ -10,7 +10,7 @@
 class GameExample : public Game
 {
 private:
-
+	PlayScene playScene;
 	ClientNetworkManager clientNetworkManager;
 	SpriteBatch batch;
 

@@ -10,6 +10,7 @@
 #include "BodyDef.h"
 #include "..\collisionquadtree\QuadTree.h"
 #include "../spacedivisionquadtree/SpaceDivisionQuadTree.h"
+#include <unordered_map>
 
 #define USECOLLISIONINFO 0 //using collision info is more precise for collision callback, but decreasing performance
 
@@ -20,8 +21,8 @@ class World: public GameObject
 private:
 	
 	float _Gravity;  
-	std::vector<Body*> _Bodies; 	//list of all bodies. Using pointer like this may be better, I think. 
-									//Note that we do not allocate new memory to this list, just hold the references to our objects
+	std::vector<Body*> _Bodies; 	
+									
 
 	WorldContactListener* _Listener;  //listen to the collision
 	
@@ -78,7 +79,21 @@ public:
 	//Render all bodies by squares
 	void RenderBodiesDebug(SpriteBatch *batch);
 
-	void Release();
+	//void Release();
+
+};
+
+typedef std::shared_ptr<World> WorldPtr;
+
+//just a holder for worlds, not automatically release anything
+class WorldCollector
+{
+private:
+	static std::unordered_map<int, WorldPtr> mNameToWorldMap;
+public:
+	static WorldPtr CreateWorld(int id);
+	static WorldPtr GetWorld(int id);
+	static void RemoveWorld(int id);
 
 };
 
