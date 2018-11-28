@@ -23,7 +23,7 @@ void PlayScene::SetBatch(SpriteBatch* batch)
 
 void PlayScene::SetClientNetworkManager(ClientNetworkManager* networkManager)
 {
-	networkManager = networkManager;
+	this->networkManager = networkManager;
 }
 
 //create stuff here
@@ -35,6 +35,7 @@ void PlayScene::Create()
 	//create world
 	world = WorldCollector::CreateWorld('PS');
 	world->SetGravity(0);
+	world->SetContactListener(&contactListener);
 
 }
 
@@ -43,6 +44,8 @@ void PlayScene::Update(float dt)
 {
 
 	world->Update(dt);
+
+	networkManager->Update(dt);
 
 	//draw everything
 	Render();
@@ -53,9 +56,10 @@ void PlayScene::Render()
 	//draw every thing between batch begin and end
 	batch->Begin();
 	
+	networkManager->Render(batch);
 
 	//Render the shape of bodies
-	//world.RenderBodiesDebug(batch);
+	world->RenderBodiesDebug(batch);
 
 	batch->End();
 }

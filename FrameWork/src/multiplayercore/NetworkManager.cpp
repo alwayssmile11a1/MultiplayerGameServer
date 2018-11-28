@@ -126,28 +126,28 @@ void NetworkManager::ProcessQueuedPackets()
 	}
 }
 
-NetworkGameObjectPtr NetworkManager::GetGameObject(int inNetworkId) const
-{
-	auto gameObjectIt = networkIdToGameObjectMap.find(inNetworkId);
-	if (gameObjectIt != networkIdToGameObjectMap.end())
-	{
-		return gameObjectIt->second;
-	}
-	else
-	{
-		return nullptr;
-	}
-}
-
-void NetworkManager::AddToNetworkIdToGameObjectMap(NetworkGameObjectPtr inGameObject)
-{
-	networkIdToGameObjectMap[inGameObject->GetNetworkId()] = inGameObject;
-}
-
-void NetworkManager::RemoveFromNetworkIdToGameObjectMap(NetworkGameObjectPtr inGameObject)
-{
-	networkIdToGameObjectMap.erase(inGameObject->GetNetworkId());
-}
+//NetworkGameObjectPtr NetworkManager::GetGameObject(int inNetworkId) const
+//{
+//	auto gameObjectIt = networkIdToGameObjectMap.find(inNetworkId);
+//	if (gameObjectIt != networkIdToGameObjectMap.end())
+//	{
+//		return gameObjectIt->second;
+//	}
+//	else
+//	{
+//		return nullptr;
+//	}
+//}
+//
+//void NetworkManager::AddToNetworkIdToGameObjectMap(NetworkGameObjectPtr inGameObject)
+//{
+//	networkIdToGameObjectMap[inGameObject->GetNetworkId()] = inGameObject;
+//}
+//
+//void NetworkManager::RemoveFromNetworkIdToGameObjectMap(NetworkGameObjectPtr inGameObject)
+//{
+//	networkIdToGameObjectMap.erase(inGameObject->GetNetworkId());
+//}
 
 UDPSocketPtr NetworkManager::CreateUDPSocket(SocketAddressFamily inFamily)
 {

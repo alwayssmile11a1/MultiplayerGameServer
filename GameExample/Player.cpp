@@ -31,46 +31,51 @@ void Player::Render(SpriteBatch *batch)
 
 void Player::Update(float dt)
 {
-	if (Input::GetKey(DIK_RIGHT))
+	if (GetNetworkId() == Proxy::playerObjectId)
 	{
-		mMainBody->SetVelocity(5, mMainBody->GetVelocity().y);
-	}
+		if (Input::GetKey(DIK_RIGHT))
+		{
+			mMainBody->SetVelocity(5, mMainBody->GetVelocity().y);
+		}
 
-	if (Input::GetKey(DIK_LEFT))
-	{
-		mMainBody->SetVelocity(-5, mMainBody->GetVelocity().y);
-	}
+		if (Input::GetKey(DIK_LEFT))
+		{
+			mMainBody->SetVelocity(-5, mMainBody->GetVelocity().y);
+		}
 
-	if (Input::GetKey(DIK_UP))
-	{
-		mMainBody->SetVelocity(mMainBody->GetVelocity().x, 5);
-	}
+		if (Input::GetKey(DIK_UP))
+		{
+			mMainBody->SetVelocity(mMainBody->GetVelocity().x, 5);
+		}
 
-	if (Input::GetKey(DIK_DOWN))
-	{
-		mMainBody->SetVelocity(mMainBody->GetVelocity().x, -5);
-	}
+		if (Input::GetKey(DIK_DOWN))
+		{
+			mMainBody->SetVelocity(mMainBody->GetVelocity().x, -5);
+		}
 
-	if (Input::GetKeyUp(DIK_UP) || Input::GetKeyUp(DIK_DOWN))
-	{
-		mMainBody->SetVelocity(mMainBody->GetVelocity().x, 0);
-	}
+		if (Input::GetKeyUp(DIK_UP) || Input::GetKeyUp(DIK_DOWN))
+		{
+			mMainBody->SetVelocity(mMainBody->GetVelocity().x, 0);
+		}
 
-	if (Input::GetKeyUp(DIK_LEFT) || Input::GetKeyUp(DIK_RIGHT))
-	{
-		mMainBody->SetVelocity(0, mMainBody->GetVelocity().y);
+		if (Input::GetKeyUp(DIK_LEFT) || Input::GetKeyUp(DIK_RIGHT))
+		{
+			mMainBody->SetVelocity(0, mMainBody->GetVelocity().y);
+		}
 	}
-
 	//update sprite position
 	mSprite.SetPosition(mMainBody->GetPosition().x, mMainBody->GetPosition().y);
 }
 
-uint32_t Player::Write(OutputMemoryBitStream & inOutputStream, uint32_t inDirtyState) const
+void Player::OnNetworkRead(InputMemoryBitStream & inInputStream)
 {
-	return uint32_t();
+	Vector2 position;
+	inInputStream.Read(position);
+
+	mMainBody->SetPosition(position.x, position.y);
 }
 
-void Player::Read(InputMemoryBitStream & inInputStream)
+void Player::OnNetworkDestroy()
 {
 
 }

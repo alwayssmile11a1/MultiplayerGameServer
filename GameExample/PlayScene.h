@@ -5,6 +5,7 @@
 #include "HanabiSprite.h"
 #include "HanabiWorld.h"
 #include "ClientNetworkManager.h"
+#include "WorldCollisionListener.h"
 
 class PlayScene : public Scene
 {
@@ -12,8 +13,10 @@ private:
 	WorldPtr world;
 	SpriteBatch * batch;
 	Camera camera;
+	WorldCollisionListener contactListener;
 
-	ClientNetworkManager networkManager;
+	ClientNetworkManager* networkManager;
+
 
 public:
 

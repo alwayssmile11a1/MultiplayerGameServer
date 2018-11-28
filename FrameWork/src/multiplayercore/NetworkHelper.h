@@ -1,5 +1,5 @@
-#ifndef SOCKETUTIL_H
-#define SOCKETUTIL_H
+#ifndef NETWORKHELPER_H
+#define NETWORKHELPER_H
 
 #include "SocketInclude.h"
 #include <vector>

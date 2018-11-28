@@ -19,8 +19,7 @@ public:
 
 private:
 
-	static std::unordered_map< uint32_t, GameObjectCreationFunc > mNameToGameObjectCreationFunctionMap;
-
+	static std::unordered_map< uint32_t, GameObjectCreationFunc > mNameToGameObjectCreationFunctionMap; 
 };
 
 #endif

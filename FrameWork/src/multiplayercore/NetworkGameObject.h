@@ -26,9 +26,10 @@ public:
 	virtual uint32_t GetClassId() const = 0;
 	virtual void Render(SpriteBatch *batch) {};
 	virtual void Update(float dt) {};
-
-	virtual uint32_t Write(OutputMemoryBitStream& inOutputStream, uint32_t inDirtyState) const = 0;
-	virtual void Read(InputMemoryBitStream& inInputStream) = 0;
+	
+	virtual uint32_t OnNetworkWrite(OutputMemoryBitStream& inOutputStream, uint32_t inDirtyState) const { return uint32_t(); };
+	virtual void OnNetworkRead(InputMemoryBitStream& inInputStream) {};
+	virtual void OnNetworkDestroy() {};
 
 private:
 

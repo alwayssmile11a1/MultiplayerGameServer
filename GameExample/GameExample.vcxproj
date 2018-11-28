@@ -121,8 +121,12 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ClientNetworkManager.cpp" />
     <ClCompile Include="PlayScene.cpp" />
+    <ClCompile Include="Proxy.cpp" />
+    <ClCompile Include="WorldCollisionListener.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Proxy.h" />
+    <ClInclude Include="WorldCollisionListener.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="GameExample.h" />
     <ClInclude Include="ClientNetworkManager.h" />

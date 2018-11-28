@@ -26,7 +26,7 @@ void ServerReplicationManager::Write(OutputMemoryBitStream& inOutputStream)
 	for (auto& pair : mNetworkGameObjectToReplicationCommand)
 	{
 		ReplicationCommand& replicationCommand = pair.second;
-		if (replicationCommand.HasDirtyState())
+		if (replicationCommand.HasDirtyState() || replicationCommand.GetAction() == ReplicationAction::RA_Create)
 		{
 			int networkId = pair.first->GetNetworkId();
 
@@ -82,12 +82,12 @@ void ServerReplicationManager::Write(OutputMemoryBitStream& inOutputStream)
 uint32_t ServerReplicationManager::WriteCreateAction(OutputMemoryBitStream& inOutputStream, NetworkGameObjectPtr gameObject, uint32_t inDirtyState)
 {
 	inOutputStream.Write(gameObject->GetClassId());
-	return gameObject->Write(inOutputStream, inDirtyState);
+	return gameObject->OnNetworkWrite(inOutputStream, inDirtyState);
 }
 
 uint32_t ServerReplicationManager::WriteUpdateAction(OutputMemoryBitStream& inOutputStream, NetworkGameObjectPtr gameObject, uint32_t inDirtyState)
 {
-	uint32_t writtenState = gameObject->Write(inOutputStream, inDirtyState);
+	uint32_t writtenState = gameObject->OnNetworkWrite(inOutputStream, inDirtyState);
 
 	return writtenState;
 }

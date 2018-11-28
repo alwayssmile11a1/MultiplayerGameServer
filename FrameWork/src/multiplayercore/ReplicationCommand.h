@@ -3,7 +3,7 @@
 
 #include<stdint.h>
 //Some basic command to replicate world
-enum ReplicationAction
+enum ReplicationAction : uint8_t
 {
 	RA_Create,
 	RA_Update,

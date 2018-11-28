@@ -96,44 +96,24 @@ void ClientNetworkManager::OnPacketReceived(InputMemoryBitStream& inputMemoryStr
 void ClientNetworkManager::HandleWelcomePacket(InputMemoryBitStream& inputMemoryStream, const SocketAddress& fromAddress)
 {
 	//Read playerId
-	inputMemoryStream.Read(mPlayerId);
-	Debug::Log("MyPlayerId is: %d", mPlayerId);
-
+	inputMemoryStream.Read(Proxy::playerId);
+	Debug::Log("MyPlayerId is: %d \n", Proxy::playerId);
+	inputMemoryStream.Read(Proxy::playerObjectId);
+	Debug::Log("MyPlayerObjectId is: %d \n", Proxy::playerObjectId);
 	//Change state to welcome
 	mState = Welcomed;
 }
 
 void ClientNetworkManager::HandleGamePacket(InputMemoryBitStream& inputMemoryStream, const SocketAddress& fromAddress)
 {
-	//read networkId
-	int networkId;
-	inputMemoryStream.Read(networkId);
-
-	//read action
-	ReplicationAction action;
-	inputMemoryStream.Read(action, 2);
-
-	switch (action)
-	{
-		case ReplicationAction::RA_Create:
-		{
-			//read classId
-			uint32_t classId;
-			inputMemoryStream.Read(classId);
-			//create new network game object from classId
-			NetworkGameObjectPtr gameObject = NetworkGameObjectRegister::CreateGameObject(classId);
-			gameObject->SetNetworkId(networkId);
-
-			//Add to map
-			AddToNetworkIdToGameObjectMap(gameObject);
-			break;
-		}
-	}
+	clientReplicationManager.Read(inputMemoryStream);
+	
 }
+
 
 void ClientNetworkManager::Update(float dt)
 {
-	for (auto pair : networkIdToGameObjectMap)
+	for (const auto& pair : NetworkLinkingContext::GetNetworkIdToGameObjectMap())
 	{
 		pair.second->Update(dt);
 	}
@@ -141,7 +121,7 @@ void ClientNetworkManager::Update(float dt)
 
 void ClientNetworkManager::Render(SpriteBatch* spriteBatch)
 {
-	for (auto pair : networkIdToGameObjectMap)
+	for (const auto& pair : NetworkLinkingContext::GetNetworkIdToGameObjectMap())
 	{
 		pair.second->Render(spriteBatch);
 	}

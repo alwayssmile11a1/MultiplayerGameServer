@@ -5,11 +5,11 @@
 #include "HanabiInput.h"
 #include "HanabiBody.h"
 #include "HanabiWorld.h"
-
+#include "Proxy.h"
 class Player : public NetworkGameObject
 {
 private:
-	int mPlayerId;
+	//int mPlayerId;
 	Texture mTexture;
 	Sprite mSprite;
 	Body *mMainBody;
@@ -20,11 +20,13 @@ public:
 	Player();
 	~Player();
 
-	void SetPlayerId(int playerId) { mPlayerId = playerId; };
+	//void SetPlayerId(int playerId) { mPlayerId = playerId; };
+	//int GetPlayerId() {return mPlayerId;};
 
 	void Render(SpriteBatch *batch) override;
 	void Update(float dt) override;
-	uint32_t Write(OutputMemoryBitStream & inOutputStream, uint32_t inDirtyState) const override;
-	void Read(InputMemoryBitStream & inInputStream) override;
+
+	void OnNetworkRead(InputMemoryBitStream & inInputStream) override;
+	void OnNetworkDestroy() override;
 
 };

@@ -19,7 +19,7 @@ enum SocketAddressFamily
 	INET6 = AF_INET6
 };
 
-enum PacketType
+enum PacketType : uint8_t // Use uint8_t to prevent the problem between Read and Write BitStream
 {
 	PT_Hello,
 	PT_Welcome,
@@ -80,7 +80,7 @@ private:
 	float mSimulatedLatency = 0;
 
 protected:
-	std::unordered_map< int, NetworkGameObjectPtr > networkIdToGameObjectMap;
+	/*std::unordered_map< int, NetworkGameObjectPtr > networkIdToGameObjectMap;*/
 
 	//Port closed on other end, so do something (this function might be called on server side only)
 	virtual void OnConnectionReset(const SocketAddress& inFromAddress) {}
@@ -113,9 +113,9 @@ public:
 	//For debug purpose only
 	void SetSimulatedLatency(float inLatency) { mSimulatedLatency = inLatency; }
 
-	NetworkGameObjectPtr	GetGameObject(int inNetworkId) const;
-	void	AddToNetworkIdToGameObjectMap(NetworkGameObjectPtr inGameObject);
-	void	RemoveFromNetworkIdToGameObjectMap(NetworkGameObjectPtr inGameObject);
+	//NetworkGameObjectPtr	GetGameObject(int inNetworkId) const;
+	//void	AddToNetworkIdToGameObjectMap(NetworkGameObjectPtr inGameObject);
+	//void	RemoveFromNetworkIdToGameObjectMap(NetworkGameObjectPtr inGameObject);
 
 	//helper function
 	static UDPSocketPtr	CreateUDPSocket(SocketAddressFamily inFamily);

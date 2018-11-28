@@ -9,16 +9,17 @@ private:
 
 	int mPlayerId;
 	std::string mPlayerName;
-
-	ServerReplicationManager  serverReplicationManager;
+	NetworkGameObjectPtr mClientObject;
+	ServerReplicationManager  mServerReplicationManager;
 
 public:
 
 	ClientProxy(int mPlayerId, const std::string& mPlayerName);
-
-	int GetPlayerId() const { return mPlayerId; }
-	const std::string& GetPlayerName() const{ return mPlayerName; }
-	ServerReplicationManager& GetServerReplicationManager() { return serverReplicationManager; }
+	void SetClientObject(NetworkGameObjectPtr inGameObject) { mClientObject = inGameObject; };
+	NetworkGameObjectPtr GetClientObject() { return mClientObject; };
+	int GetPlayerId() const { return mPlayerId; };
+	const std::string& GetPlayerName() const { return mPlayerName; };
+	ServerReplicationManager& GetServerReplicationManager() { return mServerReplicationManager; };
 	
 
 

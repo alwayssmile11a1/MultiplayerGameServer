@@ -4,6 +4,7 @@ ServerNetworkManager::ServerNetworkManager()
 {
 	mNewPlayerId = 1;
 	mNetworkId = 1;
+	mNewSpawnPosition.Set(-350, 0);
 }
 
 ServerNetworkManager::~ServerNetworkManager()
@@ -37,7 +38,7 @@ void ServerNetworkManager::OnSendPackets()
 
 void ServerNetworkManager::OnPacketReceived(InputMemoryBitStream& inputMemoryStream, const SocketAddress& fromAddress)
 {
-	uint8_t packetType;
+	PacketType packetType;
 	inputMemoryStream.Read(packetType, 2);
 	//this is a hello packet, means a new player
 	switch (packetType)
@@ -74,33 +75,46 @@ void ServerNetworkManager::HandleHelloPacket(InputMemoryBitStream& inputMemorySt
 		mSocketAddressToClientMap[fromAddress] = newClientProxy;
 		mPlayerIdToClientMap[mNewPlayerId] = newClientProxy;
 
-		//Tell this player to create current world state
-		for (const auto& pair : networkIdToGameObjectMap)
+		//Tell this client to create current world state
+		for (const auto& pair : NetworkLinkingContext::GetNetworkIdToGameObjectMap())
 		{
 			newClientProxy->GetServerReplicationManager().ReplicateCreate(pair.second, pair.second->GetAllStateMask());
 		}
 
 		//create new player
-		CreateNewPlayer(mNewPlayerId);
-
-		//increase playerId
-		mNewPlayerId++;
+		CreateNewPlayer(newClientProxy);
 
 		//And finally write welcome packet
 		OutputMemoryBitStream welcomePacket;
 		welcomePacket.Write(PacketType::PT_Welcome, 2);
+		//write player id
 		welcomePacket.Write(mNewPlayerId);
+		//write player object id
+		welcomePacket.Write(newClientProxy->GetClientObject()->GetNetworkId());
 		//send to client
 		SendPacket(welcomePacket, fromAddress);
+
+		//increase playerId
+		mNewPlayerId++;
 	}
 }
 
-void ServerNetworkManager::CreateNewPlayer(int playerId)
+const Vector2& ServerNetworkManager::GetNewSpawnPosition()
+{
+	mNewSpawnPosition.Set(mNewSpawnPosition.x + 150, mNewSpawnPosition.y);
+	return mNewSpawnPosition;
+}
+
+void ServerNetworkManager::CreateNewPlayer(ClientProxyPtr clientProxy)
 {
 	//Create player
 	NetworkGameObjectPtr gameObject = NetworkGameObjectRegister::CreateGameObject('PL');
 	Player* player = (Player*)gameObject.get();
-	player->SetPlayerId(playerId);
+	player->SetPlayerId(clientProxy->GetPlayerId());
+	player->SetPosition(GetNewSpawnPosition());
+
+	clientProxy->SetClientObject(gameObject);
+
 	//Register this player
 	RegisterGameObject(gameObject);
 }
@@ -112,12 +126,28 @@ void ServerNetworkManager::HandleGamePacket(InputMemoryBitStream& inputMemoryStr
 
 void ServerNetworkManager::OnConnectionReset(const SocketAddress& inFromAddress)
 {
-	
+	//Remove this client immediately for now
+	auto it = mSocketAddressToClientMap.find(inFromAddress);
+	if (it != mSocketAddressToClientMap.end())
+	{
+		NetworkGameObjectPtr gameObject = it->second->GetClientObject();
+
+		//do something to remove player
+	  	Player* player = (Player*)(gameObject.get());
+
+		//remove from map
+		mSocketAddressToClientMap.erase(inFromAddress);
+		mPlayerIdToClientMap.erase(player->GetPlayerId());
+
+		//unregister
+		UnregisterGameObject(gameObject);
+	}
+
 }
 
 void ServerNetworkManager::Update(float dt)
 {
-	for (auto pair : networkIdToGameObjectMap)
+	for (const auto& pair : NetworkLinkingContext::GetNetworkIdToGameObjectMap())
 	{
 		pair.second->Update(dt);
 	}
@@ -128,6 +158,7 @@ int ServerNetworkManager::GetNewNetworkId()
 	return mNetworkId++;
 }
 
+//these two functions should be put somewhere inside Framework rather than here
 void ServerNetworkManager::RegisterGameObject(NetworkGameObjectPtr inGameObject)
 {
 	//assign network id
@@ -135,7 +166,7 @@ void ServerNetworkManager::RegisterGameObject(NetworkGameObjectPtr inGameObject)
 	inGameObject->SetNetworkId(newNetworkId);
 
 	//add mapping from network id to game object
-	AddToNetworkIdToGameObjectMap(inGameObject);
+	NetworkLinkingContext::AddToNetworkIdToGameObjectMap(inGameObject);
 
 	//tell all players this is new...
 	for (const auto& pair : mPlayerIdToClientMap)
@@ -147,8 +178,8 @@ void ServerNetworkManager::RegisterGameObject(NetworkGameObjectPtr inGameObject)
 
 void ServerNetworkManager::UnregisterGameObject(NetworkGameObjectPtr inGameObject)
 {
-	int networkId = inGameObject->GetNetworkId();
-	networkIdToGameObjectMap.erase(networkId);
+	//int networkId = inGameObject->GetNetworkId();
+	NetworkLinkingContext::RemoveFromNetworkIdToGameObjectMap(inGameObject);
 
 	//tell all players to remove this
 	for (const auto& pair : mPlayerIdToClientMap)

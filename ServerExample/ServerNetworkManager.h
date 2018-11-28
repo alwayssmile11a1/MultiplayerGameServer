@@ -11,7 +11,7 @@ class ServerNetworkManager : public NetworkManager
 private:
 	int mNewPlayerId;
 	int mNetworkId;
-
+	Vector2 mNewSpawnPosition;
 
 	std::unordered_map<SocketAddress, ClientProxyPtr> mSocketAddressToClientMap;
 	std::unordered_map<int, ClientProxyPtr> mPlayerIdToClientMap;
@@ -29,8 +29,8 @@ private:
 	void RegisterGameObject(NetworkGameObjectPtr inGameObject);
 	void UnregisterGameObject(NetworkGameObjectPtr inGameObject);
 
-
-	void CreateNewPlayer(int playerId);
+	const Vector2& GetNewSpawnPosition();
+	void CreateNewPlayer(ClientProxyPtr clientProxy);
 
 
 public:

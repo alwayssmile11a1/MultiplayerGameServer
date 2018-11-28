@@ -10,21 +10,20 @@ class Player : public NetworkGameObject
 {
 private:
 	int mPlayerId;
-	Texture mTexture;
-	Sprite mSprite;
 	Body *mMainBody;
+	Vector2 mPosition;
 
 public:
 	CLASS_IDENTIFICATION('PL', Player);
 
 	Player();
 	~Player();
-
+	
+	void SetPosition(const Vector2 &inPosition) { mPosition = inPosition; };
 	void SetPlayerId(int playerId) { mPlayerId = playerId; };
-
-	uint32_t GetAllStateMask() const override { return 0; };
+	int GetPlayerId() {return mPlayerId;};
+	uint32_t GetAllStateMask() const override { return 1; };
 	void Update(float dt) override;
-	uint32_t Write(OutputMemoryBitStream & inOutputStream, uint32_t inDirtyState) const override;
-	void Read(InputMemoryBitStream & inInputStream) override;
+	uint32_t OnNetworkWrite(OutputMemoryBitStream & inOutputStream, uint32_t inDirtyState) const override;
 
 };

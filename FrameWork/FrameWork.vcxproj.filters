@@ -357,7 +357,13 @@
     <ClInclude Include="src\multiplayercore\ReplicationCommand.h">
       <Filter>Header Files\MultiplayerCore</Filter>
     </ClInclude>
+    <ClInclude Include="src\multiplayercore\NetworkLinkingContext.h">
+      <Filter>Header Files\MultiplayerCore</Filter>
+    </ClInclude>
     <ClInclude Include="src\multiplayercore\ServerReplicationManager.h">
+      <Filter>Header Files\MultiplayerCore</Filter>
+    </ClInclude>
+    <ClInclude Include="src\multiplayercore\ClientReplicationManager.h">
       <Filter>Header Files\MultiplayerCore</Filter>
     </ClInclude>
   </ItemGroup>
@@ -514,6 +520,12 @@
       <Filter>Source Files\MultiplayerCore</Filter>
     </ClCompile>
     <ClCompile Include="src\multiplayercore\ServerReplicationManager.cpp">
+      <Filter>Source Files\MultiplayerCore</Filter>
+    </ClCompile>
+    <ClCompile Include="src\multiplayercore\ClientReplicationManager.cpp">
+      <Filter>Source Files\MultiplayerCore</Filter>
+    </ClCompile>
+    <ClCompile Include="src\multiplayercore\NetworkLinkingContext.cpp">
       <Filter>Source Files\MultiplayerCore</Filter>
     </ClCompile>
   </ItemGroup>

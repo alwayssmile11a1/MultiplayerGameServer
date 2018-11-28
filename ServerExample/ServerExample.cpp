@@ -14,6 +14,7 @@ ServerExample::~ServerExample()
 void ServerExample::CreateGame()
 {
 	serverNetworkManager.Init(8080);
+
 }
 
 //update game here
