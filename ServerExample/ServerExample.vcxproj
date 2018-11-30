@@ -125,6 +125,7 @@
     <ClInclude Include="ClientProxy.h" />
     <ClInclude Include="ServerExample.h" />
     <ClInclude Include="ServerNetworkManager.h" />
+    <ClInclude Include="WorldCollisionListener.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Player.cpp" />
@@ -132,6 +133,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ServerExample.cpp" />
     <ClCompile Include="ServerNetworkManager.cpp" />
+    <ClCompile Include="WorldCollisionListener.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

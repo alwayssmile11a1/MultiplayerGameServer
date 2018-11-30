@@ -175,6 +175,7 @@
     <ClInclude Include="src\collisionquadtree\QuadTree.h" />
     <ClInclude Include="src\game\EntryPoint.h" />
     <ClInclude Include="src\math\Time.h" />
+    <ClInclude Include="src\multiplayercore\AckRange.h" />
     <ClInclude Include="src\multiplayercore\ClientReplicationManager.h" />
     <ClInclude Include="src\multiplayercore\DeliveryNotificationManager.h" />
     <ClInclude Include="src\multiplayercore\InFlightPacket.h" />
@@ -191,6 +192,7 @@
     <ClInclude Include="src\multiplayercore\NetworkHelper.h" />
     <ClInclude Include="src\multiplayercore\StringUtils.h" />
     <ClInclude Include="src\multiplayercore\TCPSocket.h" />
+    <ClInclude Include="src\multiplayercore\TransmissionData.h" />
     <ClInclude Include="src\multiplayercore\UDPSocket.h" />
     <ClInclude Include="src\spacedivisionquadtree\SpaceDivisionQuadTree.h" />
     <ClInclude Include="src\world\BodyDef.h" />
@@ -241,8 +243,10 @@
     <ClCompile Include="src\effect\Effect.cpp" />
     <ClCompile Include="src\collisionquadtree\QuadTree.cpp" />
     <ClCompile Include="src\math\Time.cpp" />
+    <ClCompile Include="src\multiplayercore\AckRange.cpp" />
     <ClCompile Include="src\multiplayercore\ClientReplicationManager.cpp" />
     <ClCompile Include="src\multiplayercore\DeliveryNotificationManager.cpp" />
+    <ClCompile Include="src\multiplayercore\InFlightPacket.cpp" />
     <ClCompile Include="src\multiplayercore\MemoryBitStream.cpp" />
     <ClCompile Include="src\multiplayercore\NetworkGameObject.cpp" />
     <ClCompile Include="src\multiplayercore\NetworkGameObjectRegister.cpp" />

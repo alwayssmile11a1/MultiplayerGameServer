@@ -10,5 +10,6 @@
 #include "../src/multiplayercore/ServerReplicationManager.h"
 #include "../src/multiplayercore/ClientReplicationManager.h"
 #include "../src/multiplayercore/NetworkLinkingContext.h"
+#include "../src/multiplayercore/DeliveryNotificationManager.h"
 
 #endif

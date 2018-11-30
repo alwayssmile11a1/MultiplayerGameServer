@@ -23,8 +23,6 @@ private:
 	void OnSendPackets() override;
 	void OnConnectionReset(const SocketAddress& inFromAddress) override;
 
-	void Update(float dt);
-
 	int GetNewNetworkId();
 	void RegisterGameObject(NetworkGameObjectPtr inGameObject);
 	void UnregisterGameObject(NetworkGameObjectPtr inGameObject);
@@ -38,4 +36,5 @@ public:
 	~ServerNetworkManager();
 
 	void Init(uint16_t inPort);
+	void Update(float dt);
 };

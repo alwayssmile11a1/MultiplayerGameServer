@@ -1,4 +1,4 @@
-#ifndef  TIME_H
+#ifndef TIME_H
 #define TIME_H
 
 #include <Windows.h>

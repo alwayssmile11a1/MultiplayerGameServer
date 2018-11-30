@@ -3,11 +3,17 @@
 
 #include "HanabiGame.h"
 #include "ServerNetworkManager.h"
+#include "HanabiWorld.h"
+#include "WorldCollisionListener.h"
 
 class ServerExample : public Game
 {
 private:
-	ServerNetworkManager serverNetworkManager;
+
+	WorldPtr mWorld;
+	ServerNetworkManager mServerNetworkManager;
+	WorldCollisionListener mWorldListener;
+	SpriteBatch batch;
 
 protected:
 	//create all the things of a game here, such as world, object, ...

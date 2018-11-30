@@ -13,21 +13,34 @@ ServerExample::~ServerExample()
 //Create game here
 void ServerExample::CreateGame()
 {
-	serverNetworkManager.Init(8080);
-
+	mServerNetworkManager.Init(8080);
+	mWorld = WorldCollector::CreateWorld('PS');
+	mWorld->SetContactListener(&mWorldListener);
+	batch.Create();
 }
 
 //update game here
 void ServerExample::UpdateGame(float dt)
 {
 	Game::UpdateGame(dt);
-	serverNetworkManager.ReceiveIncomingPackets();
-	serverNetworkManager.SendOutgoingPackets();
+	mServerNetworkManager.ReceiveIncomingPackets();
+	mServerNetworkManager.SendOutgoingPackets();
+	mServerNetworkManager.Update(dt);
+
+	mWorld->Update(dt);
+
+
+	batch.Begin();
+
+	mWorld->RenderBodiesDebug(&batch);
+
+	batch.End();
 }
 
 //remember to release everything
 void ServerExample::Release()
 {
 	Game::Release();
+	batch.Release();
 }
 
