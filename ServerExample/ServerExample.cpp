@@ -15,6 +15,7 @@ void ServerExample::CreateGame()
 {
 	mServerNetworkManager.Init(8080);
 	mWorld = WorldCollector::CreateWorld('PS');
+	mWorld->SetGravity(0);
 	mWorld->SetContactListener(&mWorldListener);
 	batch.Create();
 }
@@ -28,7 +29,6 @@ void ServerExample::UpdateGame(float dt)
 	mServerNetworkManager.Update(dt);
 
 	mWorld->Update(dt);
-
 
 	batch.Begin();
 

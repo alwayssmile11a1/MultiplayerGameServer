@@ -27,9 +27,6 @@
     <ClCompile Include="GameExample.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PlayScene.cpp">
-      <Filter>Source Files\PlayScene</Filter>
-    </ClCompile>
     <ClCompile Include="ClientNetworkManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -41,6 +38,9 @@
     </ClCompile>
     <ClCompile Include="Proxy.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayScene.cpp">
+      <Filter>Source Files\PlayScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

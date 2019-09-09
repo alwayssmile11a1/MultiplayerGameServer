@@ -72,10 +72,6 @@ void ClientNetworkManager::SendGamePackets()
 	}
 }
 
-
-
-
-
 void ClientNetworkManager::OnPacketReceived(InputMemoryBitStream& inputMemoryStream, const SocketAddress& fromAddress)
 {
 	//Read packet type
@@ -107,7 +103,6 @@ void ClientNetworkManager::HandleWelcomePacket(InputMemoryBitStream& inputMemory
 void ClientNetworkManager::HandleGamePacket(InputMemoryBitStream& inputMemoryStream, const SocketAddress& fromAddress)
 {
 	clientReplicationManager.Read(inputMemoryStream);
-	
 }
 
 

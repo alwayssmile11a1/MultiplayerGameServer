@@ -10,11 +10,6 @@ void ServerReplicationManager::ReplicateDestroy(NetworkGameObjectPtr gameObject)
 	mNetworkGameObjectToReplicationCommand[gameObject].SetDestroy();
 }
 
-void ServerReplicationManager::RemoveFromReplication(NetworkGameObjectPtr gameObject)
-{
-	mNetworkGameObjectToReplicationCommand.erase(gameObject);
-}
-
 void ServerReplicationManager::AddDirtyState(NetworkGameObjectPtr gameObject, uint32_t inDirtyState)
 {
 	mNetworkGameObjectToReplicationCommand[gameObject].AddDirtyState(inDirtyState);
@@ -78,6 +73,10 @@ void ServerReplicationManager::Write(OutputMemoryBitStream& inOutputStream)
 	}
 }
 
+void ServerReplicationManager::RemoveFromReplication(NetworkGameObjectPtr gameObject)
+{
+	mNetworkGameObjectToReplicationCommand.erase(gameObject);
+}
 
 uint32_t ServerReplicationManager::WriteCreateAction(OutputMemoryBitStream& inOutputStream, NetworkGameObjectPtr gameObject, uint32_t inDirtyState)
 {

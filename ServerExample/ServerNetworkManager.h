@@ -13,8 +13,8 @@ private:
 	int mNetworkId;
 	Vector2 mNewSpawnPosition;
 
-	std::unordered_map<SocketAddress, ClientProxyPtr> mSocketAddressToClientMap;
-	std::unordered_map<int, ClientProxyPtr> mPlayerIdToClientMap;
+	std::unordered_map<SocketAddress, ClientProxyPtr> mSocketAddressToClientProxyMap;
+	std::unordered_map<int, ClientProxyPtr> mPlayerIdToClientProxyMap;
 
 	void HandleHelloPacket(InputMemoryBitStream& inputMemoryStream, const SocketAddress& fromAddress);
 	void HandleGamePacket(InputMemoryBitStream& inputMemoryStream, const SocketAddress& fromAddress);

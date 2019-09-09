@@ -29,10 +29,16 @@ void NetworkHelper::ReportError(const char* message)
 
 void NetworkHelper::Log(const char* message, ...)
 {
+	//va_list args;
+	//va_start(args, message);
+	//Debug::Log("NETWORK INFO: ");
+	//Debug::Log(message, args);
+	//va_end(args);
+
 	va_list args;
 	va_start(args, message);
 	Debug::Log("NETWORK INFO: ");
-	Debug::Log(message, args);
+	vprintf(message, args);
 	va_end(args);
 }
 

@@ -21,7 +21,7 @@ void ServerNetworkManager::Init(uint16_t inPort)
 
 void ServerNetworkManager::OnSendPackets()
 {
-	for (const auto& pair : mSocketAddressToClientMap)
+	for (const auto& pair : mSocketAddressToClientProxyMap)
 	{
 		//first write packet type
 		OutputMemoryBitStream packet;
@@ -60,10 +60,10 @@ void ServerNetworkManager::OnPacketReceived(InputMemoryBitStream& inputMemoryStr
 void ServerNetworkManager::HandleHelloPacket(InputMemoryBitStream& inputMemoryStream, const SocketAddress& fromAddress)
 {
 	//since hello packet can be sent multiple time, check to be sure we haven't received one from this address
-	auto it = mSocketAddressToClientMap.find(fromAddress);
+	auto it = mSocketAddressToClientProxyMap.find(fromAddress);
 
 	//don't find one, create welcome packet and send back to client
-	if (it == mSocketAddressToClientMap.end())
+	if (it == mSocketAddressToClientProxyMap.end())
 	{
 		//read the name
 		std::string playerName;
@@ -72,8 +72,8 @@ void ServerNetworkManager::HandleHelloPacket(InputMemoryBitStream& inputMemorySt
 
 		//create a new client proxy to store necessary info about new client
 		ClientProxyPtr newClientProxy = std::make_shared< ClientProxy >(mNewPlayerId, playerName);
-		mSocketAddressToClientMap[fromAddress] = newClientProxy;
-		mPlayerIdToClientMap[mNewPlayerId] = newClientProxy;
+		mSocketAddressToClientProxyMap[fromAddress] = newClientProxy;
+		mPlayerIdToClientProxyMap[mNewPlayerId] = newClientProxy;
 
 		//Tell this client to create current world state
 		for (const auto& pair : NetworkLinkingContext::GetNetworkIdToGameObjectMap())
@@ -121,14 +121,28 @@ void ServerNetworkManager::CreateNewPlayer(ClientProxyPtr clientProxy)
 
 void ServerNetworkManager::HandleGamePacket(InputMemoryBitStream& inputMemoryStream, const SocketAddress& fromAddress)
 {
-
+	//tell all players to remove this
+	auto it = mSocketAddressToClientProxyMap.find(fromAddress);
+	//fromClient existed
+	if (it != mSocketAddressToClientProxyMap.end())
+	{
+		NetworkGameObjectPtr fromObject = it->second->GetClientObject();
+		for (const auto& pair : mPlayerIdToClientProxyMap)
+		{
+			//tell all clients except the fromAddress one. 
+			if (fromObject != pair.second->GetClientObject())
+			{
+				pair.second->GetServerReplicationManager().AddDirtyState(pair.second->GetClientObject(), 1);
+			}
+		}
+	}
 }
 
 void ServerNetworkManager::OnConnectionReset(const SocketAddress& inFromAddress)
 {
 	//Remove this client immediately for now
-	auto it = mSocketAddressToClientMap.find(inFromAddress);
-	if (it != mSocketAddressToClientMap.end())
+	auto it = mSocketAddressToClientProxyMap.find(inFromAddress);
+	if (it != mSocketAddressToClientProxyMap.end())
 	{
 		NetworkGameObjectPtr gameObject = it->second->GetClientObject();
 
@@ -136,8 +150,8 @@ void ServerNetworkManager::OnConnectionReset(const SocketAddress& inFromAddress)
 	  	Player* player = (Player*)(gameObject.get());
 
 		//remove from map
-		mSocketAddressToClientMap.erase(inFromAddress);
-		mPlayerIdToClientMap.erase(player->GetPlayerId());
+		mSocketAddressToClientProxyMap.erase(inFromAddress);
+		mPlayerIdToClientProxyMap.erase(player->GetPlayerId());
 
 		//unregister
 		UnregisterGameObject(gameObject);
@@ -158,7 +172,7 @@ int ServerNetworkManager::GetNewNetworkId()
 	return mNetworkId++;
 }
 
-//these two functions should be put somewhere inside Framework rather than here
+//this should be put somewhere inside Framework rather than here
 void ServerNetworkManager::RegisterGameObject(NetworkGameObjectPtr inGameObject)
 {
 	//assign network id
@@ -169,20 +183,20 @@ void ServerNetworkManager::RegisterGameObject(NetworkGameObjectPtr inGameObject)
 	NetworkLinkingContext::AddToNetworkIdToGameObjectMap(inGameObject);
 
 	//tell all players this is new...
-	for (const auto& pair : mPlayerIdToClientMap)
+	for (const auto& pair : mPlayerIdToClientProxyMap)
 	{
 		pair.second->GetServerReplicationManager().ReplicateCreate(inGameObject, inGameObject->GetAllStateMask());
 	}
 }
 
-
+//this should be put somewhere inside Framework rather than here
 void ServerNetworkManager::UnregisterGameObject(NetworkGameObjectPtr inGameObject)
 {
 	//int networkId = inGameObject->GetNetworkId();
 	NetworkLinkingContext::RemoveFromNetworkIdToGameObjectMap(inGameObject);
 
 	//tell all players to remove this
-	for (const auto& pair : mPlayerIdToClientMap)
+	for (const auto& pair : mPlayerIdToClientProxyMap)
 	{
 		pair.second->GetServerReplicationManager().ReplicateDestroy(inGameObject);
 	}

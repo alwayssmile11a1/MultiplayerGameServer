@@ -62,6 +62,8 @@ void Player::Update(float dt)
 		{
 			mMainBody->SetVelocity(0, mMainBody->GetVelocity().y);
 		}
+
+		
 	}
 	//update sprite position
 	mSprite.SetPosition(mMainBody->GetPosition().x, mMainBody->GetPosition().y);
@@ -71,11 +73,11 @@ void Player::OnNetworkRead(InputMemoryBitStream & inInputStream)
 {
 	Vector2 position;
 	inInputStream.Read(position);
-
 	mMainBody->SetPosition(position.x, position.y);
 }
 
 void Player::OnNetworkDestroy()
 {
-
+	WorldCollector::GetWorld('PS')->DestroyBody(mMainBody);
+	mMainBody = nullptr;
 }
