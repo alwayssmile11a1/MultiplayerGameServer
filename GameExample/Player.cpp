@@ -73,6 +73,8 @@ void Player::OnNetworkRead(InputMemoryBitStream & inInputStream)
 {
 	Vector2 position;
 	inInputStream.Read(position);
+	Debug::Log("%f", position.x);
+	Debug::Log("%f\n", position.y);
 	mMainBody->SetPosition(position.x, position.y);
 }
 

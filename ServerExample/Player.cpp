@@ -26,7 +26,6 @@ uint32_t Player::OnNetworkWrite(OutputMemoryBitStream & inOutputStream, uint32_t
 {
 	inOutputStream.Write(mPosition);
 
-
 	return 1;
 }
 

@@ -111,7 +111,8 @@ void ServerNetworkManager::CreateNewPlayer(ClientProxyPtr clientProxy)
 	NetworkGameObjectPtr gameObject = NetworkGameObjectRegister::CreateGameObject('PL');
 	Player* player = (Player*)gameObject.get();
 	player->SetPlayerId(clientProxy->GetPlayerId());
-	player->SetPosition(GetNewSpawnPosition());
+	Vector2 newPosition = GetNewSpawnPosition();
+	player->SetPosition(newPosition);
 
 	clientProxy->SetClientObject(gameObject);
 
