@@ -122,18 +122,24 @@ void ServerNetworkManager::CreateNewPlayer(ClientProxyPtr clientProxy)
 
 void ServerNetworkManager::HandleGamePacket(InputMemoryBitStream& inputMemoryStream, const SocketAddress& fromAddress)
 {
-	//tell all players to remove this
+	//find fromObject
 	auto it = mSocketAddressToClientProxyMap.find(fromAddress);
 	//fromClient existed
 	if (it != mSocketAddressToClientProxyMap.end())
 	{
-		NetworkGameObjectPtr fromObject = it->second->GetClientObject();
+		//just for testing purpose only
+		Vector2 position;
+		inputMemoryStream.Read(position);
+		ClientProxyPtr fromClientProxy = it->second;
+		((Player*)(fromClientProxy->GetClientObject().get()))->SetPosition(position);
+
+		//update other players
 		for (const auto& pair : mPlayerIdToClientProxyMap)
 		{
 			//tell all clients except the fromAddress one. 
-			if (fromObject != pair.second->GetClientObject())
+			if (fromClientProxy != pair.second)
 			{
-				pair.second->GetServerReplicationManager().AddDirtyState(pair.second->GetClientObject(), 1);
+				pair.second->GetServerReplicationManager().AddDirtyState(fromClientProxy->GetClientObject(), Player::PlayerReplicationState::PRS_Position);
 			}
 		}
 	}

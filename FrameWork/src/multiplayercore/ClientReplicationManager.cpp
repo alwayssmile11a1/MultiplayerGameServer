@@ -12,16 +12,20 @@ void ClientReplicationManager::Read(InputMemoryBitStream& inInputStream)
 		ReplicationAction action;
 		inInputStream.Read(action, 2);
 
+		//read dirty state
+		uint32_t dirtyState;
+		inInputStream.Read(dirtyState);
+
 		switch (action)
 		{
 		case RA_Create:
-			ReadAndDoCreateAction(inInputStream, networkId);
+			ReadAndDoCreateAction(inInputStream, networkId, dirtyState);
 			break;
 		case RA_Update:
-			ReadAndDoUpdateAction(inInputStream, networkId);
+			ReadAndDoUpdateAction(inInputStream, networkId, dirtyState);
 			break;
 		case RA_Destroy:
-			ReadAndDoDestroyAction(inInputStream, networkId);
+			ReadAndDoDestroyAction(inInputStream, networkId, dirtyState);
 			break;
 		}
 
@@ -29,7 +33,7 @@ void ClientReplicationManager::Read(InputMemoryBitStream& inInputStream)
 
 }
 
-void ClientReplicationManager::ReadAndDoCreateAction(InputMemoryBitStream& inInputStream, int inNetworkId)
+void ClientReplicationManager::ReadAndDoCreateAction(InputMemoryBitStream& inInputStream, int inNetworkId, uint32_t dirtyState)
 {
 	//need 4 cc
 	uint32_t fourCCName;
@@ -48,20 +52,20 @@ void ClientReplicationManager::ReadAndDoCreateAction(InputMemoryBitStream& inInp
 	}
 
 	//and read state
-	gameObject->OnNetworkRead(inInputStream);
+	gameObject->OnNetworkRead(inInputStream, dirtyState);
 }
 
-void ClientReplicationManager::ReadAndDoUpdateAction(InputMemoryBitStream& inInputStream, int inNetworkId)
+void ClientReplicationManager::ReadAndDoUpdateAction(InputMemoryBitStream& inInputStream, int inNetworkId, uint32_t dirtyState)
 {
 	//need object
 	NetworkGameObjectPtr gameObject = NetworkLinkingContext::GetGameObject(inNetworkId);
 
 	//gameObject MUST be found, because create was ack'd if we're getting an update...
 	//and read state
-	gameObject->OnNetworkRead(inInputStream);
+	gameObject->OnNetworkRead(inInputStream, dirtyState);
 }
 
-void ClientReplicationManager::ReadAndDoDestroyAction(InputMemoryBitStream& inInputStream, int inNetworkId)
+void ClientReplicationManager::ReadAndDoDestroyAction(InputMemoryBitStream& inInputStream, int inNetworkId, uint32_t dirtyState)
 {
 	//if something was destroyed before the create went through, we'll never get it
 	//but we might get the destroy request, so be tolerant of being asked to destroy something that wasn't created

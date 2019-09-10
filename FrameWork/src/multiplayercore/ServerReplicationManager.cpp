@@ -35,6 +35,9 @@ void ServerReplicationManager::Write(OutputMemoryBitStream& inOutputStream)
 			uint32_t writtenState = 0;
 			uint32_t dirtyState = replicationCommand.GetDirtyState();
 
+			//write dirtyState
+			inOutputStream.Write(dirtyState);
+
 			//now do what?
 			switch (action)
 			{
@@ -87,13 +90,11 @@ uint32_t ServerReplicationManager::WriteCreateAction(OutputMemoryBitStream& inOu
 uint32_t ServerReplicationManager::WriteUpdateAction(OutputMemoryBitStream& inOutputStream, NetworkGameObjectPtr gameObject, uint32_t inDirtyState)
 {
 	uint32_t writtenState = gameObject->OnNetworkWrite(inOutputStream, inDirtyState);
-
 	return writtenState;
 }
 
 uint32_t ServerReplicationManager::WriteDestroyAction(OutputMemoryBitStream& inOutputStream, NetworkGameObjectPtr gameObject, uint32_t inDirtyState)
 {
 	//don't have to do anything- action already written
-
 	return inDirtyState;
 }

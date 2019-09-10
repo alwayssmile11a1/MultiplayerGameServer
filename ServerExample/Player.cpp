@@ -22,10 +22,23 @@ void Player::Update(float dt)
 
 }
 
-uint32_t Player::OnNetworkWrite(OutputMemoryBitStream & inOutputStream, uint32_t inDirtyState) const
+uint32_t Player::OnNetworkWrite(OutputMemoryBitStream & inOutputStream, uint32_t dirtyState) const
 {
-	inOutputStream.Write(mPosition);
+	if (dirtyState & PRS_PlayerId)
+	{
+		inOutputStream.Write(mPlayerId);
+	}
 
-	return 1;
+	if (dirtyState & PRS_Position)
+	{
+		inOutputStream.Write(mMainBody->GetPosition());
+	}
+
+	if (dirtyState & PRS_Health)
+	{
+		inOutputStream.Write(mHealth);
+	}
+
+	return PRS_AllState;
 }
 

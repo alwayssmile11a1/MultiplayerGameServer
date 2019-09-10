@@ -37,13 +37,17 @@ private:
 	void HandleGamePacket(InputMemoryBitStream& inputMemoryStream, const SocketAddress& fromAddress);
 
 public:
+
+	static ClientNetworkManager* instance;
+
+public:
 	ClientNetworkManager();
 	~ClientNetworkManager();
 
 	void Init(const std::string &destination, const std::string &playerName);
 	void OnPacketReceived(InputMemoryBitStream& inputMemoryStream, const SocketAddress& fromAddress) override;
 	void OnSendPackets() override;
-
+	void SendPacketToDestination(const OutputMemoryBitStream &outputMemoryStream) { SendPacket(outputMemoryStream, mDestinationAddress); };
 	void Update(float dt);
 	void Render(SpriteBatch* spriteBatch);
 

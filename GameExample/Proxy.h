@@ -5,5 +5,5 @@ class Proxy
 {
 public:
 	static int playerId;
-	static int playerObjectId;
+	static int playerNetworkGameObjectId;
 };

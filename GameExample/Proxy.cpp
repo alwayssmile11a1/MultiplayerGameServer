@@ -1,4 +1,4 @@
 #include "Proxy.h"
 
 int Proxy::playerId;
-int Proxy::playerObjectId;
+int Proxy::playerNetworkGameObjectId;

@@ -1,11 +1,13 @@
 #include "ClientNetworkManager.h"
 
+ClientNetworkManager* ClientNetworkManager:: instance;
+
 ClientNetworkManager::ClientNetworkManager()
 {
 	mState = NetworkClientState::Uninitialized;
 	mTimeOfLastHello = Time::GetTime();
 	mTimeOfLastGamePacket = Time::GetTime();
-
+	instance = this;
 }
 
 ClientNetworkManager::~ClientNetworkManager()
@@ -94,8 +96,8 @@ void ClientNetworkManager::HandleWelcomePacket(InputMemoryBitStream& inputMemory
 	//Read playerId
 	inputMemoryStream.Read(Proxy::playerId);
 	Debug::Log("MyPlayerId is: %d \n", Proxy::playerId);
-	inputMemoryStream.Read(Proxy::playerObjectId);
-	Debug::Log("MyPlayerObjectId is: %d \n", Proxy::playerObjectId);
+	inputMemoryStream.Read(Proxy::playerNetworkGameObjectId);
+	Debug::Log("MyPlayerNetworkGameObjectId is: %d \n", Proxy::playerNetworkGameObjectId);
 	//Change state to welcome
 	mState = Welcomed;
 }
@@ -104,6 +106,7 @@ void ClientNetworkManager::HandleGamePacket(InputMemoryBitStream& inputMemoryStr
 {
 	clientReplicationManager.Read(inputMemoryStream);
 }
+
 
 
 void ClientNetworkManager::Update(float dt)

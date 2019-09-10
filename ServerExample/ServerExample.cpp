@@ -18,6 +18,8 @@ void ServerExample::CreateGame()
 	mWorld->SetGravity(0);
 	mWorld->SetContactListener(&mWorldListener);
 	batch.Create();
+	camera.SetPosition(0, 0);
+	batch.SetCamera(&camera);
 }
 
 //update game here

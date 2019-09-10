@@ -28,7 +28,7 @@ public:
 	virtual void Update(float dt) {};
 	
 	virtual uint32_t OnNetworkWrite(OutputMemoryBitStream& inOutputStream, uint32_t inDirtyState) const { return uint32_t(); };
-	virtual void OnNetworkRead(InputMemoryBitStream& inInputStream) {};
+	virtual void OnNetworkRead(InputMemoryBitStream& inInputStream, uint32_t inDirtyState) {};
 	virtual void OnNetworkDestroy() {};
 
 private:

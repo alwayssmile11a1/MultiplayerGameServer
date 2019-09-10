@@ -31,7 +31,7 @@ void Player::Render(SpriteBatch *batch)
 
 void Player::Update(float dt)
 {
-	if (GetNetworkId() == Proxy::playerObjectId)
+	if (GetPlayerId() == Proxy::playerId)
 	{
 		if (Input::GetKey(DIK_RIGHT))
 		{
@@ -63,19 +63,34 @@ void Player::Update(float dt)
 			mMainBody->SetVelocity(0, mMainBody->GetVelocity().y);
 		}
 
-		
+		//just for testing purpose only
+		OutputMemoryBitStream outputStream;
+		outputStream.Write(PacketType::PT_State, 2);
+		outputStream.Write(mMainBody->GetPosition());
+		ClientNetworkManager::instance->SendPacketToDestination(outputStream);
 	}
 	//update sprite position
 	mSprite.SetPosition(mMainBody->GetPosition().x, mMainBody->GetPosition().y);
 }
 
-void Player::OnNetworkRead(InputMemoryBitStream & inInputStream)
+void Player::OnNetworkRead(InputMemoryBitStream & inInputStream, uint32_t dirtyState)
 {
-	Vector2 position;
-	inInputStream.Read(position);
-	Debug::Log("%f", position.x);
-	Debug::Log("%f\n", position.y);
-	mMainBody->SetPosition(position.x, position.y);
+	if (dirtyState & PRS_PlayerId)
+	{
+		inInputStream.Read(mPlayerId);
+	}
+
+	if (dirtyState & PRS_Position)
+	{
+		Vector2 position;
+		inInputStream.Read(position);
+		mMainBody->SetPosition(position.x, position.y);
+	}
+
+	if (dirtyState & PRS_Health)
+	{
+		inInputStream.Read(mHealth);
+	}
 }
 
 void Player::OnNetworkDestroy()

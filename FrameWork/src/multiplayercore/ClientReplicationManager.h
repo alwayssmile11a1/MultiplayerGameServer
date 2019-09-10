@@ -14,9 +14,9 @@ public:
 
 private:
 
-	void ReadAndDoCreateAction(InputMemoryBitStream& inInputStream, int inNetworkId);
-	void ReadAndDoUpdateAction(InputMemoryBitStream& inInputStream, int inNetworkId);
-	void ReadAndDoDestroyAction(InputMemoryBitStream& inInputStream, int inNetworkId);
+	void ReadAndDoCreateAction(InputMemoryBitStream& inInputStream, int inNetworkId, uint32_t dirtyState);
+	void ReadAndDoUpdateAction(InputMemoryBitStream& inInputStream, int inNetworkId, uint32_t dirtyState);
+	void ReadAndDoDestroyAction(InputMemoryBitStream& inInputStream, int inNetworkId, uint32_t dirtyState);
 
 };
 

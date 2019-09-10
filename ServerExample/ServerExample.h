@@ -9,7 +9,7 @@
 class ServerExample : public Game
 {
 private:
-
+	Camera camera;
 	WorldPtr mWorld;
 	ServerNetworkManager mServerNetworkManager;
 	WorldCollisionListener mWorldListener;
