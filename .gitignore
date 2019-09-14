@@ -17,12 +17,14 @@
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/
-x64/
-x86/
 bld/
 [Bb]in/
 [Oo]bj/
 [Ll]og/
+x64/
+x86/
+# include lib (currently not working because of x64 and x86 settings above)
+!/FrameWork/extensions/directX9/Lib/**/*.lib
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
@@ -328,3 +330,5 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+
+
