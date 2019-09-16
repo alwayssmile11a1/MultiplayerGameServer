@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<yellowtank>
+<yellowtank_1>
 	<up>
-	 <rect left="100" top = "678" width = "4" height="5" />
+	 <rect left="001" top = "2" width = "13" height="13" />
+	 <rect left="017" top = "2" width = "13" height="13" />
 	</up>
 	<down>
-	 <rect left="100" top = "678" width = "4" height="5" />
+	 <rect left="065" top = "1" width = "13" height="13" />
+	 <rect left="081" top = "1" width = "13" height="13" />
 	</down>
 	<left>
-	 <rect left="100" top = "678" width = "4" height="5" />
+	 <rect left="034" top = "1" width = "13" height="13" />
+	 <rect left="050" top = "1" width = "13" height="13" />
 	</left>
 	<right>
-	 <rect left="100" top = "678" width = "4" height="5" />
+	 <rect left="097" top = "1" width = "13" height="13" />
+	 <rect left="113" top = "1" width = "13" height="13" />
 	</right>
-</yellowtank>
+</yellowtank_1>
