@@ -123,6 +123,7 @@
   <ItemGroup>
     <ClInclude Include="Player.h" />
     <ClInclude Include="ClientProxy.h" />
+    <ClInclude Include="PlayerAction.h" />
     <ClInclude Include="ServerExample.h" />
     <ClInclude Include="ServerNetworkManager.h" />
     <ClInclude Include="WorldCollisionListener.h" />
@@ -131,6 +132,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="ClientProxy.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="PlayerAction.cpp" />
     <ClCompile Include="ServerExample.cpp" />
     <ClCompile Include="ServerNetworkManager.cpp" />
     <ClCompile Include="WorldCollisionListener.cpp" />

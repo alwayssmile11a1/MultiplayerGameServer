@@ -120,11 +120,13 @@
     <ClCompile Include="GameExample.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ClientNetworkManager.cpp" />
+    <ClCompile Include="PlayerAction.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="Proxy.cpp" />
     <ClCompile Include="WorldCollisionListener.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="PlayerAction.h" />
     <ClInclude Include="Proxy.h" />
     <ClInclude Include="WorldCollisionListener.h" />
     <ClInclude Include="Player.h" />
