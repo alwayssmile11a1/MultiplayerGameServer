@@ -17,3 +17,204 @@
 	 <rect left="113" top = "1" width = "13" height="13" />
 	</right>
 </yellowtank_1>
+<yellowtank_2>
+	<up>
+	 <rect left="001" top = "16" width = "13" height="16" />
+	 <rect left="017" top = "16" width = "13" height="16" />
+	</up>
+	<down>
+	 <rect left="065" top = "16" width = "13" height="16" />
+	 <rect left="081" top = "16" width = "13" height="16" />
+	</down>
+	<left>
+	 <rect left="032" top = "17" width = "16" height="13" />
+	 <rect left="048" top = "17" width = "16" height="13" />
+	</left>
+	<right>
+	 <rect left="096" top = "17" width = "16" height="13" />
+	 <rect left="112" top = "17" width = "16" height="13" />
+	</right>
+</yellowtank_2>
+<yellowtank_3>
+	<up>
+	 <rect left="001" top = "32" width = "13" height="15" />
+	 <rect left="017" top = "32" width = "13" height="15" />
+	</up>
+	<down>
+	 <rect left="065" top = "33" width = "13" height="15" />
+	 <rect left="081" top = "33" width = "13" height="15" />
+	</down>
+	<left>
+	 <rect left="032" top = "33" width = "15" height="13" />
+	 <rect left="048" top = "33" width = "15" height="13" />
+	</left>
+	<right>
+	 <rect left="097" top = "33" width = "15" height="13" />
+	 <rect left="113" top = "33" width = "15" height="13" />
+	</right>
+</yellowtank_3>
+<yellowtank_4>
+	<up>
+	 <rect left="001" top = "48" width = "14" height="15" />
+	 <rect left="017" top = "48" width = "14" height="15" />
+	</up>
+	<down>
+	 <rect left="065" top = "48" width = "14" height="15" />
+	 <rect left="081" top = "48" width = "14" height="15" />
+	</down>
+	<left>
+	 <rect left="032" top = "49" width = "15" height="14" />
+	 <rect left="048" top = "49" width = "15" height="14" />
+	</left>
+	<right>
+	 <rect left="097" top = "49" width = "15" height="14" />
+	 <rect left="113" top = "49" width = "15" height="14" />
+	</right>
+</yellowtank_4>
+<greentank_1>
+	<up>
+	 <rect left="001" top = "130" width = "13" height="13" />
+	 <rect left="017" top = "130" width = "13" height="13" />
+	</up>
+	<down>
+	 <rect left="065" top = "129" width = "13" height="13" />
+	 <rect left="081" top = "129" width = "13" height="13" />
+	</down>
+	<left>
+	 <rect left="034" top = "129" width = "13" height="13" />
+	 <rect left="050" top = "129" width = "13" height="13" />
+	</left>
+	<right>
+	 <rect left="097" top = "129" width = "13" height="13" />
+	 <rect left="113" top = "129" width = "13" height="13" />
+	</right>
+</greentank_1>
+<greentank_2>
+	<up>
+	 <rect left="001" top = "144" width = "13" height="16" />
+	 <rect left="017" top = "144" width = "13" height="16" />
+	</up>
+	<down>
+	 <rect left="065" top = "144" width = "13" height="16" />
+	 <rect left="081" top = "144" width = "13" height="16" />
+	</down>
+	<left>
+	 <rect left="032" top = "145" width = "16" height="13" />
+	 <rect left="048" top = "145" width = "16" height="13" />
+	</left>
+	<right>
+	 <rect left="096" top = "145" width = "16" height="13" />
+	 <rect left="112" top = "145" width = "16" height="13" />
+	</right>
+</greentank_2>
+<greentank_3>
+	<up>
+	 <rect left="001" top = "160" width = "13" height="15" />
+	 <rect left="017" top = "160" width = "13" height="15" />
+	</up>
+	<down>
+	 <rect left="065" top = "161" width = "13" height="15" />
+	 <rect left="081" top = "161" width = "13" height="15" />
+	</down>
+	<left>
+	 <rect left="032" top = "161" width = "15" height="13" />
+	 <rect left="048" top = "161" width = "15" height="13" />
+	</left>
+	<right>
+	 <rect left="097" top = "161" width = "15" height="13" />
+	 <rect left="113" top = "161" width = "15" height="13" />
+	</right>
+</greentank_3>
+<greentank_4>
+	<up>
+	 <rect left="001" top = "176" width = "14" height="15" />
+	 <rect left="017" top = "176" width = "14" height="15" />
+	</up>
+	<down>
+	 <rect left="065" top = "176" width = "14" height="15" />
+	 <rect left="081" top = "176" width = "14" height="15" />
+	</down>
+	<left>
+	 <rect left="032" top = "177" width = "15" height="14" />
+	 <rect left="048" top = "177" width = "15" height="14" />
+	</left>
+	<right>
+	 <rect left="097" top = "177" width = "15" height="14" />
+	 <rect left="113" top = "177" width = "15" height="14" />
+	</right>
+</greentank_4>
+<enemy_1>
+	<up>
+	 <rect left="129" top = "64" width = "13" height="15" />
+	 <rect left="145" top = "64" width = "13" height="15" />
+	</up>
+	<down>
+	 <rect left="193" top = "64" width = "13" height="15" />
+	 <rect left="209" top = "64" width = "13" height="15" />
+	</down>
+	<left>
+	 <rect left="160" top = "66" width = "15" height="13" />
+	 <rect left="176" top = "66" width = "15" height="13" />
+	</left>
+	<right>
+	 <rect left="225" top = "65" width = "15" height="13" />
+	 <rect left="241" top = "65" width = "15" height="13" />
+	</right>
+</enemy_1>
+<enemy_2>
+	<up>
+	 <rect left="129" top = "80" width = "13" height="15" />
+	 <rect left="145" top = "80" width = "13" height="15" />
+	</up>
+	<down>
+	 <rect left="193" top = "81" width = "13" height="15" />
+	 <rect left="209" top = "81" width = "13" height="15" />
+	</down>
+	<left>
+	 <rect left="160" top = "82" width = "15" height="13" />
+	 <rect left="176" top = "82" width = "15" height="13" />
+	</left>
+	<right>
+	 <rect left="225" top = "81" width = "15" height="13" />
+	 <rect left="241" top = "81" width = "15" height="13" />
+	</right>
+</enemy_2>
+<enemy_3>
+	<up>
+	 <rect left="129" top = "96" width = "13" height="15" />
+	 <rect left="145" top = "96" width = "13" height="15" />
+	</up>
+	<down>
+	 <rect left="192" top = "96" width = "13" height="15" />
+	 <rect left="208" top = "96" width = "13" height="15" />
+	</down>
+	<left>
+	 <rect left="160" top = "98" width = "15" height="13" />
+	 <rect left="176" top = "98" width = "15" height="13" />
+	</left>
+	<right>
+	 <rect left="225" top = "98" width = "15" height="13" />
+	 <rect left="241" top = "98" width = "15" height="13" />
+	</right>
+</enemy_3>
+<enemy_4>
+	<up>
+	 <rect left="129" top = "112" width = "13" height="15" />
+	 <rect left="145" top = "112" width = "13" height="15" />
+	</up>
+	<down>
+	 <rect left="193" top = "112" width = "13" height="15" />
+	 <rect left="209" top = "112" width = "13" height="15" />
+	</down>
+	<left>
+	 <rect left="160" top = "113" width = "15" height="13" />
+	 <rect left="176" top = "113" width = "15" height="13" />
+	</left>
+	<right>
+	 <rect left="224" top = "113" width = "15" height="13" />
+	 <rect left="240" top = "113" width = "15" height="13" />
+	</right>
+</enemy_4>
+<pinkenemy_1>
+	do later
+</pinkenemy_1>
