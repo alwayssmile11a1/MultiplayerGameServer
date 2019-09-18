@@ -31,7 +31,7 @@ void Player::Render(SpriteBatch *batch)
 
 void Player::Update(float dt)
 {
-	if (GetPlayerId() == Proxy::playerId)
+	if (GetPlayerId() == Proxy::GetPlayerId())
 	{
 		if (Input::GetKey(DIK_RIGHT))
 		{
@@ -66,7 +66,16 @@ void Player::Update(float dt)
 		if (Input::GetKey(DIK_SPACE))
 		{
 			//Shoot bullets
+			mIsShooting = true;
 		}
+		else
+		{
+
+			mIsShooting = false;
+		}
+
+		//Add playerAction to list
+		PlayerActions::GetInstance()->AddPlayerAction(Time::GetTime(), mMainBody->GetVelocity(), mIsShooting);
 
 		//just for testing purpose only
 		OutputMemoryBitStream outputStream;
@@ -96,6 +105,24 @@ void Player::OnNetworkRead(InputMemoryBitStream & inInputStream, uint32_t dirtyS
 	{
 		inInputStream.Read(mHealth);
 	}
+
+	if (GetPlayerId() == Proxy::GetPlayerId())
+	{
+		//all processed moves have been removed, so all that are left are unprocessed moves
+		//so we must apply them...
+		for (const PlayerAction& playerAction : *PlayerActions::GetInstance())
+		{
+			//simulate movement
+
+
+		}
+
+	}
+	else
+	{
+
+	}
+
 }
 
 void Player::OnNetworkDestroy()

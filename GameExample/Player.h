@@ -7,6 +7,8 @@
 #include "HanabiBody.h"
 #include "HanabiWorld.h"
 #include "Proxy.h"
+#include "PlayerAction.h";
+
 class Player : public NetworkGameObject
 {
 private:
@@ -15,6 +17,7 @@ private:
 	Texture mTexture;
 	Sprite mSprite;
 	Body *mMainBody;
+	bool mIsShooting;
 
 public:
 	CLASS_IDENTIFICATION('PL', Player);

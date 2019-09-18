@@ -3,7 +3,15 @@
 //just contain some static information
 class Proxy
 {
-public:
 	static int playerId;
 	static int playerNetworkGameObjectId;
+public:
+
+	static int GetPlayerId() {
+		return playerId;
+	}
+
+	static int GetPlayerNetworkGameObjectId() {
+		return playerNetworkGameObjectId;
+	}
 };
