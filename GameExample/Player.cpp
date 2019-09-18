@@ -63,6 +63,11 @@ void Player::Update(float dt)
 			mMainBody->SetVelocity(0, mMainBody->GetVelocity().y);
 		}
 
+		if (Input::GetKey(DIK_SPACE))
+		{
+			//Shoot bullets
+		}
+
 		//just for testing purpose only
 		OutputMemoryBitStream outputStream;
 		outputStream.Write(PacketType::PT_State, 2);
