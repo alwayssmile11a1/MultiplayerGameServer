@@ -11,7 +11,16 @@ public:
 		return playerId;
 	}
 
+	static void SetPlayerId(int id) {
+		playerId = id;
+	}
+
+
 	static int GetPlayerNetworkGameObjectId() {
 		return playerNetworkGameObjectId;
+	}
+
+	static void SetPlayerNetworkGameObjectId(int id) {
+		playerNetworkGameObjectId = id;
 	}
 };

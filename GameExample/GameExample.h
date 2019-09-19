@@ -5,8 +5,6 @@
 #include "HanabiGame.h"
 #include "PlayScene.h"
 
-
-
 class GameExample : public Game
 {
 private:

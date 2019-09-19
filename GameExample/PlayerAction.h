@@ -1,7 +1,7 @@
 #pragma once
 
-#include "HanabiMath.h"
 #include "HanabiMultiplayer.h"
+#include "HanabiMath.h"
 #include <iostream>
 #include <deque>
 
@@ -9,15 +9,20 @@
 class PlayerAction 
 {
 private:
-	Vector2 mVelocity;
 	float mTimeStamp;
+	Vector2 mVelocity;
+	float mDeltaTime;
 	bool mIsShooting;
 
 public:
 	PlayerAction();
-	PlayerAction(float timeStamp, const Vector2 &velocity, bool isShooting);
+	PlayerAction(float timeStamp, float deltaTime, const Vector2 &velocity, bool isShooting);
 	~PlayerAction();
 
+	const Vector2& GetVelocity() const { return mVelocity;}
+	bool GetIsShooting() const { return mIsShooting; }
+	float GetDeltaTime() const { return mDeltaTime; }
+	float GetTimeStamp() const { return mTimeStamp; }
 	void OnNetworkWrite(OutputMemoryBitStream & inOutputStream);
 
 };
@@ -42,6 +47,6 @@ public:
 	const_iterator	end()					const { return mPlayerActions.end(); }
 
 	int Count();
-	const PlayerAction& AddPlayerAction(float timeStamp, const Vector2& velocity, bool isShooting);
+	const PlayerAction& AddPlayerAction(float timeStamp, float deltaTime, const Vector2& velocity, bool isShooting);
 	void RemovePlayerAction(float timeStamp);
 };

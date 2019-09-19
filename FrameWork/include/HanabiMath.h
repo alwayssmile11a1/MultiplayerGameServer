@@ -3,5 +3,6 @@
 
 #include"../src/math/Vector2.h"
 #include "../src/math/Time.h"
+#include "../src/math/Math2D.h"
 
 #endif

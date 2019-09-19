@@ -82,6 +82,8 @@ public:
 
 	void ShowGUILog();
 
+	int GetFrameRate() { return _FrameRate; };
+
 	//Release game
 	void virtual Release() = 0;
 

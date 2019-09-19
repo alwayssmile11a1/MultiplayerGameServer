@@ -4,9 +4,10 @@ PlayerAction::PlayerAction()
 {
 }
 
-PlayerAction::PlayerAction(float timeStamp, const Vector2 &velocity, bool isShooting)
+PlayerAction::PlayerAction(float timeStamp, float deltaTime, const Vector2 &velocity, bool isShooting)
 {
 	mTimeStamp = timeStamp;
+	mDeltaTime = deltaTime;
 	mVelocity = velocity;
 	mIsShooting = isShooting;
 }
@@ -17,7 +18,10 @@ PlayerAction::~PlayerAction()
 
 void PlayerAction::OnNetworkWrite(OutputMemoryBitStream & inOutputStream)
 {
-
+	inOutputStream.Write(mTimeStamp);
+	inOutputStream.Write(mDeltaTime);
+	inOutputStream.Write(mVelocity);
+	inOutputStream.Write(mIsShooting);
 }
 
 
@@ -40,9 +44,9 @@ int PlayerActions::Count()
 	return mPlayerActions.size();
 }
 
-const PlayerAction& PlayerActions::AddPlayerAction(float timeStamp, const Vector2& velocity, bool isShooting)
+const PlayerAction& PlayerActions::AddPlayerAction(float timeStamp, float deltaTime, const Vector2& velocity, bool isShooting)
 {
-	mPlayerActions.emplace_back(timeStamp, velocity, isShooting);
+	mPlayerActions.emplace_back(timeStamp, deltaTime, velocity, isShooting);
 	return mPlayerActions.back();
 }
 

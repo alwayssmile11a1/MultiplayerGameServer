@@ -372,6 +372,9 @@
     <ClInclude Include="src\multiplayercore\TransmissionData.h">
       <Filter>Header Files\MultiplayerCore</Filter>
     </ClInclude>
+    <ClInclude Include="src\math\Math2D.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="extensions\rapidxml\license.txt">
@@ -539,6 +542,9 @@
     </ClCompile>
     <ClCompile Include="src\multiplayercore\InFlightPacket.cpp">
       <Filter>Source Files\MultiplayerCore</Filter>
+    </ClCompile>
+    <ClCompile Include="src\math\Math2D.cpp">
+      <Filter>Source Files\Math</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

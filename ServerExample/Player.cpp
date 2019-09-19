@@ -34,6 +34,16 @@ uint32_t Player::OnNetworkWrite(OutputMemoryBitStream & inOutputStream, uint32_t
 		inOutputStream.Write(mMainBody->GetPosition());
 	}
 
+	if (dirtyState & PRS_Velocity)
+	{
+		inOutputStream.Write(mMainBody->GetVelocity());
+	}
+
+	if (dirtyState & PRS_Rotation)
+	{
+		inOutputStream.Write(mRotation);
+	}
+
 	if (dirtyState & PRS_Health)
 	{
 		inOutputStream.Write(mHealth);

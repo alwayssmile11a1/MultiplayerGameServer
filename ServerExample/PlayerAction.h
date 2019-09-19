@@ -7,14 +7,21 @@
 class PlayerAction
 {
 private:
+	float mTimeStamp;
 	Vector2 mVelocity;
+	float mDeltaTime;
 	bool mIsShooting;
 
 public:
 	PlayerAction();
-	PlayerAction(const Vector2 &velocity, bool isShooting);
+	PlayerAction(float timeStamp, float deltaTime, const Vector2 &velocity, bool isShooting);
 	~PlayerAction();
 
-	void OnNetworkRead(InputMemoryBitStream & inInputputStream);
+	const Vector2& GetVelocity() const { return mVelocity; }
+	bool GetIsShooting() const { return mIsShooting; }
+	float GetDeltaTime() const { return mDeltaTime; }
+	float GetTimeStamp() const { return mTimeStamp; }
+
+	void OnNetworkRead(InputMemoryBitStream & inInputStream);
 
 };

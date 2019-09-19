@@ -94,10 +94,15 @@ void ClientNetworkManager::OnPacketReceived(InputMemoryBitStream& inputMemoryStr
 void ClientNetworkManager::HandleWelcomePacket(InputMemoryBitStream& inputMemoryStream, const SocketAddress& fromAddress)
 {
 	//Read playerId
-	inputMemoryStream.Read(Proxy::playerId);
-	Debug::Log("MyPlayerId is: %d \n", Proxy::playerId);
-	inputMemoryStream.Read(Proxy::playerNetworkGameObjectId);
-	Debug::Log("MyPlayerNetworkGameObjectId is: %d \n", Proxy::playerNetworkGameObjectId);
+	int playerId;
+	inputMemoryStream.Read(playerId);
+	Proxy::SetPlayerId(playerId);
+	Debug::Log("MyPlayerId is: %d \n", playerId);
+
+	int playerObjectId;
+	inputMemoryStream.Read(playerObjectId);
+	Proxy::SetPlayerNetworkGameObjectId(playerObjectId);
+	Debug::Log("MyPlayerNetworkGameObjectId is: %d \n", playerObjectId);
 	//Change state to welcome
 	mState = Welcomed;
 }

@@ -75,7 +75,7 @@ void Player::Update(float dt)
 		}
 
 		//Add playerAction to list
-		PlayerActions::GetInstance()->AddPlayerAction(Time::GetTime(), mMainBody->GetVelocity(), mIsShooting);
+		PlayerActions::GetInstance()->AddPlayerAction(Time::GetTime(), dt, mMainBody->GetVelocity(), mIsShooting);
 
 		//just for testing purpose only
 		OutputMemoryBitStream outputStream;
@@ -89,6 +89,12 @@ void Player::Update(float dt)
 
 void Player::OnNetworkRead(InputMemoryBitStream & inInputStream, uint32_t dirtyState)
 {
+	//Save the current position on client
+	Vector2 oldPosition = mMainBody->GetPosition();
+	Vector2 oldVelocity = mMainBody->GetVelocity();
+	int oldRotation = mRotation;
+
+	//Read info from server
 	if (dirtyState & PRS_PlayerId)
 	{
 		inInputStream.Read(mPlayerId);
@@ -98,7 +104,22 @@ void Player::OnNetworkRead(InputMemoryBitStream & inInputStream, uint32_t dirtyS
 	{
 		Vector2 position;
 		inInputStream.Read(position);
-		mMainBody->SetPosition(position.x, position.y);
+		//set the current position back to the position of this player on server 
+		mMainBody->SetPosition(position.x, position.y); 
+	}
+
+	if (dirtyState & PRS_Velocity)
+	{
+		Vector2 velocity;
+		inInputStream.Read(velocity);
+		//set the current velocity back to the velocity of this player on server 
+		mMainBody->SetVelocity(velocity.x, velocity.y);
+	}
+
+	if (dirtyState & PRS_Rotation)
+	{
+		//set the current rotation back to the rotation of this player on server 
+		inInputStream.Read(mRotation);
 	}
 
 	if (dirtyState & PRS_Health)
@@ -110,17 +131,81 @@ void Player::OnNetworkRead(InputMemoryBitStream & inInputStream, uint32_t dirtyS
 	{
 		//all processed moves have been removed, so all that are left are unprocessed moves
 		//so we must apply them...
+		//TODO: remove processed move before this function
 		for (const PlayerAction& playerAction : *PlayerActions::GetInstance())
 		{
 			//simulate movement
-
-
+			SimulateMovement(playerAction);
+			InterpolateClientSidePrediction(oldPosition, oldVelocity, oldRotation);
 		}
-
 	}
 	else
 	{
+		//Simulate movement with round trip time
+		//TODO: Get round trip time
+		SimulateMovement(0.01);
+		InterpolateClientSidePrediction(oldPosition, oldVelocity, oldRotation);
+	}
 
+}
+
+void Player::SimulateMovement(const PlayerAction& playerAction)
+{
+	//Set velocity
+	Vector2 velocity = playerAction.GetVelocity();
+	mMainBody->SetVelocity(velocity.x, velocity.y);
+	
+	//Set shooting
+	mIsShooting = playerAction.GetIsShooting();
+
+	//Update word to simulate the current player action (also check collisions)
+	WorldCollector::GetWorld('PS')->Update(playerAction.GetDeltaTime());
+}
+
+void Player::SimulateMovement(float totalTime)
+{
+	//simulate movement for an additional totalTime
+	//Predict that the current player will continue moving in the direction that it did previously
+	//let's break into framerate sized chunks though so that we don't run through walls and do crazy things...
+	float chunkTime = 1.f / 60;
+
+	while (true)
+	{
+		if (totalTime < chunkTime)
+		{
+			//Update word to simulate the current player action (also check collisions)
+			WorldCollector::GetWorld('PS')->Update(totalTime);
+			break;
+		}
+		else
+		{
+			//Update word to simulate the current player action (also check collisions)
+			WorldCollector::GetWorld('PS')->Update(chunkTime);
+			totalTime -= chunkTime;
+		}
+	}
+}
+
+void Player::InterpolateClientSidePrediction(const Vector2& oldPosition, const Vector2& oldVelocity, int oldRotation)
+{
+
+	//Different. Interpolate the old position towards the simulated position and set it to the current player
+	if (oldPosition.x != mMainBody->GetPosition().x || oldPosition.y != mMainBody->GetPosition().y)
+	{
+		//Lerp by an amount of 0.1 (can be a different number but we use it for now)
+		Vector2 interpolatedPosition = Math2D::Lerp(oldPosition, mMainBody->GetPosition(), 0.1);
+	}
+
+	//Different. Interpolate the old velocity towards the simulated velocity and set it to the current player
+	if (oldVelocity.x != mMainBody->GetVelocity().x || oldVelocity.y != mMainBody->GetVelocity().y)
+	{
+		//Lerp by an amount of 0.1 (can be a different number but we use it for now)
+		Vector2 interpolatedPosition = Math2D::Lerp(oldVelocity, mMainBody->GetVelocity(), 0.1);
+	}
+
+	if (oldRotation != mRotation)
+	{
+		//Different. Don't need to do anything for now since it's not something which is too noticable
 	}
 
 }
