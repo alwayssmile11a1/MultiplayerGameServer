@@ -30,12 +30,6 @@ enum PacketType : uint8_t // Use uint8_t to prevent the problem between Read and
 //Hold a UDPSocket (for now) and manage sending and receiving packets
 class NetworkManager
 {
-//protected:
-//	static const uint32_t	kHelloCC = 'HELO';
-//	static const uint32_t	kWelcomeCC = 'WLCM';
-//	static const uint32_t	kStateCC = 'STAT';
-//	static const uint32_t	kInputCC = 'INPT';
-
 private:
 
 	int mMaxPacketsPerFrameCount = 10;
@@ -75,6 +69,9 @@ private:
 	void ReadIncomingPacketsIntoQueue();
 	void ProcessQueuedPackets();
 
+	//the average round trip time
+	float mAverageRoundTripTime = 0;
+
 	//for debug purpose only
 	float mDropPacketChance = 0;
 	float mSimulatedLatency = 0;
@@ -113,9 +110,7 @@ public:
 	//For debug purpose only
 	void SetSimulatedLatency(float inLatency) { mSimulatedLatency = inLatency; }
 
-	//NetworkGameObjectPtr	GetGameObject(int inNetworkId) const;
-	//void	AddToNetworkIdToGameObjectMap(NetworkGameObjectPtr inGameObject);
-	//void	RemoveFromNetworkIdToGameObjectMap(NetworkGameObjectPtr inGameObject);
+	float GetAverageRoundTripTime() { return mAverageRoundTripTime; }
 
 	//helper function
 	static UDPSocketPtr	CreateUDPSocket(SocketAddressFamily inFamily);

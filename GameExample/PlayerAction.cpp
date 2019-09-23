@@ -16,7 +16,7 @@ PlayerAction::~PlayerAction()
 {
 }
 
-void PlayerAction::OnNetworkWrite(OutputMemoryBitStream & inOutputStream)
+void PlayerAction::OnNetworkWrite(OutputMemoryBitStream & inOutputStream) const
 {
 	inOutputStream.Write(mTimeStamp);
 	inOutputStream.Write(mDeltaTime);

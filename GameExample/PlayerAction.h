@@ -23,7 +23,7 @@ public:
 	bool GetIsShooting() const { return mIsShooting; }
 	float GetDeltaTime() const { return mDeltaTime; }
 	float GetTimeStamp() const { return mTimeStamp; }
-	void OnNetworkWrite(OutputMemoryBitStream & inOutputStream);
+	void OnNetworkWrite(OutputMemoryBitStream & inOutputStream) const;
 
 };
 

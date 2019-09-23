@@ -22,9 +22,13 @@ private:
 	Texture mTexture;
 	Sprite mSprite;
 
+	//Network stuff
+	float mTimeLocationBecameOutOfSync = 0.0f;
+	float mTimeVelocityBecameOutOfSync = 0.0f;
+
 	void SimulateMovement(const PlayerAction& playerAction);
 	void SimulateMovement(float totalTime);
-	void InterpolateClientSidePrediction(const Vector2& oldPosition, const Vector2& oldVelocity, int oldRotation);
+	void InterpolateClientSidePrediction(float roundTripTime, const Vector2& oldPosition, const Vector2& oldVelocity, int oldRotation);
 
 public:
 	CLASS_IDENTIFICATION('PL', Player);

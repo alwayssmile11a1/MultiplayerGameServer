@@ -11,7 +11,7 @@ class ClientNetworkManager: public NetworkManager
 private:
 
 	const float kTimeBetweenSendingHelloPacket = 1.0f;
-	const float kTimeBetweenSendingGamePacket = 1.0/60;
+	const float kTimeBetweenSendingGamePacket = 1.0f/60.0f;
 
 	float mTimeOfLastHello;
 	float mTimeOfLastGamePacket;
@@ -38,7 +38,7 @@ private:
 
 public:
 
-	static ClientNetworkManager* instance;
+	static ClientNetworkManager* Instance;
 
 public:
 	ClientNetworkManager();

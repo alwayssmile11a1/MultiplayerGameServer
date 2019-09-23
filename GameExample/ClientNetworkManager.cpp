@@ -1,13 +1,13 @@
 #include "ClientNetworkManager.h"
 
-ClientNetworkManager* ClientNetworkManager:: instance;
+ClientNetworkManager* ClientNetworkManager:: Instance;
 
 ClientNetworkManager::ClientNetworkManager()
 {
 	mState = NetworkClientState::Uninitialized;
 	mTimeOfLastHello = Time::GetTime();
 	mTimeOfLastGamePacket = Time::GetTime();
-	instance = this;
+	Instance = this;
 }
 
 ClientNetworkManager::~ClientNetworkManager()
@@ -68,9 +68,35 @@ void ClientNetworkManager::SendGamePackets()
 
 	if (currentTime > mTimeOfLastGamePacket + kTimeBetweenSendingGamePacket)
 	{
-		//just send something here
+		//Send PlayerActions
+		if (PlayerActions::GetInstance()->Count() > 0)
+		{
+			OutputMemoryBitStream inputPacket;
 
-		mTimeOfLastHello = currentTime;
+			//write packet type
+			inputPacket.Write(PacketType::PT_Input, 2); //only need 2 bits
+
+			//eventually write the 3 latest playeractions so they have three chances to get through...
+			int playerActionCount = PlayerActions::GetInstance()->Count();
+			int firstPlayerActionIndex = playerActionCount - 3;
+			if (firstPlayerActionIndex < 3)
+			{
+				firstPlayerActionIndex = 0;
+			}
+			auto playerAction = PlayerActions::GetInstance()->begin() + firstPlayerActionIndex;
+
+			//only need two bits to write the player action count, because it's 0, 1, 2 or 3
+			inputPacket.Write(playerActionCount - firstPlayerActionIndex, 2);
+
+			for (; firstPlayerActionIndex < playerActionCount; ++firstPlayerActionIndex, ++playerAction)
+			{
+				playerAction->OnNetworkWrite(inputPacket);
+			}
+
+			SendPacket(inputPacket, mDestinationAddress);
+		}
+
+		mTimeOfLastGamePacket = currentTime;
 	}
 }
 
