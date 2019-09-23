@@ -216,5 +216,40 @@
 	</right>
 </enemy_4>
 <pinkenemy_1>
-	do later
+	<up>
+	 <rect left="129" top = "080" width = "13" height="15" />
+	 <rect left="145" top = "208" width = "13" height="15" />
+	</up>
+	<down>
+	 <rect left="193" top = "081" width = "13" height="15" />
+	 <rect left="209" top = "209" width = "13" height="15" />
+	</down>
+	<left>
+	 <rect left="160" top = "082" width = "15" height="13" />
+	 <rect left="176" top = "210" width = "15" height="13" />
+	</left>
+	<right>
+	 <rect left="225" top = "081" width = "15" height="13" />
+	 <rect left="241" top = "209" width = "15" height="13" />
+	</right>
 </pinkenemy_1>
+<spawn_anim>
+	 <rect left="259" top = "099" width = "09" height="09" />
+	 <rect left="274" top = "098" width = "11" height="11" />
+	 <rect left="289" top = "097" width = "13" height="13" />
+	 <rect left="304" top = "096" width = "15" height="15" />
+</spawn_anim>
+<bullet>
+	<up>
+	 <rect left="323" top = "102" width = "3" height="4" />
+	</up>
+	<down>
+	 <rect left="339" top = "102" width = "3" height="4" />
+	</down>
+	<left>
+	 <rect left="330" top = "102" width = "4" height="3" />
+	</left>
+	<right>
+	 <rect left="346" top = "102" width = "4" height="3" />
+	</right>
+</bullet>
