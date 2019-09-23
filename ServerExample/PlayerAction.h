@@ -1,7 +1,7 @@
 #pragma once
 
-#include "HanabiMath.h"
 #include "HanabiMultiplayer.h"
+#include "HanabiMath.h"
 
 //Hold the action information of the current player
 class PlayerAction

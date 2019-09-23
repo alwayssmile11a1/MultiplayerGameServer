@@ -1,10 +1,10 @@
 #pragma once
 
 #include "HanabiMultiplayer.h"
-#include "HanabiMath.h"
-#include "HanabiConsole.h"
 #include "ClientProxy.h"
 #include "Player.h"
+#include "HanabiMath.h"
+#include "HanabiConsole.h"
 
 class ServerNetworkManager : public NetworkManager
 {

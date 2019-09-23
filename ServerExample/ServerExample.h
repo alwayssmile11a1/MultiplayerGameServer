@@ -1,8 +1,7 @@
 #pragma once
 
-
-#include "HanabiGame.h"
 #include "ServerNetworkManager.h"
+#include "HanabiGame.h"
 #include "HanabiWorld.h"
 #include "WorldCollisionListener.h"
 
