@@ -10,7 +10,7 @@ private:
 
 public:
 	//Get current time
-	static float GetTime();
+	static float GetTimeF();
 
 
 };

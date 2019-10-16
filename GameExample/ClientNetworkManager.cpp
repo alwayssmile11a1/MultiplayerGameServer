@@ -5,8 +5,8 @@ ClientNetworkManager* ClientNetworkManager:: Instance;
 ClientNetworkManager::ClientNetworkManager()
 {
 	mState = NetworkClientState::Uninitialized;
-	mTimeOfLastHello = Time::GetTime();
-	mTimeOfLastGamePacket = Time::GetTime();
+	mTimeOfLastHello = Time::GetTimeF();
+	mTimeOfLastGamePacket = Time::GetTimeF();
 	Instance = this;
 }
 
@@ -48,7 +48,7 @@ void ClientNetworkManager::OnSendPackets()
 
 void ClientNetworkManager::SendHelloPacket()
 {
-	float currentTime = Time::GetTime();
+	float currentTime = Time::GetTimeF();
 
 	if (currentTime > mTimeOfLastHello + kTimeBetweenSendingHelloPacket)
 	{
@@ -64,7 +64,7 @@ void ClientNetworkManager::SendHelloPacket()
 
 void ClientNetworkManager::SendGamePackets()
 {
-	float currentTime = Time::GetTime();
+	float currentTime = Time::GetTimeF();
 
 	if (currentTime > mTimeOfLastGamePacket + kTimeBetweenSendingGamePacket)
 	{
@@ -135,9 +135,24 @@ void ClientNetworkManager::HandleWelcomePacket(InputMemoryBitStream& inputMemory
 
 void ClientNetworkManager::HandleGamePacket(InputMemoryBitStream& inputMemoryStream, const SocketAddress& fromAddress)
 {
+	ReadLastActionProcessedOnServerTimeStamp(inputMemoryStream);
+
 	clientReplicationManager.Read(inputMemoryStream);
 }
 
+void ClientNetworkManager::ReadLastActionProcessedOnServerTimeStamp(InputMemoryBitStream& inputMemoryStream)
+{
+	//read timeStamp
+	float lastActionProcessedByServerTimestamp;
+	inputMemoryStream.Read(lastActionProcessedByServerTimestamp);
+
+	//remove processed action
+	PlayerActions::GetInstance()->RemovePlayerActions(lastActionProcessedByServerTimestamp);
+
+	//Update averageRoundTripTime
+	float rtt = Time::GetTimeF() - lastActionProcessedByServerTimestamp;
+	mAverageRoundTripTime.Update(rtt);
+}
 
 
 void ClientNetworkManager::Update(float dt)

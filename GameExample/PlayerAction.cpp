@@ -50,7 +50,10 @@ const PlayerAction& PlayerActions::AddPlayerAction(float timeStamp, float deltaT
 	return mPlayerActions.back();
 }
 
-void PlayerActions::RemovePlayerAction(float timeStamp)
+void PlayerActions::RemovePlayerActions(float lastestTimeStamp)
 {
-
+	while (!mPlayerActions.empty() && mPlayerActions.front().GetTimeStamp() <= lastestTimeStamp)
+	{
+		mPlayerActions.pop_front();
+	}
 }

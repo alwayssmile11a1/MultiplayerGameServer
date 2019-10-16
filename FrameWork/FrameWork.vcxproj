@@ -177,6 +177,7 @@
     <ClInclude Include="src\math\Math2D.h" />
     <ClInclude Include="src\math\Time.h" />
     <ClInclude Include="src\multiplayercore\AckRange.h" />
+    <ClInclude Include="src\multiplayercore\AverageFloatVariable.h" />
     <ClInclude Include="src\multiplayercore\ClientReplicationManager.h" />
     <ClInclude Include="src\multiplayercore\DeliveryNotificationManager.h" />
     <ClInclude Include="src\multiplayercore\InFlightPacket.h" />

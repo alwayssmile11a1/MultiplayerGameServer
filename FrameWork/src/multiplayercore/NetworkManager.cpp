@@ -87,7 +87,7 @@ void NetworkManager::ReadIncomingPacketsIntoQueue()
 			//{
 			//	//we made it
 				//float simulatedReceivedTime = Timing::sInstance.GetTimef() + mSimulatedLatency;
-				mReceivedPacketQueue.emplace(Time::GetTime(), inputStream, fromAddress);
+				mReceivedPacketQueue.emplace(Time::GetTimeF(), inputStream, fromAddress);
 			//}
 			//else
 			//{

@@ -27,10 +27,13 @@ void ServerNetworkManager::OnSendPackets()
 		OutputMemoryBitStream packet;
 		packet.Write(PacketType::PT_State, 2);
 
-		//then write world state
+		//write last action timestamp
+		packet.Write(pair.second->GetPlayerActions().GetLastActionTimeStamp());
+
+		//then write world replication state
 		pair.second->GetServerReplicationManager().Write(packet);
 
-		//Send ..
+		//Send packet
 		SendPacket(packet, pair.first);
 	}
 }
@@ -124,23 +127,22 @@ void ServerNetworkManager::HandleGamePacket(InputMemoryBitStream& inputMemoryStr
 {
 	//find fromObject
 	auto it = mSocketAddressToClientProxyMap.find(fromAddress);
+
 	//fromClient existed
 	if (it != mSocketAddressToClientProxyMap.end())
 	{
-		//just for testing purpose only
-		Vector2 position;
-		inputMemoryStream.Read(position);
+		//Get client proxy
 		ClientProxyPtr fromClientProxy = it->second;
-		((Player*)(fromClientProxy->GetClientObject().get()))->SetPosition(position);
 
-		//update other players
-		for (const auto& pair : mPlayerIdToClientProxyMap)
+		//Handle PlayerActions
+		uint32_t actionCount = 0;
+		inputMemoryStream.Read(actionCount, 2);
+		//Add playeractions to list
+		for (; actionCount > 0; --actionCount)
 		{
-			//tell all clients except the fromAddress one. 
-			if (fromClientProxy != pair.second)
-			{
-				pair.second->GetServerReplicationManager().AddDirtyState(fromClientProxy->GetClientObject(), Player::PlayerReplicationState::PRS_Position);
-			}
+			PlayerAction playerAction;
+			playerAction.OnNetworkRead(inputMemoryStream);
+			fromClientProxy->GetPlayerActions().AddPlayerAction(playerAction);
 		}
 	}
 }

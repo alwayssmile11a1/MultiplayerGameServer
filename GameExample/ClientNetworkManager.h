@@ -16,6 +16,8 @@ private:
 	float mTimeOfLastHello;
 	float mTimeOfLastGamePacket;
 
+	AverageFloatVariable mAverageRoundTripTime;
+
 	//just some states to keep track of what we have to do next 
 	//eg. Uninitialized -> Call Init function -> SayingHello until server responses -> and we are Welcomed by server
 	enum NetworkClientState
@@ -35,6 +37,7 @@ private:
 	void SendGamePackets();
 	void HandleWelcomePacket(InputMemoryBitStream& inputMemoryStream, const SocketAddress& fromAddress);
 	void HandleGamePacket(InputMemoryBitStream& inputMemoryStream, const SocketAddress& fromAddress);
+	void ReadLastActionProcessedOnServerTimeStamp(InputMemoryBitStream& inputMemoryStream);
 
 public:
 
@@ -51,4 +54,5 @@ public:
 	void Update(float dt);
 	void Render(SpriteBatch* spriteBatch);
 
+	float GetAverageRoundTripTime() { return mAverageRoundTripTime.GetValue(); }
 };

@@ -48,5 +48,5 @@ public:
 
 	int Count();
 	const PlayerAction& AddPlayerAction(float timeStamp, float deltaTime, const Vector2& velocity, bool isShooting);
-	void RemovePlayerAction(float timeStamp);
+	void RemovePlayerActions(float timeStamp);
 };

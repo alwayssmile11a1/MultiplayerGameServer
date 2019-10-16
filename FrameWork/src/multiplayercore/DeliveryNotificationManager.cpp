@@ -178,7 +178,7 @@ void DeliveryNotificationManager::ProcessAcks(InputMemoryBitStream& inInputStrea
 
 void DeliveryNotificationManager::ProcessTimedOutPackets()
 {
-	float timeoutTime = Time::GetTime() - kDelayBeforeAckTimeout;
+	float timeoutTime = Time::GetTimeF() - kDelayBeforeAckTimeout;
 
 	while (!mInFlightPackets.empty())
 	{

@@ -14,7 +14,6 @@ private:
 
 public:
 	PlayerAction();
-	PlayerAction(float timeStamp, float deltaTime, const Vector2 &velocity, bool isShooting);
 	~PlayerAction();
 
 	const Vector2& GetVelocity() const { return mVelocity; }
@@ -22,6 +21,27 @@ public:
 	float GetDeltaTime() const { return mDeltaTime; }
 	float GetTimeStamp() const { return mTimeStamp; }
 
-	void OnNetworkRead(InputMemoryBitStream & inInputStream);
+	void OnNetworkRead(InputMemoryBitStream & inInputStream) const;
+};
 
+//Hold list of playerActions
+class PlayerActions
+{
+private:
+	std::deque<PlayerAction> mPlayerActions;
+	static std::unique_ptr<PlayerActions>	sInstance;
+	float mLastActionTimeStamp;
+
+public:
+
+	typedef std::deque< PlayerAction >::const_iterator			const_iterator;
+	typedef std::deque< PlayerAction >::const_reverse_iterator	const_reverse_iterator;
+
+	//for for each, we have to match stl calling convention
+	const_iterator	begin()					const { return mPlayerActions.begin(); }
+	const_iterator	end()					const { return mPlayerActions.end(); }
+
+	int Count();
+	const PlayerAction& AddPlayerAction(const PlayerAction &playerAction);
+	float GetLastActionTimeStamp() { return mLastActionTimeStamp; }
 };

@@ -75,18 +75,17 @@ void Player::Update(float dt)
 		}
 
 		//Add playerAction to list
-		PlayerActions::GetInstance()->AddPlayerAction(Time::GetTime(), dt, mMainBody->GetVelocity(), mIsShooting);
+		PlayerActions::GetInstance()->AddPlayerAction(Time::GetTimeF(), dt, mMainBody->GetVelocity(), mIsShooting);
 
-		//just for testing purpose only
-		OutputMemoryBitStream outputStream;
-		outputStream.Write(PacketType::PT_State, 2);
-		outputStream.Write(mMainBody->GetPosition());
-		ClientNetworkManager::Instance->SendPacketToDestination(outputStream);
+		////just for testing purpose only
+		//OutputMemoryBitStream outputStream;
+		//outputStream.Write(PacketType::PT_State, 2);
+		//outputStream.Write(mMainBody->GetPosition());
+		//ClientNetworkManager::Instance->SendPacketToDestination(outputStream);
 	}
 
 	//update sprite position
 	mSprite.SetPosition(mMainBody->GetPosition().x, mMainBody->GetPosition().y);
-
 
 }
 
@@ -195,7 +194,7 @@ void Player::InterpolateClientSidePrediction(float roundTripTime, const Vector2&
 	if (oldPosition.x != mMainBody->GetPosition().x || oldPosition.y != mMainBody->GetPosition().y)
 	{
 		//have we been out of sync, or did we just become out of sync?
-		float time = Time::GetTime();
+		float time = Time::GetTimeF();
 		if (mTimeLocationBecameOutOfSync == 0.0f)
 		{
 			mTimeLocationBecameOutOfSync = time;
@@ -212,7 +211,7 @@ void Player::InterpolateClientSidePrediction(float roundTripTime, const Vector2&
 			}
 			else
 			{
-				//Lerp by an amount of 0.1 (can be a different number but we use it for now)
+				//Lerp by an amount of durationOutOfSync / roundTripTime
 				Vector2 interpolatedPosition = Math2D::Lerp(oldPosition, mMainBody->GetPosition(), durationOutOfSync / roundTripTime);
 				mMainBody->SetPosition(interpolatedPosition.x, interpolatedPosition.y);
 			}
@@ -233,7 +232,7 @@ void Player::InterpolateClientSidePrediction(float roundTripTime, const Vector2&
 	if (oldVelocity.x != mMainBody->GetVelocity().x || oldVelocity.y != mMainBody->GetVelocity().y)
 	{
 		//have we been out of sync, or did we just become out of sync?
-		float time = Time::GetTime();
+		float time = Time::GetTimeF();
 		if (mTimeVelocityBecameOutOfSync == 0.f)
 		{
 			mTimeVelocityBecameOutOfSync = time;
@@ -251,7 +250,7 @@ void Player::InterpolateClientSidePrediction(float roundTripTime, const Vector2&
 			}
 			else
 			{
-				//Lerp by an amount of 0.1 (can be a different number but we use it for now)
+				//Lerp by an amount of durationOutOfSync / roundTripTime
 				Vector2 interpolatedVelocity = Math2D::Lerp(oldVelocity, mMainBody->GetVelocity(), durationOutOfSync / roundTripTime);
 				mMainBody->SetVelocity(interpolatedVelocity.x, interpolatedVelocity.y);
 			}

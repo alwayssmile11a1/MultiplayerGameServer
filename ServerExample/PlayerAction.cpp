@@ -4,22 +4,34 @@ PlayerAction::PlayerAction()
 {
 }
 
-PlayerAction::PlayerAction(float timeStamp, float deltaTime, const Vector2 &velocity, bool isShooting)
-{
-	mTimeStamp = timeStamp;
-	mDeltaTime = deltaTime;
-	mVelocity = velocity;
-	mIsShooting = isShooting;
-}
-
 PlayerAction::~PlayerAction()
 {
 }
 
-void PlayerAction::OnNetworkRead(InputMemoryBitStream & inInputStream)
+void PlayerAction::OnNetworkRead(InputMemoryBitStream & inInputStream) const
 {
 	inInputStream.Read(mVelocity);
 	inInputStream.Read(mDeltaTime);
 	inInputStream.Read(mVelocity);
 	inInputStream.Read(mIsShooting);
+}
+
+//PLAYER ACTIONS//
+int PlayerActions::Count()
+{
+	return mPlayerActions.size();
+}
+
+const PlayerAction& PlayerActions::AddPlayerAction(const PlayerAction &playerAction)
+{
+	// we might have already received this move in another packet(since we're sending the same move in multiple packets )
+	//so make sure it's new...
+	//Get timestamp
+	float timeStamp = playerAction.GetTimeStamp();
+
+	if (timeStamp > mLastActionTimeStamp)
+	{
+		mLastActionTimeStamp = timeStamp;
+		mPlayerActions.emplace_back(playerAction);
+	}
 }

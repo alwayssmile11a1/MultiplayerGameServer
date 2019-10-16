@@ -69,9 +69,6 @@ private:
 	void ReadIncomingPacketsIntoQueue();
 	void ProcessQueuedPackets();
 
-	//the average round trip time
-	float mAverageRoundTripTime = 0;
-
 	//for debug purpose only
 	float mDropPacketChance = 0;
 	float mSimulatedLatency = 0;
@@ -109,8 +106,6 @@ public:
 	void SetDropPacketChance(float inChance) { mDropPacketChance = inChance; }
 	//For debug purpose only
 	void SetSimulatedLatency(float inLatency) { mSimulatedLatency = inLatency; }
-
-	float GetAverageRoundTripTime() { return mAverageRoundTripTime; }
 
 	//helper function
 	static UDPSocketPtr	CreateUDPSocket(SocketAddressFamily inFamily);
