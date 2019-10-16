@@ -8,7 +8,7 @@ PlayerAction::~PlayerAction()
 {
 }
 
-void PlayerAction::OnNetworkRead(InputMemoryBitStream & inInputStream) const
+void PlayerAction::OnNetworkRead(InputMemoryBitStream & inInputStream)
 {
 	inInputStream.Read(mTimeStamp);
 	inInputStream.Read(mDeltaTime);
@@ -22,7 +22,7 @@ int PlayerActions::Count()
 	return mPlayerActions.size();
 }
 
-const PlayerAction& PlayerActions::AddPlayerAction(const PlayerAction &playerAction)
+bool PlayerActions::AddPlayerAction(const PlayerAction &playerAction)
 {
 	// we might have already received this move in another packet(since we're sending the same move in multiple packets )
 	//so make sure it's new...
@@ -33,7 +33,11 @@ const PlayerAction& PlayerActions::AddPlayerAction(const PlayerAction &playerAct
 	{
 		mLastActionTimeStamp = timeStamp;
 		mPlayerActions.emplace_back(playerAction);
+
+		return true;
 	}
+
+	return false;
 }
 
 void PlayerActions::Clear()

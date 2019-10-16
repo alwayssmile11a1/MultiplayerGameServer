@@ -2,6 +2,7 @@
 
 PlayerAction::PlayerAction()
 {
+
 }
 
 PlayerAction::PlayerAction(float timeStamp, float deltaTime, const Vector2 &velocity, bool isShooting)

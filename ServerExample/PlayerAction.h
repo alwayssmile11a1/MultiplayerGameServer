@@ -23,7 +23,7 @@ public:
 	float GetDeltaTime() const { return mDeltaTime; }
 	float GetTimeStamp() const { return mTimeStamp; }
 
-	void OnNetworkRead(InputMemoryBitStream & inInputStream) const;
+	void OnNetworkRead(InputMemoryBitStream & inInputStream);
 };
 
 //Hold list of playerActions
@@ -43,7 +43,7 @@ public:
 	const_iterator	end()					const { return mPlayerActions.end(); }
 
 	int Count();
-	const PlayerAction& AddPlayerAction(const PlayerAction &playerAction);
+	bool AddPlayerAction(const PlayerAction &playerAction);
 	float GetLastActionTimeStamp() { return mLastActionTimeStamp; }
 	void Clear();
 };

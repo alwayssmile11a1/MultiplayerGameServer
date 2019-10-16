@@ -125,7 +125,6 @@
     <ClInclude Include="ClientProxy.h" />
     <ClInclude Include="PlayerAction.h" />
     <ClInclude Include="ServerExample.h" />
-    <ClInclude Include="ServerIncludeHeader.h" />
     <ClInclude Include="ServerNetworkManager.h" />
     <ClInclude Include="WorldCollisionListener.h" />
   </ItemGroup>

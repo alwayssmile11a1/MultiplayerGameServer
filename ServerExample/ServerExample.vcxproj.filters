@@ -33,9 +33,6 @@
     <ClInclude Include="PlayerAction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ServerIncludeHeader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ServerExample.cpp">
