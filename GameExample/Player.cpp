@@ -137,20 +137,20 @@ void Player::OnNetworkRead(InputMemoryBitStream & inInputStream, uint32_t dirtyS
 		for (const PlayerAction& playerAction : *PlayerActions::GetInstance())
 		{
 			//simulate movement
-			SimulateMovement(playerAction);
+			SimulateAction(playerAction);
 			InterpolateClientSidePrediction(ClientNetworkManager::Instance->GetAverageRoundTripTime(), oldPosition, oldVelocity, oldRotation);
 		}
 	}
 	else
 	{
 		//Simulate movement with round trip time for remote players
-		SimulateMovement(ClientNetworkManager::Instance->GetAverageRoundTripTime());
+		SimulateAction(ClientNetworkManager::Instance->GetAverageRoundTripTime());
 		InterpolateClientSidePrediction(ClientNetworkManager::Instance->GetAverageRoundTripTime(), oldPosition, oldVelocity, oldRotation);
 	}
 
 }
 
-void Player::SimulateMovement(const PlayerAction& playerAction)
+void Player::SimulateAction(const PlayerAction& playerAction)
 {
 	//Set velocity
 	Vector2 velocity = playerAction.GetVelocity();
@@ -163,7 +163,7 @@ void Player::SimulateMovement(const PlayerAction& playerAction)
 	WorldCollector::GetWorld('PS')->Update(playerAction.GetDeltaTime());
 }
 
-void Player::SimulateMovement(float totalTime)
+void Player::SimulateAction(float totalTime)
 {
 	//simulate movement for an additional totalTime
 	//Predict that the current player will continue moving in the direction that it did previously

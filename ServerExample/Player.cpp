@@ -2,6 +2,10 @@
 
 Player::Player()
 {
+	mHealth = 10;
+	mIsShooting = false;
+	mRotation = 0;
+
 	//Setup body
 	BodyDef bodyDef;
 	bodyDef.bodyType = Body::BodyType::Dynamic;
@@ -19,7 +23,55 @@ Player::~Player()
 
 void Player::Update(float dt)
 {
+	//Get old variables
+	Vector2 oldPosition = mMainBody->GetPosition();
+	Vector2 oldVelocity = mMainBody->GetVelocity();
+	float oldRotation = mRotation;
 
+	ClientProxyPtr clientProxy = ServerNetworkManager::Instance->GetClientProxy(GetPlayerId());
+	if (clientProxy != nullptr)
+	{
+		PlayerActions& playerActions = clientProxy->GetPlayerActions();
+		for (const PlayerAction& playerAction : playerActions)
+		{
+			SimulateAction(playerAction);
+		}
+
+		playerActions.Clear();
+	}
+
+	//Get new variables
+	Vector2 newPosition = mMainBody->GetPosition();
+	Vector2 newVelocity = mMainBody->GetVelocity();
+	float newRotation = mRotation;
+
+	if (oldPosition.x != newPosition.x || oldPosition.y != newPosition.y)
+	{
+		ServerNetworkManager::Instance->SetStateDirty(GetNetworkId(), PRS_Position);
+	}
+
+	if (oldVelocity.x != newVelocity.x || oldVelocity.y != newVelocity.y)
+	{
+		ServerNetworkManager::Instance->SetStateDirty(GetNetworkId(), PRS_Velocity);
+	}
+
+	if (oldRotation != newRotation)
+	{
+		ServerNetworkManager::Instance->SetStateDirty(GetNetworkId(), PRS_Rotation);
+	}
+}
+
+void Player::SimulateAction(const PlayerAction& playerAction)
+{
+	//Set velocity
+	Vector2 velocity = playerAction.GetVelocity();
+	mMainBody->SetVelocity(velocity.x, velocity.y);
+
+	//Update word to simulate the current player action (also check collisions)
+	WorldCollector::GetWorld('PS')->Update(playerAction.GetDeltaTime());
+
+	//TODO: Handle shooting
+	mIsShooting = playerAction.GetIsShooting();
 }
 
 uint32_t Player::OnNetworkWrite(OutputMemoryBitStream & inOutputStream, uint32_t dirtyState) const
@@ -49,6 +101,6 @@ uint32_t Player::OnNetworkWrite(OutputMemoryBitStream & inOutputStream, uint32_t
 		inOutputStream.Write(mHealth);
 	}
 
-	return PRS_AllState;
+	return dirtyState;
 }
 

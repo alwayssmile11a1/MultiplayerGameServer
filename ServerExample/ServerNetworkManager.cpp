@@ -1,10 +1,13 @@
 #include "ServerNetworkManager.h"
 
+ServerNetworkManager* ServerNetworkManager::Instance;
+
 ServerNetworkManager::ServerNetworkManager()
 {
 	mNewPlayerId = 1;
 	mNetworkId = 1;
 	mNewSpawnPosition.Set(-350, 0);
+	Instance = this;
 }
 
 ServerNetworkManager::~ServerNetworkManager()
@@ -208,5 +211,28 @@ void ServerNetworkManager::UnregisterGameObject(NetworkGameObjectPtr inGameObjec
 	for (const auto& pair : mPlayerIdToClientProxyMap)
 	{
 		pair.second->GetServerReplicationManager().ReplicateDestroy(inGameObject);
+	}
+}
+
+ClientProxyPtr ServerNetworkManager::GetClientProxy(int inPlayerId) const
+{
+	//find fromObject
+	auto it = mPlayerIdToClientProxyMap.find(inPlayerId);
+
+	if (it != mPlayerIdToClientProxyMap.end())
+	{
+		return it->second;
+	}
+	
+	return nullptr;
+}
+
+void ServerNetworkManager::SetStateDirty(int networkId, uint32_t dirtyState)
+{
+	//tell everybody this is dirty
+	NetworkGameObjectPtr networkGameObject = NetworkLinkingContext::GetGameObject(networkId);
+	for (const auto& pair : mPlayerIdToClientProxyMap)
+	{
+		pair.second->GetServerReplicationManager().AddDirtyState(NetworkLinkingContext::GetGameObject(networkId), dirtyState);
 	}
 }

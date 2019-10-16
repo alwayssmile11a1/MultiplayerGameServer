@@ -1,6 +1,5 @@
 #pragma once
 
-#include "HanabiMultiplayer.h"
 #include "ClientProxy.h"
 #include "Player.h"
 #include "HanabiMath.h"
@@ -30,6 +29,8 @@ private:
 	const Vector2& GetNewSpawnPosition();
 	void CreateNewPlayer(ClientProxyPtr clientProxy);
 
+public:
+	static ServerNetworkManager* Instance;
 
 public:
 	ServerNetworkManager();
@@ -37,4 +38,7 @@ public:
 
 	void Init(uint16_t inPort);
 	void Update(float dt);
+
+	ClientProxyPtr GetClientProxy(int inPlayerId) const;
+	void SetStateDirty(int networkId, uint32_t dirtyState);
 };

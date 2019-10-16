@@ -1,6 +1,7 @@
 #pragma once
 
-#include "HanabiMultiplayer.h"
+#include "ServerNetworkManager.h"
+#include "PlayerAction.h"
 #include "HanabiSprite.h"
 #include "HanabiInput.h"
 #include "HanabiBody.h"
@@ -14,6 +15,8 @@ private:
 	Body *mMainBody;
 	bool mIsShooting;
 	int mRotation;
+
+	void SimulateAction(const PlayerAction& playerAction);
 
 public:
 	CLASS_IDENTIFICATION('PL', Player);

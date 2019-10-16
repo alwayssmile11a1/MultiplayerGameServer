@@ -2,6 +2,8 @@
 
 #include "HanabiMultiplayer.h"
 #include "HanabiMath.h"
+#include <iostream>
+#include <deque>
 
 //Hold the action information of the current player
 class PlayerAction
@@ -29,7 +31,6 @@ class PlayerActions
 {
 private:
 	std::deque<PlayerAction> mPlayerActions;
-	static std::unique_ptr<PlayerActions>	sInstance;
 	float mLastActionTimeStamp;
 
 public:
@@ -44,4 +45,5 @@ public:
 	int Count();
 	const PlayerAction& AddPlayerAction(const PlayerAction &playerAction);
 	float GetLastActionTimeStamp() { return mLastActionTimeStamp; }
+	void Clear();
 };

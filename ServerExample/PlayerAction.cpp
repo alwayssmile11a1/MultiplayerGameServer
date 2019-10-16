@@ -10,7 +10,7 @@ PlayerAction::~PlayerAction()
 
 void PlayerAction::OnNetworkRead(InputMemoryBitStream & inInputStream) const
 {
-	inInputStream.Read(mVelocity);
+	inInputStream.Read(mTimeStamp);
 	inInputStream.Read(mDeltaTime);
 	inInputStream.Read(mVelocity);
 	inInputStream.Read(mIsShooting);
@@ -34,4 +34,9 @@ const PlayerAction& PlayerActions::AddPlayerAction(const PlayerAction &playerAct
 		mLastActionTimeStamp = timeStamp;
 		mPlayerActions.emplace_back(playerAction);
 	}
+}
+
+void PlayerActions::Clear()
+{
+	mPlayerActions.clear();
 }
