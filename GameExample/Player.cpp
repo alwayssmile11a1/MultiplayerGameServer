@@ -11,7 +11,7 @@ Player::Player()
 
 	//Setup body
 	BodyDef bodyDef;
-	bodyDef.bodyType = Body::BodyType::Dynamic;
+	bodyDef.bodyType = Body::BodyType::Kinematic;
 	bodyDef.position.Set(0, 0);
 	bodyDef.size.Set(100, 100);
 	//bodyDef.linearDrag.Set(10, 10);
@@ -43,6 +43,11 @@ void Player::Update(float dt)
 			mMainBody->SetVelocity(-5, mMainBody->GetVelocity().y);
 		}
 
+		if (Input::GetKeyUp(DIK_LEFT) || Input::GetKeyUp(DIK_RIGHT))
+		{
+			mMainBody->SetVelocity(0, mMainBody->GetVelocity().y);
+		}
+
 		if (Input::GetKey(DIK_UP))
 		{
 			mMainBody->SetVelocity(mMainBody->GetVelocity().x, 5);
@@ -56,11 +61,6 @@ void Player::Update(float dt)
 		if (Input::GetKeyUp(DIK_UP) || Input::GetKeyUp(DIK_DOWN))
 		{
 			mMainBody->SetVelocity(mMainBody->GetVelocity().x, 0);
-		}
-
-		if (Input::GetKeyUp(DIK_LEFT) || Input::GetKeyUp(DIK_RIGHT))
-		{
-			mMainBody->SetVelocity(0, mMainBody->GetVelocity().y);
 		}
 
 		if (Input::GetKey(DIK_SPACE))
@@ -77,11 +77,6 @@ void Player::Update(float dt)
 		//Add playerAction to list
 		PlayerActions::GetInstance()->AddPlayerAction(Time::GetTimeF(), dt, mMainBody->GetVelocity(), mIsShooting);
 
-		////just for testing purpose only
-		//OutputMemoryBitStream outputStream;
-		//outputStream.Write(PacketType::PT_State, 2);
-		//outputStream.Write(mMainBody->GetPosition());
-		//ClientNetworkManager::Instance->SendPacketToDestination(outputStream);
 	}
 
 	//update sprite position
@@ -138,7 +133,7 @@ void Player::OnNetworkRead(InputMemoryBitStream & inInputStream, uint32_t dirtyS
 		{
 			//simulate movement
 			SimulateAction(playerAction);
-			InterpolateClientSidePrediction(ClientNetworkManager::Instance->GetAverageRoundTripTime(), oldPosition, oldVelocity, oldRotation);
+			//InterpolateClientSidePrediction(ClientNetworkManager::Instance->GetAverageRoundTripTime(), oldPosition, oldVelocity, oldRotation);
 		}
 	}
 	else

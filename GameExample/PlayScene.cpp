@@ -42,7 +42,6 @@ void PlayScene::Create()
 //update scene here
 void PlayScene::Update(float dt)
 {
-
 	world->Update(dt);
 
 	networkManager->Update(dt);

@@ -54,13 +54,12 @@ void ServerNetworkManager::OnPacketReceived(InputMemoryBitStream& inputMemoryStr
 			HandleHelloPacket(inputMemoryStream, fromAddress);
 			break;
 		}
-		case PacketType::PT_State:
+		case PacketType::PT_Input:
 		{
 			HandleGamePacket(inputMemoryStream, fromAddress);
 			break;
 		}
 	}
-
 }
 
 void ServerNetworkManager::HandleHelloPacket(InputMemoryBitStream& inputMemoryStream, const SocketAddress& fromAddress)
@@ -140,6 +139,7 @@ void ServerNetworkManager::HandleGamePacket(InputMemoryBitStream& inputMemoryStr
 		//Handle PlayerActions
 		uint32_t actionCount = 0;
 		inputMemoryStream.Read(actionCount, 2);
+
 		//Add playeractions to list
 		for (; actionCount > 0; --actionCount)
 		{

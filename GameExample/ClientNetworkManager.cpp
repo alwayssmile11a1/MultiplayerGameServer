@@ -145,6 +145,7 @@ void ClientNetworkManager::ReadLastActionProcessedOnServerTimeStamp(InputMemoryB
 	//read timeStamp
 	float lastActionProcessedByServerTimestamp;
 	inputMemoryStream.Read(lastActionProcessedByServerTimestamp);
+	//Debug::Log("%f", lastActionProcessedByServerTimestamp);
 
 	//remove processed action
 	PlayerActions::GetInstance()->RemovePlayerActions(lastActionProcessedByServerTimestamp);

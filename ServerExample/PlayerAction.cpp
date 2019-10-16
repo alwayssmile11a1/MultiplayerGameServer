@@ -2,6 +2,10 @@
 
 PlayerAction::PlayerAction()
 {
+	mTimeStamp = 0.0f;
+	mVelocity.Set(0,0);
+	mDeltaTime = 0.0f;
+	mIsShooting = false;
 }
 
 PlayerAction::~PlayerAction()

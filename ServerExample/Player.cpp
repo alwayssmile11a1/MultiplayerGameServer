@@ -8,7 +8,7 @@ Player::Player()
 
 	//Setup body
 	BodyDef bodyDef;
-	bodyDef.bodyType = Body::BodyType::Dynamic;
+	bodyDef.bodyType = Body::BodyType::Kinematic;
 	bodyDef.position.Set(0, 0);
 	bodyDef.size.Set(100, 100);
 	//bodyDef.linearDrag.Set(10, 10);
