@@ -6,7 +6,7 @@ ServerNetworkManager::ServerNetworkManager()
 {
 	mNewPlayerId = 1;
 	mNetworkId = 1;
-	mNewSpawnPosition.Set(-350, 0);
+	mNewSpawnPositionIndex = 0;
 	Instance = this;
 }
 
@@ -20,6 +20,33 @@ void ServerNetworkManager::Init(uint16_t inPort)
 
 	//Register function
 	NetworkGameObjectRegister::RegisterCreationFunction(Player::GetId(), Player::CreateInstance);
+	NetworkGameObjectRegister::RegisterCreationFunction(Brick::GetId(), Brick::CreateInstance);
+
+	//Setup map
+	mapLoader.AddMap("map1", "../Resources/battlecitymap.tmx", 3.1);
+	map = mapLoader.GetMap("map1");
+
+	//create brick
+	int i = 0;
+	std::vector<Shape::Rectangle> brickRects = map->GetObjectGroup("Brick")->GetRects();
+	for (std::vector<Shape::Rectangle>::iterator rect = brickRects.begin(); rect != brickRects.end(); ++rect)
+	{
+		//Create brick
+		NetworkGameObjectPtr gameObject = NetworkGameObjectRegister::CreateGameObject('BR');
+		Brick* brick = (Brick*)gameObject.get();
+		brick->SetPosition(Vector2(rect->x, rect->y));
+
+		//Register this brick
+		RegisterGameObject(gameObject);
+
+		i++;
+
+		if (i == 70)
+		{
+			break;
+		}
+	}
+
 }
 
 void ServerNetworkManager::OnSendPackets()
@@ -111,8 +138,12 @@ void ServerNetworkManager::HandleHelloPacket(InputMemoryBitStream& inputMemorySt
 
 const Vector2& ServerNetworkManager::GetNewSpawnPosition()
 {
-	mNewSpawnPosition.Set(mNewSpawnPosition.x + 150, mNewSpawnPosition.y);
-	return mNewSpawnPosition;
+	float x = map->GetObjectGroup("TankSpawnPosition")->GetRects()[mNewSpawnPositionIndex].x;
+	float y = map->GetObjectGroup("TankSpawnPosition")->GetRects()[mNewSpawnPositionIndex].y;
+
+	mNewSpawnPositionIndex = (mNewSpawnPositionIndex+1)%(map->GetObjectGroup("TankSpawnPosition")->GetRects().size());
+
+	return Vector2(x, y);
 }
 
 void ServerNetworkManager::CreateNewPlayer(ClientProxyPtr clientProxy)
@@ -213,6 +244,8 @@ void ServerNetworkManager::RegisterGameObject(NetworkGameObjectPtr inGameObject)
 //this should be put somewhere inside Framework rather than here
 void ServerNetworkManager::UnregisterGameObject(NetworkGameObjectPtr inGameObject)
 {
+	inGameObject->OnNetworkDestroy();
+
 	//int networkId = inGameObject->GetNetworkId();
 	NetworkLinkingContext::RemoveFromNetworkIdToGameObjectMap(inGameObject);
 
@@ -236,7 +269,7 @@ ClientProxyPtr ServerNetworkManager::GetClientProxy(int inPlayerId) const
 	return nullptr;
 }
 
-void ServerNetworkManager::SetStateDirty(int networkId, uint32_t dirtyState)
+void ServerNetworkManager::UpdateNetworkGameObject(int networkId, uint32_t dirtyState)
 {
 	//tell everybody this is dirty
 	NetworkGameObjectPtr networkGameObject = NetworkLinkingContext::GetGameObject(networkId);
@@ -244,4 +277,9 @@ void ServerNetworkManager::SetStateDirty(int networkId, uint32_t dirtyState)
 	{
 		pair.second->GetServerReplicationManager().AddDirtyState(NetworkLinkingContext::GetGameObject(networkId), dirtyState);
 	}
+}
+
+void ServerNetworkManager::DestroyNetworkGameObject(int networkId)
+{
+	UnregisterGameObject(NetworkLinkingContext::GetGameObject(networkId));
 }

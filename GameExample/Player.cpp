@@ -2,15 +2,15 @@
 
 Player::Player()
 {
-	//Get texture
-	mTexture = Texture("../Resources/battlecityspritesheet.png");
-
 	//Setup body
 	BodyDef bodyDef;
 	bodyDef.bodyType = Body::BodyType::Kinematic;
 	bodyDef.position.Set(0, 0);
 	bodyDef.size.Set(26, 26);
 	mMainBody = WorldCollector::GetWorld('PS')->CreateBody(bodyDef);
+	mMainBody->categoryBits = PLAYER_BIT;
+	mMainBody->maskBits = BRICK_BIT | METAL_BIT | BULLET_BIT;
+
 	mMainBody->PutExtra(this);
 
 	mMoveSpeed = 2.0f;
@@ -98,13 +98,13 @@ void Player::OnNetworkRead(InputMemoryBitStream & inInputStream, uint32_t dirtyS
 
 		if (mPlayerId == Proxy::GetPlayerId())
 		{
-			TexturePacker p = TexturePacker(&mTexture, "../Resources/battlecity.xml");
+			TexturePacker p = TexturePacker(&SharedTextures::BattleCityTexture, "../Resources/battlecity.xml");
 			mSprite.SetRegion(p.GetRegion("greentank_1")[0]);
 			mSprite.SetSize(26, 26);
 		}
 		else
 		{
-			TexturePacker p = TexturePacker(&mTexture, "../Resources/battlecity.xml");
+			TexturePacker p = TexturePacker(&SharedTextures::BattleCityTexture, "../Resources/battlecity.xml");
 			mSprite.SetRegion(p.GetRegion("yellowtank_1")[0]);
 			mSprite.SetSize(26, 26);
 		}

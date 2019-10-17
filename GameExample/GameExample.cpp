@@ -28,6 +28,7 @@ void GameExample::CreateGame()
 	//Set scene to render
 	SetScene(&playScene);
 
+	SharedTextures::Init();
 }
 
 //update game here

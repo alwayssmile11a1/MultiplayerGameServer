@@ -13,13 +13,13 @@ ServerExample::~ServerExample()
 //Create game here
 void ServerExample::CreateGame()
 {
-	mServerNetworkManager.Init(8080);
 	mWorld = WorldCollector::CreateWorld('PS');
 	mWorld->SetGravity(0);
 	mWorld->SetContactListener(&mWorldListener);
 	batch.Create();
-	camera.SetPosition(0, 0);
+	camera.SetPosition(640/2, 640/2);
 	batch.SetCamera(&camera);
+	mServerNetworkManager.Init(8080);
 }
 
 //update game here

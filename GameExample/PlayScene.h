@@ -17,14 +17,10 @@ private:
 
 	ClientNetworkManager* networkManager;
 
-
 public:
 
 	PlayScene();
 	~PlayScene();
-
-	//static void Init();
-	//static std::unique_ptr<PlayScene> Instance;
 
 	void SetBatch(SpriteBatch* batch);
 	void SetClientNetworkManager(ClientNetworkManager* networkManager);

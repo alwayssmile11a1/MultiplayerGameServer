@@ -14,6 +14,10 @@ Player::Player()
 	//bodyDef.linearDrag.Set(10, 10);
 	//bodyDef.mass = 2;
 	mMainBody = WorldCollector::GetWorld('PS')->CreateBody(bodyDef);
+
+	mMainBody->categoryBits = PLAYER_BIT;
+	mMainBody->maskBits = BRICK_BIT | METAL_BIT | BULLET_BIT;
+
 	mMainBody->PutExtra(this);
 
 	mMoveSpeed = 2.0f;
@@ -49,17 +53,17 @@ void Player::Update(float dt)
 
 	if (oldPosition.x != newPosition.x || oldPosition.y != newPosition.y)
 	{
-		ServerNetworkManager::Instance->SetStateDirty(GetNetworkId(), PRS_Position);
+		ServerNetworkManager::Instance->UpdateNetworkGameObject(GetNetworkId(), PRS_Position);
 	}
 
 	if (oldVelocity.x != newVelocity.x || oldVelocity.y != newVelocity.y)
 	{
-		ServerNetworkManager::Instance->SetStateDirty(GetNetworkId(), PRS_Velocity);
+		ServerNetworkManager::Instance->UpdateNetworkGameObject(GetNetworkId(), PRS_Velocity);
 	}
 
 	if (oldRotation != newRotation)
 	{
-		ServerNetworkManager::Instance->SetStateDirty(GetNetworkId(), PRS_Rotation);
+		ServerNetworkManager::Instance->UpdateNetworkGameObject(GetNetworkId(), PRS_Rotation);
 	}
 }
 
@@ -116,3 +120,8 @@ uint32_t Player::OnNetworkWrite(OutputMemoryBitStream & inOutputStream, uint32_t
 	return dirtyState;
 }
 
+void Player::OnNetworkDestroy()
+{
+	WorldCollector::GetWorld('PS')->DestroyBody(mMainBody);
+	mMainBody = nullptr;
+}

@@ -2,18 +2,23 @@
 
 #include "ClientProxy.h"
 #include "Player.h"
+#include "Brick.h"
 #include "HanabiMath.h"
 #include "HanabiConsole.h"
+#include "HanabiMap.h"
 
 class ServerNetworkManager : public NetworkManager
 {
 private:
 	int mNewPlayerId;
 	int mNetworkId;
-	Vector2 mNewSpawnPosition;
+	int mNewSpawnPositionIndex;
 
 	std::unordered_map<SocketAddress, ClientProxyPtr> mSocketAddressToClientProxyMap;
 	std::unordered_map<int, ClientProxyPtr> mPlayerIdToClientProxyMap;
+
+	TMXLoader mapLoader;
+	TMXMap* map;
 
 	void HandleHelloPacket(InputMemoryBitStream& inputMemoryStream, const SocketAddress& fromAddress);
 	void HandleGamePacket(InputMemoryBitStream& inputMemoryStream, const SocketAddress& fromAddress);
@@ -40,5 +45,6 @@ public:
 	void Update(float dt);
 
 	ClientProxyPtr GetClientProxy(int inPlayerId) const;
-	void SetStateDirty(int networkId, uint32_t dirtyState);
+	void UpdateNetworkGameObject(int networkId, uint32_t dirtyState);
+	void DestroyNetworkGameObject(int networkId);
 };

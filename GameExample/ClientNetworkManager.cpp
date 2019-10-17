@@ -24,6 +24,7 @@ void ClientNetworkManager::Init(const std::string &destination, const std::strin
 
 	//Init Register 
 	NetworkGameObjectRegister::RegisterCreationFunction(Player::GetId(), Player::CreateInstance);
+	NetworkGameObjectRegister::RegisterCreationFunction(Brick::GetId(), Brick::CreateInstance);
 
 	//init done, now prepare to send hello packet
 	mState = NetworkClientState::SayingHello;
@@ -137,6 +138,8 @@ void ClientNetworkManager::HandleWelcomePacket(InputMemoryBitStream& inputMemory
 void ClientNetworkManager::HandleGamePacket(InputMemoryBitStream& inputMemoryStream, const SocketAddress& fromAddress)
 {
 	ReadLastActionProcessedOnServerTimeStamp(inputMemoryStream);
+
+	Debug::Log("%d\n", inputMemoryStream.GetRemainingBitCount());
 
 	clientReplicationManager.Read(inputMemoryStream);
 }

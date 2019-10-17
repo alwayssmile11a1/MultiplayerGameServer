@@ -4,6 +4,7 @@
 #include "HanabiMath.h"
 #include "HanabiConsole.h"
 #include "Player.h"
+#include "Brick.h"
 #include "Proxy.h"
 
 class ClientNetworkManager: public NetworkManager

@@ -4,6 +4,7 @@
 #include "HanabiMultiplayer.h"
 #include "HanabiGame.h"
 #include "PlayScene.h"
+#include "SharedTextures.h"
 
 class GameExample : public Game
 {

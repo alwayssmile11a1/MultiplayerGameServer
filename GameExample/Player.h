@@ -8,6 +8,8 @@
 #include "HanabiBody.h"
 #include "HanabiWorld.h"
 #include "Proxy.h"
+#include "SharedTextures.h"
+#include "CollisionBit.h"
 
 class Player : public NetworkGameObject
 {
@@ -20,7 +22,6 @@ private:
 	int mRotation;
 	
 	Body *mMainBody;
-	Texture mTexture;
 	Sprite mSprite;
 
 	//Network stuff

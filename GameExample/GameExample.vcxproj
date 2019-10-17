@@ -116,6 +116,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Brick.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="GameExample.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -123,11 +124,15 @@
     <ClCompile Include="PlayerAction.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="Proxy.cpp" />
+    <ClCompile Include="SharedTexturescpp.cpp" />
     <ClCompile Include="WorldCollisionListener.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Brick.h" />
+    <ClInclude Include="CollisionBit.h" />
     <ClInclude Include="PlayerAction.h" />
     <ClInclude Include="Proxy.h" />
+    <ClInclude Include="SharedTextures.h" />
     <ClInclude Include="WorldCollisionListener.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="GameExample.h" />

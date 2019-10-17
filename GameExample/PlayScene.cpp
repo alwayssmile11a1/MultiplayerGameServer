@@ -30,7 +30,7 @@ void PlayScene::SetClientNetworkManager(ClientNetworkManager* networkManager)
 void PlayScene::Create()
 {
 	//setup camera
-	camera.SetPosition(0, 0);
+	camera.SetPosition(640/2, 640/2);
 
 	//create world
 	world = WorldCollector::CreateWorld('PS');
@@ -61,6 +61,8 @@ void PlayScene::Render()
 	
 	networkManager->Render(batch);
 
+	//map->Render(batch);
+
 	//Render the shape of bodies
 	world->RenderBodiesDebug(batch);
 
@@ -70,5 +72,5 @@ void PlayScene::Render()
 //release scene here
 void PlayScene::Release()
 {
-	
+
 }

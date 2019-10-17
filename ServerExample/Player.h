@@ -5,6 +5,7 @@
 #include "HanabiInput.h"
 #include "HanabiBody.h"
 #include "HanabiWorld.h"
+#include "CollisionBit.h"
 
 class Player : public NetworkGameObject
 {
@@ -41,5 +42,6 @@ public:
 	int GetPlayerId() {return mPlayerId;};
 	void Update(float dt) override;
 	uint32_t OnNetworkWrite(OutputMemoryBitStream & inOutputStream, uint32_t inDirtyState) const override;
+	void OnNetworkDestroy() override;
 
 };
