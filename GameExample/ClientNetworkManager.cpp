@@ -66,7 +66,7 @@ void ClientNetworkManager::SendGamePackets()
 {
 	float currentTime = Time::GetTimeFSinceGameStart();
 
-	//if (currentTime > mTimeOfLastGamePacket + kTimeBetweenSendingGamePacket)
+	if (currentTime > mTimeOfLastGamePacket + kTimeBetweenSendingGamePacket)
 	{
 		//Send PlayerActions
 		if (PlayerActions::GetInstance()->Count() > 0)
@@ -76,9 +76,9 @@ void ClientNetworkManager::SendGamePackets()
 			//write packet type
 			inputPacket.Write(PacketType::PT_Input, 2); //only need 2 bits
 
-			//eventually write the 3 latest playeractions so they have three chances to get through...
+			//eventually write the latest playeractions so they have three chances to get through...
 			int playerActionCount = PlayerActions::GetInstance()->Count();
-			int sentCount = 1;
+			int sentCount = 3;
 			int firstPlayerActionIndex = playerActionCount - sentCount;
 			if (firstPlayerActionIndex < sentCount)
 			{
@@ -158,10 +158,6 @@ void ClientNetworkManager::ReadLastActionProcessedOnServerTimeStamp(InputMemoryB
 	//Update averageRoundTripTime
 	float rtt = Time::GetTimeFSinceGameStart() - lastActionProcessedByServerTimestamp;
 	mAverageRoundTripTime.Update(rtt);
-
-	//Debug::Log("%f\n", lastActionProcessedByServerTimestamp);
-	//Debug::Log("%f\n", Time::GetTimeF());
-	//Debug::Log("\n\n");
 }
 
 

@@ -14,6 +14,7 @@ private:
 	Body *mMainBody;
 	bool mIsShooting;
 	int mRotation;
+	float mMoveSpeed;
 
 	void SimulateAction(const PlayerAction& playerAction);
 

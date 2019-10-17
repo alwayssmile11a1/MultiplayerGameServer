@@ -43,10 +43,10 @@ void PlayScene::Create()
 void PlayScene::Update(float dt)
 {
 	networkManager->ReceiveIncomingPackets();
-
-	networkManager->Update(dt);
 	
 	world->Update(dt);
+
+	networkManager->Update(dt);
 
 	networkManager->SendOutgoingPackets();
 

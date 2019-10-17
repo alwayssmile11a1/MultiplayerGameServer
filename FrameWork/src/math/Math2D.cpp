@@ -6,3 +6,10 @@ const Vector2& Math2D::Lerp(const Vector2& vectorA, const Vector2& vectorB, floa
 
 	return result;
 }
+
+float Math2D::Clamp(float value, float min, float max)
+{
+	if (value < min) value = min;
+	if (value > max) value = max;
+	return value;
+}

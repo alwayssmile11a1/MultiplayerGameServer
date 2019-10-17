@@ -10,11 +10,13 @@ Player::Player()
 	BodyDef bodyDef;
 	bodyDef.bodyType = Body::BodyType::Kinematic;
 	bodyDef.position.Set(0, 0);
-	bodyDef.size.Set(100, 100);
+	bodyDef.size.Set(26, 26);
 	//bodyDef.linearDrag.Set(10, 10);
 	//bodyDef.mass = 2;
 	mMainBody = WorldCollector::GetWorld('PS')->CreateBody(bodyDef);
 	mMainBody->PutExtra(this);
+
+	mMoveSpeed = 2.0f;
 }
 
 Player::~Player()
@@ -65,6 +67,11 @@ void Player::SimulateAction(const PlayerAction& playerAction)
 {
 	//Set velocity
 	Vector2 velocity = playerAction.GetVelocity();
+
+	//Clamp velocity
+	velocity.x = Math2D::Clamp(velocity.x, -mMoveSpeed, mMoveSpeed);
+	velocity.y = Math2D::Clamp(velocity.y, -mMoveSpeed, mMoveSpeed);
+
 	mMainBody->SetVelocity(velocity.x, velocity.y);
 
 	//Debug::Log("%f %f\n", velocity.x, velocity.y);

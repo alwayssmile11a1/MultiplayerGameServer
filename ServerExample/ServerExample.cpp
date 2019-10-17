@@ -27,9 +27,9 @@ void ServerExample::UpdateGame(float dt)
 {
 	mServerNetworkManager.ReceiveIncomingPackets();
 
-	mServerNetworkManager.Update(dt);
-	
 	mWorld->Update(dt);
+
+	mServerNetworkManager.Update(dt);
 
 	mServerNetworkManager.SendOutgoingPackets();
 

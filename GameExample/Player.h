@@ -13,6 +13,7 @@ class Player : public NetworkGameObject
 {
 private:
 
+	float mMoveSpeed;
 	int mPlayerId;
 	int mHealth;
 	bool mIsShooting;
@@ -47,6 +48,7 @@ public:
 	Player();
 	~Player();
 
+	
 	void SetPlayerId(int playerId) { mPlayerId = playerId; };
 	int GetPlayerId() {return mPlayerId;};
 

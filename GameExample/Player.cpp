@@ -2,22 +2,18 @@
 
 Player::Player()
 {
-	//Setup sprite 
-	mTexture = Texture("../Resources/mouse.png");
-	mSprite.SetTexture(&mTexture);
-	mSprite.ResetToWhole();
-	mSprite.SetPosition(0, 0);
-	mSprite.SetRotation(-90);
+	//Get texture
+	mTexture = Texture("../Resources/battlecityspritesheet.png");
 
 	//Setup body
 	BodyDef bodyDef;
 	bodyDef.bodyType = Body::BodyType::Kinematic;
 	bodyDef.position.Set(0, 0);
-	bodyDef.size.Set(100, 100);
-	//bodyDef.linearDrag.Set(10, 10);
-	//bodyDef.mass = 2;
+	bodyDef.size.Set(26, 26);
 	mMainBody = WorldCollector::GetWorld('PS')->CreateBody(bodyDef);
 	mMainBody->PutExtra(this);
+
+	mMoveSpeed = 2.0f;
 }
 
 Player::~Player()
@@ -33,34 +29,40 @@ void Player::Update(float dt)
 {
 	if (GetPlayerId() == Proxy::GetPlayerId())
 	{
-		if (Input::GetKey(DIK_RIGHT))
+		if (mMainBody->GetVelocity().x == 0)
 		{
-			mMainBody->SetVelocity(5, mMainBody->GetVelocity().y);
+			if (Input::GetKey(DIK_UP))
+			{
+				mMainBody->SetVelocity(0, mMoveSpeed);
+			}
+
+			if (Input::GetKey(DIK_DOWN))
+			{
+				mMainBody->SetVelocity(0, -mMoveSpeed);
+			}
+
+			if (Input::GetKeyUp(DIK_UP) || Input::GetKeyUp(DIK_DOWN))
+			{
+				mMainBody->SetVelocity(0, 0);
+			}
 		}
 
-		if (Input::GetKey(DIK_LEFT))
+		if (mMainBody->GetVelocity().y == 0)
 		{
-			mMainBody->SetVelocity(-5, mMainBody->GetVelocity().y);
-		}
+			if (Input::GetKey(DIK_RIGHT))
+			{
+				mMainBody->SetVelocity(mMoveSpeed, 0);
+			}
 
-		if (Input::GetKeyUp(DIK_LEFT) || Input::GetKeyUp(DIK_RIGHT))
-		{
-			mMainBody->SetVelocity(0, mMainBody->GetVelocity().y);
-		}
+			if (Input::GetKey(DIK_LEFT))
+			{
+				mMainBody->SetVelocity(-mMoveSpeed, 0);
+			}
 
-		if (Input::GetKey(DIK_UP))
-		{
-			mMainBody->SetVelocity(mMainBody->GetVelocity().x, 5);
-		}
-
-		if (Input::GetKey(DIK_DOWN))
-		{
-			mMainBody->SetVelocity(mMainBody->GetVelocity().x, -5);
-		}
-
-		if (Input::GetKeyUp(DIK_UP) || Input::GetKeyUp(DIK_DOWN))
-		{
-			mMainBody->SetVelocity(mMainBody->GetVelocity().x, 0);
+			if (Input::GetKeyUp(DIK_LEFT) || Input::GetKeyUp(DIK_RIGHT))
+			{
+				mMainBody->SetVelocity(0, 0);
+			}
 		}
 
 		if (Input::GetKey(DIK_SPACE))
@@ -93,6 +95,19 @@ void Player::OnNetworkRead(InputMemoryBitStream & inInputStream, uint32_t dirtyS
 	if (dirtyState & PRS_PlayerId)
 	{
 		inInputStream.Read(mPlayerId);
+
+		if (mPlayerId == Proxy::GetPlayerId())
+		{
+			TexturePacker p = TexturePacker(&mTexture, "../Resources/battlecity.xml");
+			mSprite.SetRegion(p.GetRegion("greentank_1")[0]);
+			mSprite.SetSize(26, 26);
+		}
+		else
+		{
+			TexturePacker p = TexturePacker(&mTexture, "../Resources/battlecity.xml");
+			mSprite.SetRegion(p.GetRegion("yellowtank_1")[0]);
+			mSprite.SetSize(26, 26);
+		}
 	}
 
 	if (dirtyState & PRS_Position)
@@ -124,28 +139,29 @@ void Player::OnNetworkRead(InputMemoryBitStream & inInputStream, uint32_t dirtyS
 		inInputStream.Read(mHealth);
 	}
 
-	//Debug::Log("%f   %f %f\n\n", Time::GetTimeF(), mMainBody->GetPosition().x, mMainBody->GetPosition().y);
-
-	if (GetPlayerId() == Proxy::GetPlayerId())
+	//Don't do anything if it's the very first packet
+	if (dirtyState & PRS_PlayerId == 0)
 	{
-		//all processed moves have been removed, so all that are left are unprocessed moves
-		//so we must apply them...
-		//TODO: remove processed move before this function
-		for (const PlayerAction& playerAction : *PlayerActions::GetInstance())
+		if (GetPlayerId() == Proxy::GetPlayerId())
 		{
-			//simulate movement
-			SimulateAction(playerAction);
+			//all processed moves have been removed, so all that are left are unprocessed moves
+			//so we must apply them...
+			//TODO: remove processed move before this function
+			for (const PlayerAction& playerAction : *PlayerActions::GetInstance())
+			{
+				//simulate movement
+				SimulateAction(playerAction);
+			}
+
+			InterpolateClientSidePrediction(ClientNetworkManager::Instance->GetAverageRoundTripTime(), oldPosition, oldVelocity, oldRotation);
 		}
-
-		//InterpolateClientSidePrediction(ClientNetworkManager::Instance->GetAverageRoundTripTime(), oldPosition, oldVelocity, oldRotation);
+		else
+		{
+			//Simulate movement with round trip time for remote players
+			SimulateAction(ClientNetworkManager::Instance->GetAverageRoundTripTime());
+			InterpolateClientSidePrediction(ClientNetworkManager::Instance->GetAverageRoundTripTime(), oldPosition, oldVelocity, oldRotation);
+		}
 	}
-	else
-	{
-		//Simulate movement with round trip time for remote players
-		SimulateAction(ClientNetworkManager::Instance->GetAverageRoundTripTime());
-		InterpolateClientSidePrediction(ClientNetworkManager::Instance->GetAverageRoundTripTime(), oldPosition, oldVelocity, oldRotation);
-	}
-
 }
 
 void Player::SimulateAction(const PlayerAction& playerAction)
