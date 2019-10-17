@@ -27,7 +27,6 @@ void ServerNetworkManager::Init(uint16_t inPort)
 	map = mapLoader.GetMap("map1");
 
 	//create brick
-	int i = 0;
 	std::vector<Shape::Rectangle> brickRects = map->GetObjectGroup("Brick")->GetRects();
 	for (std::vector<Shape::Rectangle>::iterator rect = brickRects.begin(); rect != brickRects.end(); ++rect)
 	{
@@ -38,15 +37,7 @@ void ServerNetworkManager::Init(uint16_t inPort)
 
 		//Register this brick
 		RegisterGameObject(gameObject);
-
-		i++;
-
-		if (i == 70)
-		{
-			break;
-		}
 	}
-
 }
 
 void ServerNetworkManager::OnSendPackets()

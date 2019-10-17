@@ -139,8 +139,6 @@ void ClientNetworkManager::HandleGamePacket(InputMemoryBitStream& inputMemoryStr
 {
 	ReadLastActionProcessedOnServerTimeStamp(inputMemoryStream);
 
-	Debug::Log("%d\n", inputMemoryStream.GetRemainingBitCount());
-
 	clientReplicationManager.Read(inputMemoryStream);
 }
 

@@ -54,7 +54,7 @@ void NetworkManager::SendOutgoingPackets()
 void NetworkManager::ReadIncomingPacketsIntoQueue()
 {
 	//should we just keep a static one?
-	char packetMem[1500];
+	char packetMem[5000];
 	int packetSize = sizeof(packetMem);
 	InputMemoryBitStream inputStream(packetMem, packetSize * 8);
 	SocketAddress fromAddress;
