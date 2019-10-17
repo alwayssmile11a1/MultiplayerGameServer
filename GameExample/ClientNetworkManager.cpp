@@ -5,8 +5,8 @@ ClientNetworkManager* ClientNetworkManager:: Instance;
 ClientNetworkManager::ClientNetworkManager()
 {
 	mState = NetworkClientState::Uninitialized;
-	mTimeOfLastHello = Time::GetTimeF();
-	mTimeOfLastGamePacket = Time::GetTimeF();
+	mTimeOfLastHello = Time::GetTimeFSinceGameStart();
+	mTimeOfLastGamePacket = Time::GetTimeFSinceGameStart();
 	Instance = this;
 }
 
@@ -48,7 +48,7 @@ void ClientNetworkManager::OnSendPackets()
 
 void ClientNetworkManager::SendHelloPacket()
 {
-	float currentTime = Time::GetTimeF();
+	float currentTime = Time::GetTimeFSinceGameStart();
 
 	if (currentTime > mTimeOfLastHello + kTimeBetweenSendingHelloPacket)
 	{
@@ -64,7 +64,7 @@ void ClientNetworkManager::SendHelloPacket()
 
 void ClientNetworkManager::SendGamePackets()
 {
-	float currentTime = Time::GetTimeF();
+	float currentTime = Time::GetTimeFSinceGameStart();
 
 	//if (currentTime > mTimeOfLastGamePacket + kTimeBetweenSendingGamePacket)
 	{
@@ -92,7 +92,6 @@ void ClientNetworkManager::SendGamePackets()
 			for (; firstPlayerActionIndex < playerActionCount; ++firstPlayerActionIndex, ++playerAction)
 			{
 				playerAction->OnNetworkWrite(inputPacket);
-				Debug::Log("%f\n", playerAction->GetTimeStamp());
 			}
 
 			SendPacket(inputPacket, mDestinationAddress);
@@ -157,7 +156,7 @@ void ClientNetworkManager::ReadLastActionProcessedOnServerTimeStamp(InputMemoryB
 	PlayerActions::GetInstance()->RemovePlayerActions(lastActionProcessedByServerTimestamp);
 
 	//Update averageRoundTripTime
-	float rtt = Time::GetTimeF() - lastActionProcessedByServerTimestamp;
+	float rtt = Time::GetTimeFSinceGameStart() - lastActionProcessedByServerTimestamp;
 	mAverageRoundTripTime.Update(rtt);
 
 	//Debug::Log("%f\n", lastActionProcessedByServerTimestamp);

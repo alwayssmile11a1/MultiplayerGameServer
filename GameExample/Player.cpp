@@ -75,7 +75,7 @@ void Player::Update(float dt)
 		}
 		
 		//Add playerAction to list
-		PlayerActions::GetInstance()->AddPlayerAction(Time::GetTimeF(), dt, mMainBody->GetVelocity(), mIsShooting);
+		PlayerActions::GetInstance()->AddPlayerAction(Time::GetTimeFSinceGameStart(), dt, mMainBody->GetVelocity(), mIsShooting);
 	}
 
 	//update sprite position
@@ -192,7 +192,7 @@ void Player::InterpolateClientSidePrediction(float roundTripTime, const Vector2&
 	if (oldPosition.x != mMainBody->GetPosition().x || oldPosition.y != mMainBody->GetPosition().y)
 	{
 		//have we been out of sync, or did we just become out of sync?
-		float time = Time::GetTimeF();
+		float time = Time::GetTimeFSinceGameStart();
 		if (mTimeLocationBecameOutOfSync == 0.0f)
 		{
 			mTimeLocationBecameOutOfSync = time;
@@ -230,7 +230,7 @@ void Player::InterpolateClientSidePrediction(float roundTripTime, const Vector2&
 	if (oldVelocity.x != mMainBody->GetVelocity().x || oldVelocity.y != mMainBody->GetVelocity().y)
 	{
 		//have we been out of sync, or did we just become out of sync?
-		float time = Time::GetTimeF();
+		float time = Time::GetTimeFSinceGameStart();
 		if (mTimeVelocityBecameOutOfSync == 0.f)
 		{
 			mTimeVelocityBecameOutOfSync = time;

@@ -297,6 +297,9 @@ bool Game::InitGame()
 	//Init sound
 	Sound::DirectSound_Init(_HWnd);
 
+	//Init Time
+	Time::Init();
+
 	//Init networking 
 	NetworkManager::StaticInit();
 

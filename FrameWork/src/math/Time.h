@@ -1,16 +1,19 @@
 #ifndef TIME_H
 #define TIME_H
 
-#include <Windows.h>
+#include <time.h>       /* clock_t, clock, CLOCKS_PER_SEC */
+#include <math.h>       /* sqrt */
 
 class Time
 {
 private:
-
+	static float start;
 
 public:
-	//Get current time
-	static float GetTimeF();
+	static void Init();
+
+	//Get time since the start of frame
+	static float GetTimeFSinceGameStart();
 
 
 };

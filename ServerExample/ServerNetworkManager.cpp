@@ -151,7 +151,6 @@ void ServerNetworkManager::HandleGamePacket(InputMemoryBitStream& inputMemoryStr
 			PlayerAction playerAction;
 			playerAction.OnNetworkRead(inputMemoryStream);
 
-			//Debug::Log("%f\n", playerAction.GetTimeStamp());
 			if (fromClientProxy->GetPlayerActions().AddPlayerAction(playerAction))
 			{
 				fromClientProxy->SetLastActionTimeStampDirty(true);

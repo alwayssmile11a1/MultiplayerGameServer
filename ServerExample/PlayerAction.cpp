@@ -41,17 +41,10 @@ bool PlayerActions::AddPlayerAction(const PlayerAction &playerAction)
 	//Get timestamp
 	float timeStamp = playerAction.GetTimeStamp();
 
-	Debug::Log("%f\n", timeStamp);
-	Debug::Log("%f\n\n", mLastActionTimeStamp);
-
 	if (timeStamp > mLastActionTimeStamp)
 	{
 		mLastActionTimeStamp = timeStamp;
 		mPlayerActions.emplace_back(playerAction.GetTimeStamp(), playerAction.GetDeltaTime(), playerAction.GetVelocity(), playerAction.GetIsShooting());
-
-
-		//Debug::Log("%f %f\n", playerAction.GetVelocity().x, playerAction.GetVelocity().y);
-
 		return true;
 	}
 

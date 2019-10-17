@@ -1,7 +1,12 @@
 #include "Time.h"
 
-float Time::GetTimeF()
+float Time::start;
+void Time::Init()
 {
-	float time = GetTickCount() / 1000.0;
-	return time;
+	start = clock();
+}
+
+float Time::GetTimeFSinceGameStart()
+{
+	return (clock() - start)/CLOCKS_PER_SEC;
 }

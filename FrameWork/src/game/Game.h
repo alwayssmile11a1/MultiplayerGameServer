@@ -11,6 +11,7 @@
 #include "..\input\Input.h"
 #include "..\others\Utility.h"
 #include "..\console\Debug.h"
+#include "..\math\Time.h"
 
 	//this abstract class manages game structure, such as DirectX, game run, etc... 
 class Game : public GameObject

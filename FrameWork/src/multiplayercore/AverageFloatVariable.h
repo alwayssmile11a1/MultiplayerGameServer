@@ -10,12 +10,12 @@ public:
 	{
 		mValue = 0.0f;
 		mDuration = duration;
-		mTimeLastEntry = Time::GetTimeF();
+		mTimeLastEntry = Time::GetTimeFSinceGameStart();
 	}
 
 	void Update(float inValue)
 	{
-		float time = Time::GetTimeF();
+		float time = Time::GetTimeFSinceGameStart();
 		float timeSinceLastEntry = time - mTimeLastEntry;
 
 		//now update our value by whatever amount of the duration that was..
