@@ -66,7 +66,7 @@ void ClientNetworkManager::SendGamePackets()
 {
 	float currentTime = Time::GetTimeF();
 
-	if (currentTime > mTimeOfLastGamePacket + kTimeBetweenSendingGamePacket)
+	//if (currentTime > mTimeOfLastGamePacket + kTimeBetweenSendingGamePacket)
 	{
 		//Send PlayerActions
 		if (PlayerActions::GetInstance()->Count() > 0)
@@ -78,8 +78,9 @@ void ClientNetworkManager::SendGamePackets()
 
 			//eventually write the 3 latest playeractions so they have three chances to get through...
 			int playerActionCount = PlayerActions::GetInstance()->Count();
-			int firstPlayerActionIndex = playerActionCount - 3;
-			if (firstPlayerActionIndex < 3)
+			int sentCount = 1;
+			int firstPlayerActionIndex = playerActionCount - sentCount;
+			if (firstPlayerActionIndex < sentCount)
 			{
 				firstPlayerActionIndex = 0;
 			}
@@ -91,6 +92,7 @@ void ClientNetworkManager::SendGamePackets()
 			for (; firstPlayerActionIndex < playerActionCount; ++firstPlayerActionIndex, ++playerAction)
 			{
 				playerAction->OnNetworkWrite(inputPacket);
+				Debug::Log("%f\n", playerAction->GetTimeStamp());
 			}
 
 			SendPacket(inputPacket, mDestinationAddress);
@@ -143,9 +145,13 @@ void ClientNetworkManager::HandleGamePacket(InputMemoryBitStream& inputMemoryStr
 void ClientNetworkManager::ReadLastActionProcessedOnServerTimeStamp(InputMemoryBitStream& inputMemoryStream)
 {
 	//read timeStamp
+	bool isTimeStampDirty;
+	inputMemoryStream.Read(isTimeStampDirty);
+
+	if (!isTimeStampDirty) return;
+
 	float lastActionProcessedByServerTimestamp;
 	inputMemoryStream.Read(lastActionProcessedByServerTimestamp);
-	//Debug::Log("%f", lastActionProcessedByServerTimestamp);
 
 	//remove processed action
 	PlayerActions::GetInstance()->RemovePlayerActions(lastActionProcessedByServerTimestamp);
@@ -153,6 +159,10 @@ void ClientNetworkManager::ReadLastActionProcessedOnServerTimeStamp(InputMemoryB
 	//Update averageRoundTripTime
 	float rtt = Time::GetTimeF() - lastActionProcessedByServerTimestamp;
 	mAverageRoundTripTime.Update(rtt);
+
+	//Debug::Log("%f\n", lastActionProcessedByServerTimestamp);
+	//Debug::Log("%f\n", Time::GetTimeF());
+	//Debug::Log("\n\n");
 }
 
 

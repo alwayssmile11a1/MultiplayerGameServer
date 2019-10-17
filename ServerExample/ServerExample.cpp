@@ -25,13 +25,15 @@ void ServerExample::CreateGame()
 //update game here
 void ServerExample::UpdateGame(float dt)
 {
-	Game::UpdateGame(dt);
 	mServerNetworkManager.ReceiveIncomingPackets();
-	mServerNetworkManager.SendOutgoingPackets();
-	mServerNetworkManager.Update(dt);
 
+	mServerNetworkManager.Update(dt);
+	
 	mWorld->Update(dt);
 
+	mServerNetworkManager.SendOutgoingPackets();
+
+	//Render
 	batch.Begin();
 
 	mWorld->RenderBodiesDebug(&batch);

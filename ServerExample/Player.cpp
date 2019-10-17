@@ -67,6 +67,8 @@ void Player::SimulateAction(const PlayerAction& playerAction)
 	Vector2 velocity = playerAction.GetVelocity();
 	mMainBody->SetVelocity(velocity.x, velocity.y);
 
+	//Debug::Log("%f %f\n", velocity.x, velocity.y);
+
 	//Update word to simulate the current player action (also check collisions)
 	WorldCollector::GetWorld('PS')->Update(playerAction.GetDeltaTime());
 
@@ -84,8 +86,9 @@ uint32_t Player::OnNetworkWrite(OutputMemoryBitStream & inOutputStream, uint32_t
 	if (dirtyState & PRS_Position)
 	{
 		inOutputStream.Write(mMainBody->GetPosition());
+		//Debug::Log("DIRTY: %f   %f %f\n", Time::GetTimeF(), mMainBody->GetPosition().x, mMainBody->GetPosition().y);
 	}
-
+	
 	if (dirtyState & PRS_Velocity)
 	{
 		inOutputStream.Write(mMainBody->GetVelocity());
@@ -100,6 +103,8 @@ uint32_t Player::OnNetworkWrite(OutputMemoryBitStream & inOutputStream, uint32_t
 	{
 		inOutputStream.Write(mHealth);
 	}
+
+	//Debug::Log("%f   %f %f\n\n", Time::GetTimeF(), mMainBody->GetPosition().x, mMainBody->GetPosition().y);
 
 	return dirtyState;
 }

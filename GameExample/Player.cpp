@@ -73,15 +73,13 @@ void Player::Update(float dt)
 
 			mIsShooting = false;
 		}
-
+		
 		//Add playerAction to list
 		PlayerActions::GetInstance()->AddPlayerAction(Time::GetTimeF(), dt, mMainBody->GetVelocity(), mIsShooting);
-
 	}
 
 	//update sprite position
 	mSprite.SetPosition(mMainBody->GetPosition().x, mMainBody->GetPosition().y);
-
 }
 
 void Player::OnNetworkRead(InputMemoryBitStream & inInputStream, uint32_t dirtyState)
@@ -102,7 +100,9 @@ void Player::OnNetworkRead(InputMemoryBitStream & inInputStream, uint32_t dirtyS
 		Vector2 position;
 		inInputStream.Read(position);
 		//set the current position back to the position of this player on server 
-		mMainBody->SetPosition(position.x, position.y); 
+		mMainBody->SetPosition(position.x, position.y);
+
+		//Debug::Log("DIRTY: %f   %f %f\n", Time::GetTimeF(), mMainBody->GetPosition().x, mMainBody->GetPosition().y);
 	}
 
 	if (dirtyState & PRS_Velocity)
@@ -124,6 +124,8 @@ void Player::OnNetworkRead(InputMemoryBitStream & inInputStream, uint32_t dirtyS
 		inInputStream.Read(mHealth);
 	}
 
+	//Debug::Log("%f   %f %f\n\n", Time::GetTimeF(), mMainBody->GetPosition().x, mMainBody->GetPosition().y);
+
 	if (GetPlayerId() == Proxy::GetPlayerId())
 	{
 		//all processed moves have been removed, so all that are left are unprocessed moves
@@ -133,8 +135,9 @@ void Player::OnNetworkRead(InputMemoryBitStream & inInputStream, uint32_t dirtyS
 		{
 			//simulate movement
 			SimulateAction(playerAction);
-			//InterpolateClientSidePrediction(ClientNetworkManager::Instance->GetAverageRoundTripTime(), oldPosition, oldVelocity, oldRotation);
 		}
+
+		//InterpolateClientSidePrediction(ClientNetworkManager::Instance->GetAverageRoundTripTime(), oldPosition, oldVelocity, oldRotation);
 	}
 	else
 	{

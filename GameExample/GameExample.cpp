@@ -34,9 +34,6 @@ void GameExample::CreateGame()
 void GameExample::UpdateGame(float dt)
 {
 	Game::UpdateGame(dt);
-
-	clientNetworkManager.ReceiveIncomingPackets();
-	clientNetworkManager.SendOutgoingPackets();
 }
 
 //remember to release everything

@@ -28,7 +28,6 @@ void ClientReplicationManager::Read(InputMemoryBitStream& inInputStream)
 			ReadAndDoDestroyAction(inInputStream, networkId, dirtyState);
 			break;
 		}
-
 	}
 
 }

@@ -16,6 +16,7 @@ private:
 
 public:
 	PlayerAction();
+	PlayerAction(float timeStamp, float deltaTime, const Vector2 &velocity, bool isShooting);
 	~PlayerAction();
 
 	const Vector2& GetVelocity() const { return mVelocity; }
@@ -35,6 +36,8 @@ private:
 
 public:
 
+	PlayerActions() { mLastActionTimeStamp = -1.0f; }
+
 	typedef std::deque< PlayerAction >::const_iterator			const_iterator;
 	typedef std::deque< PlayerAction >::const_reverse_iterator	const_reverse_iterator;
 
@@ -43,6 +46,7 @@ public:
 	const_iterator	end()					const { return mPlayerActions.end(); }
 
 	int Count();
+	//Add player action if new
 	bool AddPlayerAction(const PlayerAction &playerAction);
 	float GetLastActionTimeStamp() { return mLastActionTimeStamp; }
 	void Clear();

@@ -8,6 +8,14 @@ PlayerAction::PlayerAction()
 	mIsShooting = false;
 }
 
+PlayerAction::PlayerAction(float timeStamp, float deltaTime, const Vector2 &velocity, bool isShooting)
+{
+	mTimeStamp = timeStamp;
+	mDeltaTime = deltaTime;
+	mVelocity = velocity;
+	mIsShooting = isShooting;
+}
+
 PlayerAction::~PlayerAction()
 {
 }
@@ -33,10 +41,16 @@ bool PlayerActions::AddPlayerAction(const PlayerAction &playerAction)
 	//Get timestamp
 	float timeStamp = playerAction.GetTimeStamp();
 
+	Debug::Log("%f\n", timeStamp);
+	Debug::Log("%f\n\n", mLastActionTimeStamp);
+
 	if (timeStamp > mLastActionTimeStamp)
 	{
 		mLastActionTimeStamp = timeStamp;
-		mPlayerActions.emplace_back(playerAction);
+		mPlayerActions.emplace_back(playerAction.GetTimeStamp(), playerAction.GetDeltaTime(), playerAction.GetVelocity(), playerAction.GetIsShooting());
+
+
+		//Debug::Log("%f %f\n", playerAction.GetVelocity().x, playerAction.GetVelocity().y);
 
 		return true;
 	}

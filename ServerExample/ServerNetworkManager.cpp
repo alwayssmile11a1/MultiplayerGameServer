@@ -31,7 +31,12 @@ void ServerNetworkManager::OnSendPackets()
 		packet.Write(PacketType::PT_State, 2);
 
 		//write last action timestamp
-		packet.Write(pair.second->GetPlayerActions().GetLastActionTimeStamp());
+		packet.Write(pair.second->IsLastActionTimeStampDirty());
+		if (pair.second->IsLastActionTimeStampDirty())
+		{
+			packet.Write(pair.second->GetPlayerActions().GetLastActionTimeStamp());
+			pair.second->SetLastActionTimeStampDirty(false);
+		}
 
 		//then write world replication state
 		pair.second->GetServerReplicationManager().Write(packet);
@@ -145,7 +150,12 @@ void ServerNetworkManager::HandleGamePacket(InputMemoryBitStream& inputMemoryStr
 		{
 			PlayerAction playerAction;
 			playerAction.OnNetworkRead(inputMemoryStream);
-			fromClientProxy->GetPlayerActions().AddPlayerAction(playerAction);
+
+			//Debug::Log("%f\n", playerAction.GetTimeStamp());
+			if (fromClientProxy->GetPlayerActions().AddPlayerAction(playerAction))
+			{
+				fromClientProxy->SetLastActionTimeStampDirty(true);
+			}
 		}
 	}
 }
