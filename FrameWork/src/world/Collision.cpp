@@ -55,7 +55,7 @@ bool Collision::IsColliding(Body *targetBody, Body *otherBody, float DeltaTime)
 	}
 
 	//tính toán t x entry/ exit
-	if (targetVelocity.x == 0.0f) //tránh trường hợp a.velocity = 0 dẫn tới việc chia cho 0, nên ta gán x entry/ exit = +/-vô cùng
+	if (tempvx == 0.0f) //tránh trường hợp a.velocity = 0 dẫn tới việc chia cho 0, nên ta gán x entry/ exit = +/-vô cùng
 	{
 		rxentry = -std::numeric_limits<float>::infinity();
 		rxexit = std::numeric_limits<float>::infinity();
@@ -67,7 +67,7 @@ bool Collision::IsColliding(Body *targetBody, Body *otherBody, float DeltaTime)
 	}
 
 	//tính toán t y entry/ exit, tương tự x entry/ exit
-	if (targetVelocity.y == 0.0f)
+	if (tempvy == 0.0f)
 	{
 		ryentry = -std::numeric_limits<float>::infinity();
 		ryexit = std::numeric_limits<float>::infinity();
@@ -88,6 +88,7 @@ bool Collision::IsColliding(Body *targetBody, Body *otherBody, float DeltaTime)
 		(rxentry < 0.0f && ryentry < 0.0f) || //trường hợp không xảy ra va chạm thứ 2: vật a có vận tốc = 0 dẫn đến x entry/ y entry = -vô cùng, hoặc vật a di chuyển hướng ra khỏi vật b
 
 		(rxentry > 1.0f) || (ryentry > 1.0f)) //trường hợp không xảy ra va chạm thứ 3: trong khoảng thời gian delta_time đang xét (thời gian của 1 frame) thì vật a di chuyển chưa tới vật b
+
 	{
 		_CollisionDirection.x = NOT_COLLIDED;
 		_CollisionDirection.y = NOT_COLLIDED;
@@ -125,7 +126,15 @@ bool Collision::IsColliding(Body *targetBody, Body *otherBody, float DeltaTime)
 			// và ngăn không cho vật a thay đổi theo x
 			if (dxentry == 0.0f)//nếu vật a ngay sát bên phải/trái vật b thì không cho xảy ra va chạm
 			{
-				_CollisionDirection.x = -targetVelocity.x;
+				if (dyentry == 0.0f || dyexit == 0.0f)
+				{
+					_CollisionDirection.x = NOT_COLLIDED;
+				}
+				else
+				{
+					_CollisionDirection.x = -targetVelocity.x;
+				}
+
 				_CollisionDirection.y = NOT_COLLIDED; //hardcode 100.0f để báo là ko va chạm theo chiều này
 			}
 			else
@@ -149,7 +158,14 @@ bool Collision::IsColliding(Body *targetBody, Body *otherBody, float DeltaTime)
 			if (dyentry == 0.0f)
 			{
 				_CollisionDirection.x = NOT_COLLIDED; //hardcode 100.0f để báo là ko va chạm theo chiều này
-				_CollisionDirection.y = -targetVelocity.y;
+				if (dxentry == 0.0f || dxexit == 0.0f)
+				{
+					_CollisionDirection.y = NOT_COLLIDED;
+				}
+				else
+				{
+					_CollisionDirection.y = -targetVelocity.y;
+				}
 			}
 			else
 			{

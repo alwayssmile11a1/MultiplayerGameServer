@@ -33,7 +33,7 @@
 383,384,83,84,0,0,83,84,0,0,0,36,289,290,36,0,0,0,83,83,83,83,83,84,0,0
 </data>
  </layer>
- <objectgroup name="Brick" visible="0">
+ <objectgroup name="Brick">
   <object id="1" x="16" y="16" width="8" height="8"/>
   <object id="2" x="24" y="16" width="8" height="8"/>
   <object id="3" x="16" y="24" width="8" height="8"/>
@@ -267,7 +267,7 @@
   <object id="231" x="176" y="200" width="8" height="8"/>
   <object id="232" x="184" y="200" width="8" height="8"/>
  </objectgroup>
- <objectgroup name="Metal" visible="0">
+ <objectgroup name="Metal">
   <object id="233" x="48" y="0" width="8" height="8"/>
   <object id="234" x="56" y="0" width="8" height="8"/>
   <object id="235" x="48" y="8" width="8" height="8"/>

@@ -21,10 +21,19 @@ Player::Player()
 	mMainBody->PutExtra(this);
 
 	mMoveSpeed = 2.0f;
+
+	TexturePacker p = TexturePacker(&SharedTextures::BattleCityTexture, "../Resources/battlecity.xml");
+	mSprite.SetRegion(p.GetRegion("yellowtank_1")[0]);
+	mSprite.SetSize(26, 26);
 }
 
 Player::~Player()
 {
+}
+
+void Player::Render(SpriteBatch *batch)
+{
+	batch->Draw(mSprite);
 }
 
 void Player::Update(float dt)
@@ -65,6 +74,8 @@ void Player::Update(float dt)
 	{
 		ServerNetworkManager::Instance->UpdateNetworkGameObject(GetNetworkId(), PRS_Rotation);
 	}
+
+	mSprite.SetPosition(mMainBody->GetPosition().x, mMainBody->GetPosition().y);
 }
 
 void Player::SimulateAction(const PlayerAction& playerAction)
@@ -80,8 +91,8 @@ void Player::SimulateAction(const PlayerAction& playerAction)
 
 	//Debug::Log("%f %f\n", velocity.x, velocity.y);
 
-	//Update word to simulate the current player action (also check collisions)
-	WorldCollector::GetWorld('PS')->Update(playerAction.GetDeltaTime());
+	//check collisions
+	WorldCollector::GetWorld('PS')->UpdateForBody(mMainBody, playerAction.GetDeltaTime());
 
 	//TODO: Handle shooting
 	mIsShooting = playerAction.GetIsShooting();

@@ -6,6 +6,7 @@
 #include "HanabiBody.h"
 #include "HanabiWorld.h"
 #include "CollisionBit.h"
+#include "SharedTextures.h"
 
 class Player : public NetworkGameObject
 {
@@ -16,6 +17,7 @@ private:
 	bool mIsShooting;
 	int mRotation;
 	float mMoveSpeed;
+	Sprite mSprite;
 
 	void SimulateAction(const PlayerAction& playerAction);
 
@@ -40,6 +42,7 @@ public:
 	void SetPosition(const Vector2 &inPosition) { mMainBody->SetPosition(inPosition.x, inPosition.y); };
 	void SetPlayerId(int playerId) { mPlayerId = playerId; };
 	int GetPlayerId() {return mPlayerId;};
+	void Render(SpriteBatch *batch) override;
 	void Update(float dt) override;
 	uint32_t OnNetworkWrite(OutputMemoryBitStream & inOutputStream, uint32_t inDirtyState) const override;
 	void OnNetworkDestroy() override;

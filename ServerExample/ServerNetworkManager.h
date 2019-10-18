@@ -3,6 +3,7 @@
 #include "ClientProxy.h"
 #include "Player.h"
 #include "Brick.h"
+#include "Metal.h"
 #include "HanabiMath.h"
 #include "HanabiConsole.h"
 #include "HanabiMap.h"
@@ -43,6 +44,7 @@ public:
 
 	void Init(uint16_t inPort);
 	void Update(float dt);
+	void Render(SpriteBatch* spriteBatch);
 
 	ClientProxyPtr GetClientProxy(int inPlayerId) const;
 	void UpdateNetworkGameObject(int networkId, uint32_t dirtyState);

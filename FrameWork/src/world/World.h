@@ -68,6 +68,9 @@ public:
 	//Update world (update all the objects in this world)
 	void Update(float dt);
 
+	//Check and simulate collision only
+	void UpdateForBody(Body* body, float dt);
+
 	void DestroyBody(Body* body);
 
 	Body* CreateBody(const BodyDef &bodyDef);

@@ -173,8 +173,8 @@ void Player::SimulateAction(const PlayerAction& playerAction)
 	//Set shooting
 	mIsShooting = playerAction.GetIsShooting();
 
-	//Update word to simulate the current player action (also check collisions)
-	WorldCollector::GetWorld('PS')->Update(playerAction.GetDeltaTime());
+	//Simulate collision
+	WorldCollector::GetWorld('PS')->UpdateForBody(mMainBody, playerAction.GetDeltaTime());
 }
 
 void Player::SimulateAction(float totalTime)

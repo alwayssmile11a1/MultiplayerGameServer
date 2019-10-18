@@ -21,6 +21,7 @@ void ServerNetworkManager::Init(uint16_t inPort)
 	//Register function
 	NetworkGameObjectRegister::RegisterCreationFunction(Player::GetId(), Player::CreateInstance);
 	NetworkGameObjectRegister::RegisterCreationFunction(Brick::GetId(), Brick::CreateInstance);
+	NetworkGameObjectRegister::RegisterCreationFunction(Metal::GetId(), Metal::CreateInstance);
 
 	//Setup map
 	mapLoader.AddMap("map1", "../Resources/battlecitymap.tmx", 3.1);
@@ -33,6 +34,19 @@ void ServerNetworkManager::Init(uint16_t inPort)
 		//Create brick
 		NetworkGameObjectPtr gameObject = NetworkGameObjectRegister::CreateGameObject('BR');
 		Brick* brick = (Brick*)gameObject.get();
+		brick->SetPosition(Vector2(rect->x, rect->y));
+
+		//Register this brick
+		RegisterGameObject(gameObject);
+	}
+
+	//create metal
+	std::vector<Shape::Rectangle> metalRects = map->GetObjectGroup("Metal")->GetRects();
+	for (std::vector<Shape::Rectangle>::iterator rect = metalRects.begin(); rect != metalRects.end(); ++rect)
+	{
+		//Create brick
+		NetworkGameObjectPtr gameObject = NetworkGameObjectRegister::CreateGameObject('ME');
+		Metal* brick = (Metal*)gameObject.get();
 		brick->SetPosition(Vector2(rect->x, rect->y));
 
 		//Register this brick
@@ -207,6 +221,14 @@ void ServerNetworkManager::Update(float dt)
 	for (const auto& pair : NetworkLinkingContext::GetNetworkIdToGameObjectMap())
 	{
 		pair.second->Update(dt);
+	}
+}
+
+void ServerNetworkManager::Render(SpriteBatch* spriteBatch)
+{
+	for (const auto& pair : NetworkLinkingContext::GetNetworkIdToGameObjectMap())
+	{
+		pair.second->Render(spriteBatch);
 	}
 }
 

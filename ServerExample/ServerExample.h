@@ -4,6 +4,7 @@
 #include "HanabiGame.h"
 #include "HanabiWorld.h"
 #include "WorldCollisionListener.h"
+#include "SharedTextures.h"
 
 class ServerExample : public Game
 {

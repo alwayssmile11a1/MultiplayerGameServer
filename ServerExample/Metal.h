@@ -6,7 +6,7 @@
 #include "CollisionBit.h"
 #include "SharedTextures.h"
 
-class Brick : public NetworkGameObject
+class Metal : public NetworkGameObject
 {
 
 private:
@@ -14,10 +14,10 @@ private:
 	Sprite mSprite;
 
 public:
-	CLASS_IDENTIFICATION('BR', Brick);
+	CLASS_IDENTIFICATION('ME', Metal);
 
-	Brick();
-	~Brick();
+	Metal();
+	~Metal();
 
 	uint32_t GetAllStateMask() const override { return 1; };
 

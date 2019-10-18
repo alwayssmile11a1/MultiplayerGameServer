@@ -1,31 +1,31 @@
 #pragma once
 
 #include "HanabiMultiplayer.h"
+#include "HanabiSprite.h"
 #include "HanabiBody.h"
 #include "HanabiWorld.h"
-#include "CollisionBit.h"
 #include "SharedTextures.h"
+#include "CollisionBit.h"
 
-class Brick : public NetworkGameObject
+class Metal : public NetworkGameObject
 {
 
 private:
 	Body * mMainBody;
+	Texture mTexture;
 	Sprite mSprite;
 
 public:
-	CLASS_IDENTIFICATION('BR', Brick);
+	CLASS_IDENTIFICATION('ME', Metal);
 
-	Brick();
-	~Brick();
+	Metal();
+	~Metal();
 
 	uint32_t GetAllStateMask() const override { return 1; };
-
-	void SetPosition(const Vector2 &inPosition) { mMainBody->SetPosition(inPosition.x, inPosition.y); };
 
 	void Render(SpriteBatch *batch) override;
 	void Update(float dt) override;
 
-	uint32_t OnNetworkWrite(OutputMemoryBitStream & inOutputStream, uint32_t inDirtyState) const override;
+	void OnNetworkRead(InputMemoryBitStream & inInputStream, uint32_t dirtyState) override;
 	void OnNetworkDestroy() override;
 };

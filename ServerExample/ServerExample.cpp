@@ -19,6 +19,7 @@ void ServerExample::CreateGame()
 	batch.Create();
 	camera.SetPosition(640/2, 640/2);
 	batch.SetCamera(&camera);
+	SharedTextures::Init();
 	mServerNetworkManager.Init(8080);
 }
 
@@ -35,8 +36,10 @@ void ServerExample::UpdateGame(float dt)
 
 	//Render
 	batch.Begin();
+	
+	mServerNetworkManager.Render(&batch);
 
-	mWorld->RenderBodiesDebug(&batch);
+	//mWorld->RenderBodiesDebug(&batch);
 
 	batch.End();
 }

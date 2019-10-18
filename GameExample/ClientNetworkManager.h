@@ -5,6 +5,7 @@
 #include "HanabiConsole.h"
 #include "Player.h"
 #include "Brick.h"
+#include "Metal.h"
 #include "Proxy.h"
 
 class ClientNetworkManager: public NetworkManager

@@ -123,21 +123,25 @@
   <ItemGroup>
     <ClInclude Include="Brick.h" />
     <ClInclude Include="CollisionBit.h" />
+    <ClInclude Include="Metal.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="ClientProxy.h" />
     <ClInclude Include="PlayerAction.h" />
     <ClInclude Include="ServerExample.h" />
     <ClInclude Include="ServerNetworkManager.h" />
+    <ClInclude Include="SharedTextures.h" />
     <ClInclude Include="WorldCollisionListener.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Brick.cpp" />
+    <ClCompile Include="Metal.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="ClientProxy.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="PlayerAction.cpp" />
     <ClCompile Include="ServerExample.cpp" />
     <ClCompile Include="ServerNetworkManager.cpp" />
+    <ClCompile Include="SharedTextures.cpp" />
     <ClCompile Include="WorldCollisionListener.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

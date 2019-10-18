@@ -117,6 +117,45 @@ void World::SetGravity(float gravity)
 	_Gravity = gravity;
 }
 
+void World::UpdateForBody(Body* body, float dt)
+{
+
+	if (body->_BodyType == Body::BodyType::Static)
+	{
+		body->Next(dt, false, false);
+		return;
+	}
+
+	//calculate actual velocity
+	body->CalculateActualVelocity(dt, _Gravity);
+
+	//get broadphase rect 
+	RECT broadphaseRect = collision.GetBroadphaseRect(body, dt);
+
+	bool moveX = true, moveY = true;
+
+	for (int j = 0; j < _Bodies.size(); j++)
+	{
+		Body* body2 = _Bodies.at(j);
+		if (body == body2 || body2->_IsSensor == true) continue;
+
+		bool collide = ((body)->maskBits & (body2)->categoryBits) != 0 && ((body)->categoryBits & (body2)->maskBits) != 0;
+
+		if (!collide) continue;
+
+		//get static rect 
+		RECT staticRect = collision.GetRECT(body2);
+
+		//check collision
+		CheckCollision(body, body2, broadphaseRect, staticRect, moveX, moveY, dt);
+
+		collision.Reset();
+	}
+
+	//Don't do next steop for body
+	body->Next(dt, moveX, moveY);
+}
+
 void World::Update(float dt)
 {
 

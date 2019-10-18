@@ -1,6 +1,6 @@
-#include "Brick.h"
+#include "Metal.h"
 
-Brick::Brick()
+Metal::Metal()
 {
 	//Setup body
 	BodyDef bodyDef;
@@ -13,32 +13,33 @@ Brick::Brick()
 	mMainBody->PutExtra(this);
 
 	TexturePacker p = TexturePacker(&SharedTextures::BattleCityTexture, "../Resources/battlecity.xml");
-	mSprite.SetRegion(p.GetRegion("brick")[0]);
+	mSprite.SetRegion(p.GetRegion("metal")[0]);
 	mSprite.SetSize(26, 26);
 }
-Brick::~Brick()
+Metal::~Metal()
 {
 
 }
 
-void Brick::Render(SpriteBatch *batch)
+void Metal::Render(SpriteBatch *batch)
 {
 	batch->Draw(mSprite);
 }
 
-void Brick::Update(float dt)
+
+void Metal::Update(float dt)
 {
 	mSprite.SetPosition(mMainBody->GetPosition().x, mMainBody->GetPosition().y);
 }
 
-uint32_t Brick::OnNetworkWrite(OutputMemoryBitStream & inOutputStream, uint32_t inDirtyState) const
+uint32_t Metal::OnNetworkWrite(OutputMemoryBitStream & inOutputStream, uint32_t inDirtyState) const
 {
 	inOutputStream.Write(mMainBody->GetPosition());
 
 	return 1;
 }
 
-void Brick::OnNetworkDestroy()
+void Metal::OnNetworkDestroy()
 {
 	WorldCollector::GetWorld('PS')->DestroyBody(mMainBody);
 	mMainBody = nullptr;

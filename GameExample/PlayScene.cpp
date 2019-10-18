@@ -61,10 +61,8 @@ void PlayScene::Render()
 	
 	networkManager->Render(batch);
 
-	//map->Render(batch);
-
 	//Render the shape of bodies
-	world->RenderBodiesDebug(batch);
+	//world->RenderBodiesDebug(batch);
 
 	batch->End();
 }
