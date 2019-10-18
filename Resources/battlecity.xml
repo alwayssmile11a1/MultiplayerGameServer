@@ -212,18 +212,7 @@
 	 <rect left="304" top = "096" width = "15" height="15" />
 </spawn_anim>
 <bullet>
-	<up>
 	 <rect left="323" top = "102" width = "3" height="4" />
-	</up>
-	<down>
-	 <rect left="339" top = "102" width = "3" height="4" />
-	</down>
-	<left>
-	 <rect left="330" top = "102" width = "4" height="3" />
-	</left>
-	<right>
-	 <rect left="346" top = "102" width = "4" height="3" />
-	</right>
 </bullet>
 <brick>
 	 <rect left="257" top = "0" width = "16" height="16" />

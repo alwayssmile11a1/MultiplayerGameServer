@@ -14,6 +14,9 @@ Player::Player()
 	mMainBody->PutExtra(this);
 
 	mMoveSpeed = 2.0f;
+
+	mShootingRate = 1.0f;
+	mShootingTimer = 0.0f;
 }
 
 Player::~Player()
@@ -65,17 +68,19 @@ void Player::Update(float dt)
 			}
 		}
 
-		if (Input::GetKey(DIK_SPACE))
+		if (Input::GetKey(DIK_SPACE) && Time::GetTimeFSinceGameStart() >= mShootingTimer + 1/mShootingRate)
 		{
 			//Shoot bullets
 			mIsShooting = true;
+
+			mShootingTimer = Time::GetTimeFSinceGameStart();
 		}
 		else
 		{
 
 			mIsShooting = false;
 		}
-		
+
 		//Add playerAction to list
 		PlayerActions::GetInstance()->AddPlayerAction(Time::GetTimeFSinceGameStart(), dt, mMainBody->GetVelocity(), mIsShooting);
 	}

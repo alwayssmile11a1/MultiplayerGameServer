@@ -21,6 +21,9 @@ private:
 	bool mIsShooting;
 	int mRotation;
 	
+	float mShootingRate;
+	float mShootingTimer;
+
 	Body *mMainBody;
 	Sprite mSprite;
 

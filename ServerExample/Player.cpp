@@ -22,6 +22,9 @@ Player::Player()
 
 	mMoveSpeed = 2.0f;
 
+	mShootingRate = 1.0f;
+	mShootingTimer = 0.0f;
+
 	TexturePacker p = TexturePacker(&SharedTextures::BattleCityTexture, "../Resources/battlecity.xml");
 	mSprite.SetRegion(p.GetRegion("yellowtank_1")[0]);
 	mSprite.SetSize(26, 26);
@@ -94,8 +97,16 @@ void Player::SimulateAction(const PlayerAction& playerAction)
 	//check collisions
 	WorldCollector::GetWorld('PS')->UpdateForBody(mMainBody, playerAction.GetDeltaTime());
 
-	//TODO: Handle shooting
+	//Handle shooting
 	mIsShooting = playerAction.GetIsShooting();
+	if (mIsShooting == true && playerAction.GetTimeStamp() >= mShootingTimer + 1 / mShootingRate) //Double check to prevent cheating
+	{
+		mShootingTimer = playerAction.GetTimeStamp();
+	}
+	else
+	{
+		mIsShooting = false;
+	}
 }
 
 uint32_t Player::OnNetworkWrite(OutputMemoryBitStream & inOutputStream, uint32_t dirtyState) const

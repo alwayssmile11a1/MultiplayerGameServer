@@ -4,10 +4,11 @@
 #include "Player.h"
 #include "Brick.h"
 #include "Metal.h"
+#include "Bound.h"
+#include "Bullet.h"
 #include "HanabiMath.h"
 #include "HanabiConsole.h"
 #include "HanabiMap.h"
-#include "Bound.h"
 
 class ServerNetworkManager : public NetworkManager
 {

@@ -118,6 +118,7 @@
   <ItemGroup>
     <ClCompile Include="Bound.cpp" />
     <ClCompile Include="Brick.cpp" />
+    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Metal.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="GameExample.cpp" />
@@ -132,6 +133,7 @@
   <ItemGroup>
     <ClInclude Include="Bound.h" />
     <ClInclude Include="Brick.h" />
+    <ClInclude Include="Bullet.h" />
     <ClInclude Include="CollisionBit.h" />
     <ClInclude Include="Metal.h" />
     <ClInclude Include="PlayerAction.h" />

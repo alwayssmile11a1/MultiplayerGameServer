@@ -19,6 +19,9 @@ private:
 	float mMoveSpeed;
 	Sprite mSprite;
 
+	float mShootingRate;
+	float mShootingTimer;
+
 	void SimulateAction(const PlayerAction& playerAction);
 
 public:
