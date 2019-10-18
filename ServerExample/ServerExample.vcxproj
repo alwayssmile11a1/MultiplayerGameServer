@@ -121,6 +121,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bound.h" />
     <ClInclude Include="Brick.h" />
     <ClInclude Include="CollisionBit.h" />
     <ClInclude Include="Metal.h" />
@@ -133,6 +134,7 @@
     <ClInclude Include="WorldCollisionListener.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Bound.cpp" />
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="Metal.cpp" />
     <ClCompile Include="Player.cpp" />

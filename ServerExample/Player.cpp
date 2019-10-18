@@ -16,7 +16,7 @@ Player::Player()
 	mMainBody = WorldCollector::GetWorld('PS')->CreateBody(bodyDef);
 
 	mMainBody->categoryBits = PLAYER_BIT;
-	mMainBody->maskBits = BRICK_BIT | METAL_BIT | BULLET_BIT;
+	mMainBody->maskBits = BRICK_BIT | METAL_BIT | BULLET_BIT | PLAYER_BIT | BOUND_BIT;
 
 	mMainBody->PutExtra(this);
 

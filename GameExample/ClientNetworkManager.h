@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Brick.h"
 #include "Metal.h"
+#include "Bound.h"
 #include "Proxy.h"
 
 class ClientNetworkManager: public NetworkManager

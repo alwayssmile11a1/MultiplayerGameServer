@@ -22,6 +22,7 @@ void ServerNetworkManager::Init(uint16_t inPort)
 	NetworkGameObjectRegister::RegisterCreationFunction(Player::GetId(), Player::CreateInstance);
 	NetworkGameObjectRegister::RegisterCreationFunction(Brick::GetId(), Brick::CreateInstance);
 	NetworkGameObjectRegister::RegisterCreationFunction(Metal::GetId(), Metal::CreateInstance);
+	NetworkGameObjectRegister::RegisterCreationFunction(Bound::GetId(), Bound::CreateInstance);
 
 	//Setup map
 	mapLoader.AddMap("map1", "../Resources/battlecitymap.tmx", 3.1);
@@ -44,12 +45,26 @@ void ServerNetworkManager::Init(uint16_t inPort)
 	std::vector<Shape::Rectangle> metalRects = map->GetObjectGroup("Metal")->GetRects();
 	for (std::vector<Shape::Rectangle>::iterator rect = metalRects.begin(); rect != metalRects.end(); ++rect)
 	{
-		//Create brick
+		//Create metal
 		NetworkGameObjectPtr gameObject = NetworkGameObjectRegister::CreateGameObject('ME');
-		Metal* brick = (Metal*)gameObject.get();
-		brick->SetPosition(Vector2(rect->x, rect->y));
+		Metal* metal = (Metal*)gameObject.get();
+		metal->SetPosition(Vector2(rect->x, rect->y));
 
-		//Register this brick
+		//Register this metal
+		RegisterGameObject(gameObject);
+	}
+
+	//create bound
+	std::vector<Shape::Rectangle> boundRects = map->GetObjectGroup("Bound")->GetRects();
+	for (std::vector<Shape::Rectangle>::iterator rect = boundRects.begin(); rect != boundRects.end(); ++rect)
+	{
+		//Create bound
+		NetworkGameObjectPtr gameObject = NetworkGameObjectRegister::CreateGameObject('BO');
+		Bound* bound = (Bound*)gameObject.get();
+		bound->SetPosition(Vector2(rect->x, rect->y));
+		bound->SetBodySize(rect->width, rect->height);
+
+		//Register this bound
 		RegisterGameObject(gameObject);
 	}
 }
