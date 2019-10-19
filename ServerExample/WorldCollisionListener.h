@@ -1,6 +1,8 @@
 #pragma once 
 
+#include "ServerNetworkManager.h"
 #include "HanabiWorld.h"
+#include "CollisionBit.h"
 
 class WorldCollisionListener : public WorldContactListener
 {

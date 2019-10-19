@@ -8,7 +8,7 @@ Metal::Metal()
 	bodyDef.position.Set(0, 0);
 	bodyDef.size.Set(8 * 3.1f, 8 * 3.1f);
 	mMainBody = WorldCollector::GetWorld('PS')->CreateBody(bodyDef);
-	mMainBody->categoryBits = BRICK_BIT;
+	mMainBody->categoryBits = METAL_BIT;
 	mMainBody->maskBits = PLAYER_BIT | BULLET_BIT;
 	mMainBody->PutExtra(this);
 
@@ -29,7 +29,7 @@ void Metal::Render(SpriteBatch *batch)
 
 void Metal::Update(float dt)
 {
-	mSprite.SetPosition(mMainBody->GetPosition().x, mMainBody->GetPosition().y);
+	
 }
 
 uint32_t Metal::OnNetworkWrite(OutputMemoryBitStream & inOutputStream, uint32_t inDirtyState) const

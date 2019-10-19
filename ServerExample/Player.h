@@ -15,7 +15,6 @@ private:
 	int mHealth;
 	Body *mMainBody;
 	bool mIsShooting;
-	int mRotation;
 	float mMoveSpeed;
 	Sprite mSprite;
 
@@ -47,6 +46,7 @@ public:
 	int GetPlayerId() {return mPlayerId;};
 	void Render(SpriteBatch *batch) override;
 	void Update(float dt) override;
+	void UpdateRotation();
 	uint32_t OnNetworkWrite(OutputMemoryBitStream & inOutputStream, uint32_t inDirtyState) const override;
 	void OnNetworkDestroy() override;
 

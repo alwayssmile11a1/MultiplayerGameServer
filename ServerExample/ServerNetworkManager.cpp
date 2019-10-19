@@ -182,6 +182,52 @@ void ServerNetworkManager::CreateNewPlayer(ClientProxyPtr clientProxy)
 	RegisterGameObject(gameObject);
 }
 
+void ServerNetworkManager::CreateBullet(int playerNetworkGameObjectId, const Vector2& playerPosition, int playerRotation)
+{
+	//Create bullet
+	NetworkGameObjectPtr gameObject = NetworkGameObjectRegister::CreateGameObject('BU');
+	Bullet* bullet = (Bullet*)gameObject.get();
+
+	Vector2 velocity;
+
+	switch (playerRotation)
+	{
+		case 0:
+		{
+			velocity.Set(0, bullet->GetSpeed());
+			break;
+		}
+		case 180:
+		{
+			velocity.Set(0, -bullet->GetSpeed());
+			break;
+		}
+		case 90:
+		{
+			velocity.Set(bullet->GetSpeed(), 0);
+			break;
+		}
+		case -90:
+		{
+			velocity.Set(-bullet->GetSpeed(), 0);
+			break;
+		}
+	}
+
+	bullet->SetVelocity(velocity);
+
+	//Do this so bullet don't collide with the player that created it
+	Vector2 position = playerPosition;
+	position.x += velocity.x * 1.5;
+	position.y += velocity.y * 1.5;
+	bullet->SetPosition(position);
+
+	bullet->SetPlayerNetworkGameObjectID(playerNetworkGameObjectId);
+
+	//Register this bullet
+	RegisterGameObject(gameObject);
+}
+
 void ServerNetworkManager::HandleGamePacket(InputMemoryBitStream& inputMemoryStream, const SocketAddress& fromAddress)
 {
 	//find fromObject

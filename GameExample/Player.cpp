@@ -87,6 +87,37 @@ void Player::Update(float dt)
 
 	//update sprite position
 	mSprite.SetPosition(mMainBody->GetPosition().x, mMainBody->GetPosition().y);
+
+	//update rotation
+	UpdateRotation();
+}
+
+void Player::UpdateRotation()
+{
+	if (mMainBody->GetVelocity().x == 0 && mMainBody->GetVelocity().y == 0) return;
+
+	if (mMainBody->GetVelocity().x == 0)
+	{
+		if (mMainBody->GetVelocity().y > 0)
+		{
+			mSprite.SetRotation(0);
+		}
+		else
+		{
+			mSprite.SetRotation(180);
+		}
+	}
+	else
+	{
+		if (mMainBody->GetVelocity().x > 0)
+		{
+			mSprite.SetRotation(90);
+		}
+		else
+		{
+			mSprite.SetRotation(-90);
+		}
+	}
 }
 
 void Player::OnNetworkRead(InputMemoryBitStream & inInputStream, uint32_t dirtyState)
@@ -94,7 +125,7 @@ void Player::OnNetworkRead(InputMemoryBitStream & inInputStream, uint32_t dirtyS
 	//Save the current position on client
 	Vector2 oldPosition = mMainBody->GetPosition();
 	Vector2 oldVelocity = mMainBody->GetVelocity();
-	int oldRotation = mRotation;
+	//int oldRotation = mRotation;
 
 	//Read info from server
 	if (dirtyState & PRS_PlayerId)
@@ -133,11 +164,11 @@ void Player::OnNetworkRead(InputMemoryBitStream & inInputStream, uint32_t dirtyS
 		mMainBody->SetVelocity(velocity.x, velocity.y);
 	}
 
-	if (dirtyState & PRS_Rotation)
-	{
-		//set the current rotation back to the rotation of this player on server 
-		inInputStream.Read(mRotation);
-	}
+	//if (dirtyState & PRS_Rotation)
+	//{
+	//	//set the current rotation back to the rotation of this player on server 
+	//	inInputStream.Read(mRotation);
+	//}
 
 	if (dirtyState & PRS_Health)
 	{
@@ -158,13 +189,13 @@ void Player::OnNetworkRead(InputMemoryBitStream & inInputStream, uint32_t dirtyS
 				SimulateAction(playerAction);
 			}
 
-			InterpolateClientSidePrediction(ClientNetworkManager::Instance->GetAverageRoundTripTime(), oldPosition, oldVelocity, oldRotation);
+			InterpolateClientSidePrediction(ClientNetworkManager::Instance->GetAverageRoundTripTime(), oldPosition, oldVelocity);
 		}
 		else
 		{
 			//Simulate movement with round trip time for remote players
 			SimulateAction(ClientNetworkManager::Instance->GetAverageRoundTripTime());
-			InterpolateClientSidePrediction(ClientNetworkManager::Instance->GetAverageRoundTripTime(), oldPosition, oldVelocity, oldRotation);
+			InterpolateClientSidePrediction(ClientNetworkManager::Instance->GetAverageRoundTripTime(), oldPosition, oldVelocity);
 		}
 	}
 }
@@ -175,11 +206,13 @@ void Player::SimulateAction(const PlayerAction& playerAction)
 	Vector2 velocity = playerAction.GetVelocity();
 	mMainBody->SetVelocity(velocity.x, velocity.y);
 	
-	//Set shooting
-	mIsShooting = playerAction.GetIsShooting();
-
 	//Simulate collision
 	WorldCollector::GetWorld('PS')->UpdateForBody(mMainBody, playerAction.GetDeltaTime());
+
+	UpdateRotation();
+
+	//Set shooting
+	mIsShooting = playerAction.GetIsShooting();
 }
 
 void Player::SimulateAction(float totalTime)
@@ -194,19 +227,19 @@ void Player::SimulateAction(float totalTime)
 		if (totalTime < chunkTime)
 		{
 			//Update word to simulate the current player action (also check collisions)
-			WorldCollector::GetWorld('PS')->Update(totalTime);
+			WorldCollector::GetWorld('PS')->UpdateForBody(mMainBody, totalTime);
 			break;
 		}
 		else
 		{
 			//Update word to simulate the current player action (also check collisions)
-			WorldCollector::GetWorld('PS')->Update(chunkTime);
+			WorldCollector::GetWorld('PS')->UpdateForBody(mMainBody, chunkTime);
 			totalTime -= chunkTime;
 		}
 	}
 }
 
-void Player::InterpolateClientSidePrediction(float roundTripTime, const Vector2& oldPosition, const Vector2& oldVelocity, int oldRotation)
+void Player::InterpolateClientSidePrediction(float roundTripTime, const Vector2& oldPosition, const Vector2& oldVelocity)
 {
 
 	//Different. Interpolate the old position towards the simulated position and set it to the current player
@@ -286,10 +319,10 @@ void Player::InterpolateClientSidePrediction(float roundTripTime, const Vector2&
 	}
 
 
-	if (oldRotation != mRotation)
-	{
-		//Different. Don't need to do anything for now since it's not something which is too noticable
-	}
+	//if (oldRotation != mRotation)
+	//{
+	//	//Different. Don't need to do anything for now since it's not something which is too noticable
+	//}
 
 }
 

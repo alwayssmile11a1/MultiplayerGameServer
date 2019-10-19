@@ -21,7 +21,11 @@ public:
 
 	uint32_t GetAllStateMask() const override { return 1; };
 
-	void SetPosition(const Vector2 &inPosition) { mMainBody->SetPosition(inPosition.x, inPosition.y); };
+	void SetPosition(const Vector2 &inPosition) 
+	{ 
+		mMainBody->SetPosition(inPosition.x, inPosition.y); 
+		mSprite.SetPosition(mMainBody->GetPosition().x, mMainBody->GetPosition().y);
+	};
 
 	void Render(SpriteBatch *batch) override;
 	void Update(float dt) override;

@@ -23,7 +23,7 @@ public:
 	void SetNetworkId(int inNetworkId);
 
 	virtual uint32_t GetAllStateMask() const { return 0; };
-	virtual uint32_t GetClassId() const = 0;
+	virtual uint32_t GetClassId() const { return 0; };
 	virtual void Render(SpriteBatch *batch) {};
 	virtual void Update(float dt) {};
 	

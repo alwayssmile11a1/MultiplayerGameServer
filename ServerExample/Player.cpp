@@ -4,7 +4,6 @@ Player::Player()
 {
 	mHealth = 10;
 	mIsShooting = false;
-	mRotation = 0;
 
 	//Setup body
 	BodyDef bodyDef;
@@ -44,7 +43,6 @@ void Player::Update(float dt)
 	//Get old variables
 	Vector2 oldPosition = mMainBody->GetPosition();
 	Vector2 oldVelocity = mMainBody->GetVelocity();
-	float oldRotation = mRotation;
 
 	ClientProxyPtr clientProxy = ServerNetworkManager::Instance->GetClientProxy(GetPlayerId());
 	if (clientProxy != nullptr)
@@ -61,7 +59,6 @@ void Player::Update(float dt)
 	//Get new variables
 	Vector2 newPosition = mMainBody->GetPosition();
 	Vector2 newVelocity = mMainBody->GetVelocity();
-	float newRotation = mRotation;
 
 	if (oldPosition.x != newPosition.x || oldPosition.y != newPosition.y)
 	{
@@ -73,12 +70,42 @@ void Player::Update(float dt)
 		ServerNetworkManager::Instance->UpdateNetworkGameObject(GetNetworkId(), PRS_Velocity);
 	}
 
-	if (oldRotation != newRotation)
-	{
-		ServerNetworkManager::Instance->UpdateNetworkGameObject(GetNetworkId(), PRS_Rotation);
-	}
+	//if (oldRotation != newRotation)
+	//{
+	//	ServerNetworkManager::Instance->UpdateNetworkGameObject(GetNetworkId(), PRS_Rotation);
+	//}
 
 	mSprite.SetPosition(mMainBody->GetPosition().x, mMainBody->GetPosition().y);
+
+	UpdateRotation();
+}
+
+void Player::UpdateRotation()
+{
+	if (mMainBody->GetVelocity().x == 0 && mMainBody->GetVelocity().y == 0) return;
+
+	if (mMainBody->GetVelocity().x == 0)
+	{
+		if (mMainBody->GetVelocity().y > 0)
+		{
+			mSprite.SetRotation(0);
+		}
+		else
+		{
+			mSprite.SetRotation(180);
+		}
+	}
+	else
+	{
+		if (mMainBody->GetVelocity().x > 0)
+		{
+			mSprite.SetRotation(90);
+		}
+		else
+		{
+			mSprite.SetRotation(-90);
+		}
+	}
 }
 
 void Player::SimulateAction(const PlayerAction& playerAction)
@@ -92,15 +119,18 @@ void Player::SimulateAction(const PlayerAction& playerAction)
 
 	mMainBody->SetVelocity(velocity.x, velocity.y);
 
-	//Debug::Log("%f %f\n", velocity.x, velocity.y);
-
 	//check collisions
 	WorldCollector::GetWorld('PS')->UpdateForBody(mMainBody, playerAction.GetDeltaTime());
+
+	UpdateRotation();
 
 	//Handle shooting
 	mIsShooting = playerAction.GetIsShooting();
 	if (mIsShooting == true && playerAction.GetTimeStamp() >= mShootingTimer + 1 / mShootingRate) //Double check to prevent cheating
 	{
+		//Shoot
+		ServerNetworkManager::Instance->CreateBullet(GetNetworkId(), mMainBody->GetPosition(), mSprite.GetRotation());
+
 		mShootingTimer = playerAction.GetTimeStamp();
 	}
 	else
@@ -127,10 +157,10 @@ uint32_t Player::OnNetworkWrite(OutputMemoryBitStream & inOutputStream, uint32_t
 		inOutputStream.Write(mMainBody->GetVelocity());
 	}
 
-	if (dirtyState & PRS_Rotation)
-	{
-		inOutputStream.Write(mRotation);
-	}
+	//if (dirtyState & PRS_Rotation)
+	//{
+	//	inOutputStream.Write(mRotation);
+	//}
 
 	if (dirtyState & PRS_Health)
 	{

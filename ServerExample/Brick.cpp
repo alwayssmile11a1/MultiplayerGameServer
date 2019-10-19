@@ -28,7 +28,7 @@ void Brick::Render(SpriteBatch *batch)
 
 void Brick::Update(float dt)
 {
-	mSprite.SetPosition(mMainBody->GetPosition().x, mMainBody->GetPosition().y);
+	
 }
 
 uint32_t Brick::OnNetworkWrite(OutputMemoryBitStream & inOutputStream, uint32_t inDirtyState) const
