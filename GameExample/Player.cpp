@@ -84,6 +84,10 @@ void Player::Update(float dt)
 		//Add playerAction to list
 		PlayerActions::GetInstance()->AddPlayerAction(Time::GetTimeFSinceGameStart(), dt, mMainBody->GetVelocity(), mIsShooting);
 	}
+	else
+	{
+		SimulateAction(dt);
+	}
 
 	//update sprite position
 	mSprite.SetPosition(mMainBody->GetPosition().x, mMainBody->GetPosition().y);

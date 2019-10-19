@@ -35,8 +35,10 @@ void WorldCollisionListener::OnCollisionEnter(Body * bodyA, Body * bodyB, const 
 	}
 	case BRICK_BIT*BULLET_BIT:
 	{
-		ServerNetworkManager::Instance->DestroyNetworkGameObject(((NetworkGameObject*)(bodyA->GetExtra()))->GetNetworkId());
-		ServerNetworkManager::Instance->DestroyNetworkGameObject(((NetworkGameObject*)(bodyB->GetExtra()))->GetNetworkId());
+		if (bodyA->categoryBits == BULLET_BIT || bodyB->categoryBits == BULLET_BIT) {
+			ServerNetworkManager::Instance->DestroyNetworkGameObject(((NetworkGameObject*)(bodyA->GetExtra()))->GetNetworkId());
+			ServerNetworkManager::Instance->DestroyNetworkGameObject(((NetworkGameObject*)(bodyB->GetExtra()))->GetNetworkId());
+		}
 		break;
 	}
 	case METAL_BIT*BULLET_BIT:
@@ -92,8 +94,10 @@ void WorldCollisionListener::OnColliding(Body * bodyA, Body * bodyB, const Vecto
 	}
 	case BRICK_BIT*BULLET_BIT:
 	{
-		ServerNetworkManager::Instance->DestroyNetworkGameObject(((NetworkGameObject*)(bodyA->GetExtra()))->GetNetworkId());
-		ServerNetworkManager::Instance->DestroyNetworkGameObject(((NetworkGameObject*)(bodyB->GetExtra()))->GetNetworkId());
+		if (bodyA->categoryBits == BULLET_BIT || bodyB->categoryBits == BULLET_BIT) {
+			ServerNetworkManager::Instance->DestroyNetworkGameObject(((NetworkGameObject*)(bodyA->GetExtra()))->GetNetworkId());
+			ServerNetworkManager::Instance->DestroyNetworkGameObject(((NetworkGameObject*)(bodyB->GetExtra()))->GetNetworkId());
+		}
 		break;
 	}
 	case METAL_BIT*BULLET_BIT:
