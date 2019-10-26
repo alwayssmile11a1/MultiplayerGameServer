@@ -11,7 +11,7 @@ Texture::Texture()
 Texture::Texture(const std::string &filePath)
 {
 	//set basic information
-	_Transcolor = D3DCOLOR_ARGB(255, 255, 255, 255);
+	_Transcolor = D3DCOLOR_ARGB(0, 0, 0, 0);
 	_FilePath = filePath;
 	_Image = NULL;
 

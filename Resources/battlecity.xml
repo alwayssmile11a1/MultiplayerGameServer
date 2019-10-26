@@ -215,8 +215,8 @@
 	 <rect left="323" top = "102" width = "3" height="4" />
 </bullet>
 <brick>
-	 <rect left="257" top = "0" width = "16" height="16" />
+	 <rect left="280" top = "0" width = "8" height="8" />
 </brick>
 <metal>
-	 <rect left="257" top = "16" width = "16" height="16" />
+	 <rect left="280" top = "16" width = "8" height="8" />
 </metal>

@@ -12,7 +12,8 @@ class Texture: public GameObject
 private:
 	LPDIRECT3DTEXTURE9 _Image; //store the image that was loaded from file
 	std::string _FilePath;
-	D3DCOLOR _Transcolor; //what color is needed to be transparent?
+	//what color is needed to be transparent? 
+	D3DCOLOR _Transcolor; // value to replace with transparent black, or 0 to disable the color key. This is always a 32-bit ARGB color, independent of the source image format. Alpha is significant and should usually be set to FF for opaque color keys. Thus, for opaque black, the value would be equal to 0xFF000000.
 	Vector2 _ImageSize; //the whole width and height of the image
 
 

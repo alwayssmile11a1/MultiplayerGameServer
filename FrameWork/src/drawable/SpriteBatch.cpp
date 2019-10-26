@@ -311,7 +311,7 @@ void SpriteBatch::Draw(const Sprite &sprite)
 		&_Rect,
 		&_Center,
 		&_Position,
-		sprite.GetTexture()->GetTranscolor()
+		D3DCOLOR_ARGB(255, 255, 255, 255) //The color and alpha channels are modulated by this value. A value of 0xFFFFFFFF maintains the original source color and alpha data
 	);
 }
 
