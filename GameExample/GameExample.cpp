@@ -15,7 +15,7 @@ GameExample::~GameExample()
 void GameExample::CreateGame()
 {
 	//init network manager
-	clientNetworkManager.Init("10.45.25.210:8080", "MyName");
+	clientNetworkManager.Init("127.0.0.1:8080", "MyName");
 
 	//create batch to draw everything
 	batch.Create();
