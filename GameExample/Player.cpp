@@ -332,6 +332,7 @@ void Player::InterpolateClientSidePrediction(float roundTripTime, const Vector2&
 
 void Player::OnNetworkDestroy()
 {
+	ExplosionEffectCollector::PlayEffect(mMainBody->GetPosition());
 	WorldCollector::GetWorld('PS')->DestroyBody(mMainBody);
 	mMainBody = nullptr;
 }

@@ -20,7 +20,26 @@ void ServerExample::CreateGame()
 	camera.SetPosition(640/2, 640/2);
 	batch.SetCamera(&camera);
 	SharedTextures::Init();
-	mServerNetworkManager.Init(8080);
+
+	// String to hold file contents
+	std::string fileContents = "";
+	int serverPort;
+	// Attempt to load file using provided file path
+	if (LoadFile("../Resources/networkinfo.xml", fileContents) == true)
+	{
+		// Create new RapidXML document instance to use to parse map data
+		rapidxml::xml_document<char> currentMap;
+
+		//parse the file
+		currentMap.parse<0>((char*)fileContents.c_str());
+
+		//get server node
+		rapidxml::xml_node<> *serverNode = currentMap.first_node("server");
+
+		serverPort = atoi(serverNode->first_attribute("port")->value());
+	}
+
+	mServerNetworkManager.Init(serverPort);
 }
 
 //update game here

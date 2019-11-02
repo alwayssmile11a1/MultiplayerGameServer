@@ -8,6 +8,7 @@
 #include "HanabiBody.h"
 #include "HanabiWorld.h"
 #include "Proxy.h"
+#include "ExplosionEffect.h"
 #include "SharedTextures.h"
 #include "CollisionBit.h"
 

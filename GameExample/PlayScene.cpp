@@ -50,6 +50,8 @@ void PlayScene::Update(float dt)
 
 	networkManager->SendOutgoingPackets();
 
+	ExplosionEffectCollector::Update(dt);
+
 	//draw everything
 	Render();
 }
@@ -60,6 +62,8 @@ void PlayScene::Render()
 	batch->Begin();
 	
 	networkManager->Render(batch);
+
+	ExplosionEffectCollector::Render(batch);
 
 	//Render the shape of bodies
 	//world->RenderBodiesDebug(batch);

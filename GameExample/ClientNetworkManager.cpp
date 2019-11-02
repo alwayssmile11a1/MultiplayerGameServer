@@ -162,7 +162,7 @@ void ClientNetworkManager::ReadLastActionProcessedOnServerTimeStamp(InputMemoryB
 	//Update averageRoundTripTime
 	float rtt = Time::GetTimeFSinceGameStart() - lastActionProcessedByServerTimestamp;
 	mAverageRoundTripTime.Update(rtt);
-	Debug::Log("%f - %f\n", rtt, mAverageRoundTripTime.GetValue());
+	//Debug::Log("%f - %f\n", rtt, mAverageRoundTripTime.GetValue());
 }
 
 

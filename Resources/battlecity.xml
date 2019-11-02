@@ -220,3 +220,8 @@
 <metal>
 	 <rect left="280" top = "16" width = "8" height="8" />
 </metal>
+<explosion_effect>
+	 <rect left="259" top = "130" width = "11" height="11" />
+	 <rect left="272" top = "129" width = "15" height="14" />
+	 <rect left="274" top = "130" width = "19" height="18" />
+</explosion_effect>

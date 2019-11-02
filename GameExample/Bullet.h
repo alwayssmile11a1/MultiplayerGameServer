@@ -4,6 +4,7 @@
 #include "HanabiSprite.h"
 #include "HanabiBody.h"
 #include "HanabiWorld.h"
+#include "ExplosionEffect.h"
 #include "SharedTextures.h"
 #include "CollisionBit.h"
 

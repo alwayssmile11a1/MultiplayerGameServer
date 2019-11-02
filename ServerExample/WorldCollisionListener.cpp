@@ -56,6 +56,21 @@ void WorldCollisionListener::OnCollisionEnter(Body * bodyA, Body * bodyB, const 
 		}
 		break;
 	}
+	case BULLET_BIT*BOUND_BIT:
+	{
+		if (bodyA->categoryBits == BULLET_BIT)
+		{
+			ServerNetworkManager::Instance->DestroyNetworkGameObject(((NetworkGameObject*)(bodyA->GetExtra()))->GetNetworkId());
+		}
+		else
+		{
+			if (bodyB->categoryBits == BULLET_BIT)
+			{
+				ServerNetworkManager::Instance->DestroyNetworkGameObject(((NetworkGameObject*)(bodyB->GetExtra()))->GetNetworkId());
+			}
+		}
+		break;
+	}
 	}
 }
 
@@ -101,6 +116,21 @@ void WorldCollisionListener::OnColliding(Body * bodyA, Body * bodyB, const Vecto
 		break;
 	}
 	case METAL_BIT*BULLET_BIT:
+	{
+		if (bodyA->categoryBits == BULLET_BIT)
+		{
+			ServerNetworkManager::Instance->DestroyNetworkGameObject(((NetworkGameObject*)(bodyA->GetExtra()))->GetNetworkId());
+		}
+		else
+		{
+			if (bodyB->categoryBits == BULLET_BIT)
+			{
+				ServerNetworkManager::Instance->DestroyNetworkGameObject(((NetworkGameObject*)(bodyB->GetExtra()))->GetNetworkId());
+			}
+		}
+		break;
+	}
+	case BULLET_BIT*BOUND_BIT:
 	{
 		if (bodyA->categoryBits == BULLET_BIT)
 		{
