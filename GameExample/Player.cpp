@@ -32,7 +32,7 @@ void Player::Update(float dt)
 {
 	if (GetPlayerId() == Proxy::GetPlayerId())
 	{
-		if (mMainBody->GetVelocity().x == 0)
+		//if (mMainBody->GetVelocity().x == 0)
 		{
 			if (Input::GetKey(DIK_UP))
 			{
@@ -46,11 +46,11 @@ void Player::Update(float dt)
 
 			if (Input::GetKeyUp(DIK_UP) || Input::GetKeyUp(DIK_DOWN))
 			{
-				mMainBody->SetVelocity(0, 0);
+				mMainBody->SetVelocity(mMainBody->GetVelocity().x, 0);
 			}
 		}
 
-		if (mMainBody->GetVelocity().y == 0)
+		//if (mMainBody->GetVelocity().y == 0)
 		{
 			if (Input::GetKey(DIK_RIGHT))
 			{
@@ -64,7 +64,7 @@ void Player::Update(float dt)
 
 			if (Input::GetKeyUp(DIK_LEFT) || Input::GetKeyUp(DIK_RIGHT))
 			{
-				mMainBody->SetVelocity(0, 0);
+				mMainBody->SetVelocity(0, mMainBody->GetVelocity().y);
 			}
 		}
 
@@ -86,7 +86,13 @@ void Player::Update(float dt)
 	}
 	else
 	{
-		SimulateAction(dt);
+		//SimulateAction(dt);
+
+		if (mMainBody->GetVelocity().x == 0 && mMainBody->GetVelocity().y == 0)
+		{
+			//we're in sync if our velocity is 0
+			mTimeLocationBecameOutOfSync = 0.f;
+		}
 	}
 
 	//update sprite position
@@ -268,7 +274,7 @@ void Player::InterpolateClientSidePrediction(float roundTripTime, const Vector2&
 			else
 			{
 				//Lerp by an amount of durationOutOfSync / roundTripTime
-				Vector2 interpolatedPosition = Math2D::Lerp(oldPosition, mMainBody->GetPosition(), durationOutOfSync / roundTripTime);
+				Vector2 interpolatedPosition = Math2D::Lerp(oldPosition, mMainBody->GetPosition(), /*durationOutOfSync / roundTripTime*/0.1f);
 				mMainBody->SetPosition(interpolatedPosition.x, interpolatedPosition.y);
 			}
 		}
@@ -284,43 +290,43 @@ void Player::InterpolateClientSidePrediction(float roundTripTime, const Vector2&
 	}
 
 
-	//Different. Interpolate the old velocity towards the simulated velocity and set it to the current player
-	if (oldVelocity.x != mMainBody->GetVelocity().x || oldVelocity.y != mMainBody->GetVelocity().y)
-	{
-		//have we been out of sync, or did we just become out of sync?
-		float time = Time::GetTimeFSinceGameStart();
-		if (mTimeVelocityBecameOutOfSync == 0.f)
-		{
-			mTimeVelocityBecameOutOfSync = time;
-		}
+	////Different. Interpolate the old velocity towards the simulated velocity and set it to the current player
+	//if (oldVelocity.x != mMainBody->GetVelocity().x || oldVelocity.y != mMainBody->GetVelocity().y)
+	//{
+	//	//have we been out of sync, or did we just become out of sync?
+	//	float time = Time::GetTimeFSinceGameStart();
+	//	if (mTimeVelocityBecameOutOfSync == 0.f)
+	//	{
+	//		mTimeVelocityBecameOutOfSync = time;
+	//	}
 
-		//now interpolate to the correct value...
-		float durationOutOfSync = time - mTimeVelocityBecameOutOfSync;
-		if (durationOutOfSync < roundTripTime)
-		{
-			if (GetPlayerId() == Proxy::GetPlayerId())
-			{
-				//Lerp by an amount of 0.1 (can be a different number but we use it for now)
-				Vector2 interpolatedVelocity = Math2D::Lerp(oldVelocity, mMainBody->GetVelocity(), 0.1f);
-				mMainBody->SetVelocity(interpolatedVelocity.x, interpolatedVelocity.y);
-			}
-			else
-			{
-				//Lerp by an amount of durationOutOfSync / roundTripTime
-				Vector2 interpolatedVelocity = Math2D::Lerp(oldVelocity, mMainBody->GetVelocity(), durationOutOfSync / roundTripTime);
-				mMainBody->SetVelocity(interpolatedVelocity.x, interpolatedVelocity.y);
-			}
-		}
-		else
-		{
-			//since we don't lerp anymore, we are in sync with the server
-			mTimeVelocityBecameOutOfSync = 0.0f;
-		}
-	}
-	else
-	{
-		mTimeVelocityBecameOutOfSync = 0;
-	}
+	//	//now interpolate to the correct value...
+	//	float durationOutOfSync = time - mTimeVelocityBecameOutOfSync;
+	//	if (durationOutOfSync < roundTripTime)
+	//	{
+	//		if (GetPlayerId() == Proxy::GetPlayerId())
+	//		{
+	//			//Lerp by an amount of 0.1 (can be a different number but we use it for now)
+	//			Vector2 interpolatedVelocity = Math2D::Lerp(oldVelocity, mMainBody->GetVelocity(), 0.1f);
+	//			mMainBody->SetVelocity(interpolatedVelocity.x, interpolatedVelocity.y);
+	//		}
+	//		else
+	//		{
+	//			//Lerp by an amount of durationOutOfSync / roundTripTime
+	//			Vector2 interpolatedVelocity = Math2D::Lerp(oldVelocity, mMainBody->GetVelocity(), durationOutOfSync / roundTripTime);
+	//			mMainBody->SetVelocity(interpolatedVelocity.x, interpolatedVelocity.y);
+	//		}
+	//	}
+	//	else
+	//	{
+	//		//since we don't lerp anymore, we are in sync with the server
+	//		mTimeVelocityBecameOutOfSync = 0.0f;
+	//	}
+	//}
+	//else
+	//{
+	//	mTimeVelocityBecameOutOfSync = 0;
+	//}
 
 
 	//if (oldRotation != mRotation)

@@ -31,14 +31,21 @@ void Bullet::Render(SpriteBatch *batch)
 void Bullet::Update(float dt)
 {
 	mSprite.SetPosition(mMainBody->GetPosition().x, mMainBody->GetPosition().y);
+	ServerNetworkManager::Instance->UpdateNetworkGameObject(GetNetworkId(), BRS_Position);
 }
 
 uint32_t Bullet::OnNetworkWrite(OutputMemoryBitStream & inOutputStream, uint32_t inDirtyState) const
 {
-	inOutputStream.Write(mMainBody->GetPosition());
-	inOutputStream.Write(mMainBody->GetVelocity());
+	if (inDirtyState & BRS_Position)
+	{
+		inOutputStream.Write(mMainBody->GetPosition());
+	}
+	if (inDirtyState & BRS_Velocity)
+	{
+		inOutputStream.Write(mMainBody->GetVelocity());
+	}
 
-	return 1;
+	return inDirtyState;
 }
 
 void Bullet::OnNetworkDestroy()

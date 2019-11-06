@@ -18,13 +18,21 @@ private:
 
 	float mSpeed;
 
-	float mTimeLocationBecameOutOfSync;
+	//float mTimeLocationBecameOutOfSync;
 
 	void SimulateMovement(float totalTime);
 	void InterpolateClientSidePrediction(float roundTripTime, const Vector2& oldPosition);
 
 public:
 	CLASS_IDENTIFICATION('BU', Bullet);
+
+	enum BulletReplicationState
+	{
+		BRS_Position = 1 << 0,
+		BRS_Velocity = 1 << 1,
+
+		BRS_AllState = BRS_Position | BRS_Velocity
+	};
 
 	Bullet();
 	~Bullet();

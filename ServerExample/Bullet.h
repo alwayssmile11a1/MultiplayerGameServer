@@ -1,6 +1,6 @@
 #pragma once
 
-#include "HanabiMultiplayer.h"
+#include "ServerNetworkManager.h"
 #include "HanabiSprite.h"
 #include "HanabiBody.h"
 #include "HanabiWorld.h"
@@ -22,10 +22,18 @@ private:
 public:
 	CLASS_IDENTIFICATION('BU', Bullet);
 
+	enum BulletReplicationState
+	{
+		BRS_Position = 1 << 0,
+		BRS_Velocity = 1 << 1,
+
+		BRS_AllState = BRS_Position | BRS_Velocity
+	};
+
 	Bullet();
 	~Bullet();
 
-	uint32_t GetAllStateMask() const override { return 1; };
+	uint32_t GetAllStateMask() const override { return BRS_AllState; };
 
 	void SetPosition(const Vector2 &inPosition) { mMainBody->SetPosition(inPosition.x, inPosition.y); }
 

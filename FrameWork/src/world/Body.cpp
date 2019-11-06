@@ -154,10 +154,10 @@ void Body::Next(float dt, bool moveX, bool moveY)
 		_Position.Set(_Position.x, _Position.y + _TotalVelocity.y*dt);
 
 	}
-	else
-	{
-		_Velocity.y = 0;
-	}
+	//else
+	//{
+	//	_Velocity.y = 0;
+	//}
 
 }
 

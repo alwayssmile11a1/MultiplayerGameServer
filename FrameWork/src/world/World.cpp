@@ -152,7 +152,6 @@ void World::UpdateForBody(Body* body, float dt)
 		collision.Reset();
 	}
 
-	//Don't do next steop for body
 	body->Next(dt, moveX, moveY);
 }
 
@@ -492,7 +491,6 @@ if (!body1->_IsSensor) //If body1 is a normal body
 			//perform collision
 			collision.PerformCollision(body1, body2, dt, 0, moveX, moveY);
 
-
 		}
 		else //if not, check collision exit callback
 		{
@@ -503,7 +501,6 @@ if (!body1->_IsSensor) //If body1 is a normal body
 			}
 			else
 			{
-
 				if (touching == 2 && body1->GetVelocity().x != 0)
 				{
 					_Listener->OnCollisionExit(body1, body2, collision._CollisionDirection);

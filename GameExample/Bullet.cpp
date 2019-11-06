@@ -18,7 +18,7 @@ Bullet::Bullet()
 
 	mSpeed = 6.0f;
 
-	mTimeLocationBecameOutOfSync = 0.0f;
+	//mTimeLocationBecameOutOfSync = 0.0f;
 }
 Bullet::~Bullet()
 {
@@ -39,20 +39,26 @@ void Bullet::OnNetworkRead(InputMemoryBitStream & inInputStream, uint32_t dirtyS
 {
 	Vector2 oldPosition = mMainBody->GetPosition();
 
-	Vector2 position;
-	inInputStream.Read(position);
-	//set the current position back to the position of this bullet on server 
-	mMainBody->SetPosition(position.x, position.y);
+	if (dirtyState & BRS_Position)
+	{
+		Vector2 position;
+		inInputStream.Read(position);
+		//set the current position back to the position of this bullet on server 
+		mMainBody->SetPosition(position.x, position.y);
+	}
 
-	Vector2 velocity;
-	inInputStream.Read(velocity);
-	mMainBody->SetVelocity(velocity.x, velocity.y);
+	if (dirtyState & BRS_Velocity)
+	{
+		Vector2 velocity;
+		inInputStream.Read(velocity);
+		mMainBody->SetVelocity(velocity.x, velocity.y);
+	}
 
-	//TODO: Simulate movement and things
-	//Debug::Log("%f %f\n", mMainBody->GetPosition().x, mMainBody->GetPosition().y);
-
-	//SimulateMovement(ClientNetworkManager::Instance->GetAverageRoundTripTime());
-	//InterpolateClientSidePrediction(ClientNetworkManager::Instance->GetAverageRoundTripTime(), oldPosition);
+	if (dirtyState & BRS_Velocity == 0)
+	{
+		SimulateMovement(ClientNetworkManager::Instance->GetAverageRoundTripTime());
+		InterpolateClientSidePrediction(ClientNetworkManager::Instance->GetAverageRoundTripTime(), oldPosition);
+	}
 }
 
 void Bullet::SimulateMovement(float totalTime)
@@ -83,30 +89,30 @@ void Bullet::InterpolateClientSidePrediction(float roundTripTime, const Vector2&
 	//Different. Interpolate the old position towards the simulated position and set it to the current player
 	if (oldPosition.x != mMainBody->GetPosition().x || oldPosition.y != mMainBody->GetPosition().y)
 	{
-		//have we been out of sync, or did we just become out of sync?
-		float time = Time::GetTimeFSinceGameStart();
-		if (mTimeLocationBecameOutOfSync == 0.0f)
-		{
-			mTimeLocationBecameOutOfSync = time;
-		}
+		////have we been out of sync, or did we just become out of sync?
+		//float time = Time::GetTimeFSinceGameStart();
+		//if (mTimeLocationBecameOutOfSync == 0.0f)
+		//{
+		//	mTimeLocationBecameOutOfSync = time;
+		//}
 
-		float durationOutOfSync = time - mTimeLocationBecameOutOfSync;
-		if (durationOutOfSync < roundTripTime)
-		{
+		//float durationOutOfSync = time - mTimeLocationBecameOutOfSync;
+		//if (durationOutOfSync < roundTripTime)
+		//{
 			//Lerp by an amount of durationOutOfSync / roundTripTime
-			Vector2 interpolatedPosition = Math2D::Lerp(oldPosition, mMainBody->GetPosition(), durationOutOfSync / roundTripTime);
+			Vector2 interpolatedPosition = Math2D::Lerp(oldPosition, mMainBody->GetPosition(), 0.01f);
 			mMainBody->SetPosition(interpolatedPosition.x, interpolatedPosition.y);
-		}
-		else
-		{
-			//since we don't lerp anymore, we are in sync with the server
-			mTimeLocationBecameOutOfSync = 0.0f;
-		}
+		//}
+		//else
+		//{
+		//	//since we don't lerp anymore, we are in sync with the server
+		//	mTimeLocationBecameOutOfSync = 0.0f;
+		//}
 	}
-	else
-	{
-		mTimeLocationBecameOutOfSync = 0.0f;
-	}
+	//else
+	//{
+	//	mTimeLocationBecameOutOfSync = 0.0f;
+	//}
 }
 
 void Bullet::OnNetworkDestroy()
