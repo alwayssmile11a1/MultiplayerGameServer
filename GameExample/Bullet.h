@@ -45,7 +45,7 @@ public:
 
 	void SetPosition(float x, float y){mMainBody->SetPosition(x, y);}
 	void SetVelocity(float x, float y) { mMainBody->SetVelocity(x, y); }
-
+	void FakeExplosion();
 	float GetSpeed() { return mSpeed;}
 
 	void OnNetworkRead(InputMemoryBitStream & inInputStream, uint32_t dirtyState) override;
