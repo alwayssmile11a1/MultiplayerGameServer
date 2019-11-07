@@ -16,7 +16,7 @@ Bullet::Bullet()
 	mSprite.SetRegion(p.GetRegion("bullet")[0]);
 	mSprite.SetSize(4, 4);
 
-	mSpeed = 6.0f;
+	mSpeed = 5.0f;
 
 	//mTimeLocationBecameOutOfSync = 0.0f;
 }
@@ -44,11 +44,12 @@ void Bullet::OnNetworkRead(InputMemoryBitStream & inInputStream, uint32_t dirtyS
 		int playerID;
 		inInputStream.Read(playerID);
 		NetworkGameObjectPtr networkGameObjectPtr = NetworkLinkingContext::GetGameObject(playerID);
-
+		//Debug::Log("%d\n", playerID);
 		if (networkGameObjectPtr != nullptr)
 		{
-			Player* player = (Player*)(&networkGameObjectPtr);
+			Player* player = (Player*)networkGameObjectPtr.get();
 			mMainBody->SetIgnoredCollisionBody(player->GetBody());
+			//Debug::Log("%f\n", player->GetBody()->GetPosition().x);
 		}
 	}
 
@@ -67,11 +68,11 @@ void Bullet::OnNetworkRead(InputMemoryBitStream & inInputStream, uint32_t dirtyS
 		mMainBody->SetVelocity(velocity.x, velocity.y);
 	}
 
-	if (dirtyState & BRS_Velocity == 0)
-	{
-		SimulateMovement(ClientNetworkManager::Instance->GetAverageRoundTripTime());
-		InterpolateClientSidePrediction(ClientNetworkManager::Instance->GetAverageRoundTripTime(), oldPosition);
-	}
+	//if (dirtyState & BRS_Velocity == 0)
+	//{
+	//	SimulateMovement(ClientNetworkManager::Instance->GetAverageRoundTripTime());
+	//	InterpolateClientSidePrediction(ClientNetworkManager::Instance->GetAverageRoundTripTime(), oldPosition);
+	//}
 }
 
 void Bullet::SimulateMovement(float totalTime)
@@ -113,7 +114,7 @@ void Bullet::InterpolateClientSidePrediction(float roundTripTime, const Vector2&
 		//if (durationOutOfSync < roundTripTime)
 		//{
 			//Lerp by an amount of durationOutOfSync / roundTripTime
-			Vector2 interpolatedPosition = Math2D::Lerp(oldPosition, mMainBody->GetPosition(), 0.01f);
+			Vector2 interpolatedPosition = Math2D::Lerp(oldPosition, mMainBody->GetPosition(), 0.001f);
 			mMainBody->SetPosition(interpolatedPosition.x, interpolatedPosition.y);
 		//}
 		//else
@@ -133,4 +134,9 @@ void Bullet::OnNetworkDestroy()
 	ExplosionEffectCollector::PlayEffect(mMainBody->GetPosition());
 	WorldCollector::GetWorld('PS')->DestroyBody(mMainBody);
 	mMainBody = nullptr;
+}
+
+void Bullet::FakeExplosion()
+{
+	ExplosionEffectCollector::PlayEffect(mMainBody->GetPosition());
 }

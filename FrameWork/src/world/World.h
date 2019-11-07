@@ -11,6 +11,7 @@
 #include "..\collisionquadtree\QuadTree.h"
 #include "../spacedivisionquadtree/SpaceDivisionQuadTree.h"
 #include <unordered_map>
+#include "..\console\Debug.h"
 
 #define USECOLLISIONINFO 0 //using collision info is more precise for collision callback, but decreasing performance
 

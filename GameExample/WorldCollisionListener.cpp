@@ -2,6 +2,7 @@
 
 void WorldCollisionListener::OnCollisionEnter(Body * bodyA, Body * bodyB, const Vector2 & CollisionDirection)
 {
+
 }
 
 void WorldCollisionListener::OnColliding(Body * bodyA, Body * BodyB, const Vector2 & collisionDirection)

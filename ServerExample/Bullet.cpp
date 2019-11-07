@@ -16,7 +16,7 @@ Bullet::Bullet()
 	mSprite.SetRegion(p.GetRegion("bullet")[0]);
 	mSprite.SetSize(4, 4);
 
-	mSpeed = 6.0f;
+	mSpeed = 5.0f;
 }
 Bullet::~Bullet()
 {
@@ -31,7 +31,7 @@ void Bullet::Render(SpriteBatch *batch)
 void Bullet::Update(float dt)
 {
 	mSprite.SetPosition(mMainBody->GetPosition().x, mMainBody->GetPosition().y);
-	ServerNetworkManager::Instance->UpdateNetworkGameObject(GetNetworkId(), BRS_Position);
+	//ServerNetworkManager::Instance->UpdateNetworkGameObject(GetNetworkId(), BRS_Position);
 }
 
 uint32_t Bullet::OnNetworkWrite(OutputMemoryBitStream & inOutputStream, uint32_t inDirtyState) const
