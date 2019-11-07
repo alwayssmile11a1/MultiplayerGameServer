@@ -54,7 +54,7 @@ public:
 	
 	void SetPlayerId(int playerId) { mPlayerId = playerId; };
 	int GetPlayerId() {return mPlayerId;};
-
+	Body* GetBody() {return mMainBody;}
 	uint32_t GetAllStateMask() const override { return PRS_AllState; };
 
 	void UpdateRotation();

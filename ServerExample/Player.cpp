@@ -129,7 +129,7 @@ void Player::SimulateAction(const PlayerAction& playerAction)
 	if (mIsShooting == true && playerAction.GetTimeStamp() >= mShootingTimer + 1 / mShootingRate) //Double check to prevent cheating
 	{
 		//Shoot
-		ServerNetworkManager::Instance->CreateBullet(GetNetworkId(), mMainBody->GetPosition(), mSprite.GetRotation());
+		ServerNetworkManager::Instance->CreateBullet(GetNetworkId(), mMainBody, mSprite.GetRotation());
 
 		mShootingTimer = playerAction.GetTimeStamp();
 	}

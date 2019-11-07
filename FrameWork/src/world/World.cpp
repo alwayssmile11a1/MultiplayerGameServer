@@ -355,6 +355,11 @@ void World::Update(float dt)
 
 void World::CheckCollision(Body* body1, Body* body2, const RECT &broadphaseRect, const RECT &staticRect, bool &moveX, bool &moveY, float dt)
 {
+	if (body1->GetIgnoredCollisionBody() == body2 || body2->GetIgnoredCollisionBody() == body1)
+	{
+		return;
+	}
+
 #if USECOLLISIONINFO
 
 	CollisionInfo* collisionInfo = body1->_CollisionPairStates.at(body2);

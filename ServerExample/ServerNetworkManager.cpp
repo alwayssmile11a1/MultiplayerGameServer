@@ -182,7 +182,7 @@ void ServerNetworkManager::CreateNewPlayer(ClientProxyPtr clientProxy)
 	RegisterGameObject(gameObject);
 }
 
-void ServerNetworkManager::CreateBullet(int playerNetworkGameObjectId, const Vector2& playerPosition, int playerRotation)
+void ServerNetworkManager::CreateBullet(int playerNetworkGameObjectId, Body* playerBody, int playerRotation)
 {
 	//Create bullet
 	NetworkGameObjectPtr gameObject = NetworkGameObjectRegister::CreateGameObject('BU');
@@ -217,11 +217,12 @@ void ServerNetworkManager::CreateBullet(int playerNetworkGameObjectId, const Vec
 	bullet->SetVelocity(velocity);
 
 	//Do this so bullet don't collide with the player that created it
-	Vector2 position = playerPosition;
+	Vector2 position = playerBody->GetPosition();
 	position.x += velocity.x * 1.5;
 	position.y += velocity.y * 1.5;
 	bullet->SetPosition(position);
 
+	bullet->SetIgnoredCollisionBody(playerBody);
 	bullet->SetPlayerNetworkGameObjectID(playerNetworkGameObjectId);
 
 	//Register this bullet

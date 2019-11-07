@@ -39,6 +39,19 @@ void Bullet::OnNetworkRead(InputMemoryBitStream & inInputStream, uint32_t dirtyS
 {
 	Vector2 oldPosition = mMainBody->GetPosition();
 
+	if (dirtyState & BRS_PlayerID)
+	{
+		int playerID;
+		inInputStream.Read(playerID);
+		NetworkGameObjectPtr networkGameObjectPtr = NetworkLinkingContext::GetGameObject(playerID);
+
+		if (networkGameObjectPtr != nullptr)
+		{
+			Player* player = (Player*)(&networkGameObjectPtr);
+			mMainBody->SetIgnoredCollisionBody(player->GetBody());
+		}
+	}
+
 	if (dirtyState & BRS_Position)
 	{
 		Vector2 position;

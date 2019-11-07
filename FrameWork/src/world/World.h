@@ -34,7 +34,7 @@ private:
 
 	SpaceDivisionQuadTree *_SDQuadTree;
 
-	
+	//std::unordered_map<Body*, Body*> _IgnoreCollisionPairs;
 
 private:
 
@@ -83,6 +83,11 @@ public:
 	void RenderBodiesDebug(SpriteBatch *batch);
 
 	//void Release();
+
+	//void AddIgnoredCollisionPairs(Body * keyBody, Body* body)
+	//{
+	//	_IgnoreCollisionPairs.emplace(keyBody, body);
+	//}
 
 };
 

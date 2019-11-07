@@ -24,10 +24,11 @@ public:
 
 	enum BulletReplicationState
 	{
-		BRS_Position = 1 << 0,
-		BRS_Velocity = 1 << 1,
+		BRS_PlayerID = 1 << 0,
+		BRS_Position = 1 << 1,
+		BRS_Velocity = 1 << 2,
 
-		BRS_AllState = BRS_Position | BRS_Velocity
+		BRS_AllState = BRS_PlayerID| BRS_Position | BRS_Velocity
 	};
 
 	Bullet();
@@ -36,7 +37,7 @@ public:
 	uint32_t GetAllStateMask() const override { return BRS_AllState; };
 
 	void SetPosition(const Vector2 &inPosition) { mMainBody->SetPosition(inPosition.x, inPosition.y); }
-
+	void SetIgnoredCollisionBody(Body* body) {mMainBody->SetIgnoredCollisionBody(body);}
 	void SetVelocity(const Vector2 &inVelocity) 
 	{ 
 		mMainBody->SetVelocity(inVelocity.x, inVelocity.y); 

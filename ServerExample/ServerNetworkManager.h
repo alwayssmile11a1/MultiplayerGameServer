@@ -51,5 +51,5 @@ public:
 	ClientProxyPtr GetClientProxy(int inPlayerId) const;
 	void UpdateNetworkGameObject(int networkId, uint32_t dirtyState);
 	void DestroyNetworkGameObject(int networkId);
-	void CreateBullet(int playerNetworkGameObjectId, const Vector2& playerPosition, int rotation);
+	void CreateBullet(int playerNetworkGameObjectId, Body* playerBody, int rotation);
 };

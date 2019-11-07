@@ -36,6 +36,10 @@ void Bullet::Update(float dt)
 
 uint32_t Bullet::OnNetworkWrite(OutputMemoryBitStream & inOutputStream, uint32_t inDirtyState) const
 {
+	if (inDirtyState & BRS_PlayerID)
+	{
+		inOutputStream.Write(mPlayerNetworkGameObjectId);
+	}
 	if (inDirtyState & BRS_Position)
 	{
 		inOutputStream.Write(mMainBody->GetPosition());

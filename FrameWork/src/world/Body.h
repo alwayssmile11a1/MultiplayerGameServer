@@ -70,6 +70,7 @@ private:
 
 	std::map<Body*, CollisionInfo*> _CollisionPairStates;
 
+	Body* _IgnoredCollisionBody;
 
 private: //friend class
 	friend class Collision;
@@ -116,7 +117,15 @@ public:
 	void PutExtra(GameObject* anything);
 	GameObject* GetExtra();
 
+	void SetIgnoredCollisionBody(Body* body)
+	{
+		_IgnoredCollisionBody = body;
+	}
 	
+	Body* GetIgnoredCollisionBody()
+	{
+		return _IgnoredCollisionBody;
+	}
 };
 
 #endif
