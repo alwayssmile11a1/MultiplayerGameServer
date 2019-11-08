@@ -37,6 +37,9 @@ private:
 	//UDPSocket of current client 
 	UDPSocketPtr mUDPSocket;
 
+	//UDPSocket of current client 
+	TCPSocketPtr mTCPSocket;
+
 	int mBytesSentThisFrame;
 
 	//Just a wrapper class for packets received from somewhere (server, other clients)

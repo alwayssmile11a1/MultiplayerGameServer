@@ -18,6 +18,8 @@ private:
 
 	float mSpeed;
 
+	bool mFakeExplosion = false;
+
 	//float mTimeLocationBecameOutOfSync;
 
 	void SimulateMovement(float totalTime);

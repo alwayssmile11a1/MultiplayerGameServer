@@ -33,6 +33,12 @@ void Bullet::Render(SpriteBatch *batch)
 void Bullet::Update(float dt)
 {
 	mSprite.SetPosition(mMainBody->GetPosition().x, mMainBody->GetPosition().y);
+
+	if (mFakeExplosion)
+	{
+		ExplosionEffectCollector::PlayEffect(mMainBody->GetPosition());
+		mFakeExplosion = false;
+	}
 }
 
 void Bullet::OnNetworkRead(InputMemoryBitStream & inInputStream, uint32_t dirtyState)
@@ -138,5 +144,5 @@ void Bullet::OnNetworkDestroy()
 
 void Bullet::FakeExplosion()
 {
-	ExplosionEffectCollector::PlayEffect(mMainBody->GetPosition());
+	mFakeExplosion = true;
 }
