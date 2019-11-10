@@ -39,30 +39,30 @@ void Enemy::Update(float dt)
 
 uint32_t Enemy::OnNetworkWrite(OutputMemoryBitStream & inOutputStream, uint32_t inDirtyState) const
 {
-	if (inDirtyState & ERS_EnemyID)
-	{
-		inOutputStream.Write(mEnemyNetworkGameObjectId);
-	}
-
-	if (inDirtyState & ERS_Position)
-	{
-		inOutputStream.Write(mMainBody->GetPosition());
-	}
-
-	if (inDirtyState & ERS_Velocity)
-	{
-		inOutputStream.Write(mMainBody->GetVelocity());
-	}
-
-	//if (dirtyState & PRS_Rotation)
+	//if (inDirtyState & ERS_EnemyID)
 	//{
-	//	inOutputStream.Write(mRotation);
+	//	inOutputStream.Write(mEnemyNetworkGameObjectId);
 	//}
 
-	if (inDirtyState & ERS_Health)
-	{
-		inOutputStream.Write(mHealth);
-	}
+	//if (inDirtyState & ERS_Position)
+	//{
+	//	inOutputStream.Write(mMainBody->GetPosition());
+	//}
+
+	//if (inDirtyState & ERS_Velocity)
+	//{
+	//	inOutputStream.Write(mMainBody->GetVelocity());
+	//}
+
+	////if (dirtyState & PRS_Rotation)
+	////{
+	////	inOutputStream.Write(mRotation);
+	////}
+
+	//if (inDirtyState & ERS_Health)
+	//{
+	//	inOutputStream.Write(mHealth);
+	//}
 
 	return inDirtyState;
 }
