@@ -116,22 +116,8 @@
 	</right>
 </greentank_4>
 <enemy_1>
-	<up>
-	 <rect left="129" top = "64" width = "13" height="15" />
-	 <rect left="145" top = "64" width = "13" height="15" />
-	</up>
-	<down>
-	 <rect left="193" top = "64" width = "13" height="15" />
-	 <rect left="209" top = "64" width = "13" height="15" />
-	</down>
-	<left>
-	 <rect left="160" top = "66" width = "15" height="13" />
-	 <rect left="176" top = "66" width = "15" height="13" />
-	</left>
-	<right>
-	 <rect left="225" top = "65" width = "15" height="13" />
-	 <rect left="241" top = "65" width = "15" height="13" />
-	</right>
+	<rect left="129" top = "64" width = "13" height="15" />
+	<rect left="145" top = "64" width = "13" height="15" />
 </enemy_1>
 <enemy_2>
 	<up>
