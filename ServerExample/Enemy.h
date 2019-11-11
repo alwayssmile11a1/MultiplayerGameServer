@@ -2,6 +2,7 @@
 
 #include "HanabiMultiplayer.h"
 #include "HanabiBody.h"
+#include "ServerNetworkManager.h"
 #include "HanabiWorld.h"
 #include "CollisionBit.h"
 #include "SharedTextures.h"

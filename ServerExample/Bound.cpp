@@ -9,7 +9,7 @@ Bound::Bound()
 	bodyDef.size.Set(8 * 3.1f, 8 * 3.1f);
 	mMainBody = WorldCollector::GetWorld('PS')->CreateBody(bodyDef);
 	mMainBody->categoryBits = BOUND_BIT;
-	mMainBody->maskBits = PLAYER_BIT | BULLET_BIT;
+	mMainBody->maskBits = PLAYER_BIT | BULLET_BIT | ENEMY_BIT;
 	mMainBody->PutExtra(this);
 }
 Bound::~Bound()

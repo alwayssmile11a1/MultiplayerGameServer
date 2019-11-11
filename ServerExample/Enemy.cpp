@@ -18,7 +18,8 @@ Enemy::Enemy()
 	mSprite.SetRegion(p.GetRegion("enemy_1")[0]);
 	mSprite.SetSize(26, 30);;
 
-	mMoveSpeed = 2.0f;
+	mMoveSpeed = -2.0f;
+	mMainBody->SetVelocity(0, mMoveSpeed);
 }
 
 
@@ -33,36 +34,40 @@ void Enemy::Render(SpriteBatch * batch)
 
 void Enemy::Update(float dt)
 {
-	mMainBody->SetVelocity(0, mMoveSpeed);
+	//Get old variables
+	Vector2 oldVelocity = mMainBody->GetVelocity();
+
 	mSprite.SetPosition(mMainBody->GetPosition().x, mMainBody->GetPosition().y);
+	ServerNetworkManager::Instance->UpdateNetworkGameObject(GetNetworkId(), ERS_Position);
+	ServerNetworkManager::Instance->UpdateNetworkGameObject(GetNetworkId(), ERS_Velocity);
 }
 
 uint32_t Enemy::OnNetworkWrite(OutputMemoryBitStream & inOutputStream, uint32_t inDirtyState) const
 {
-	//if (inDirtyState & ERS_EnemyID)
+	if (inDirtyState & ERS_EnemyID)
+	{
+		inOutputStream.Write(mEnemyNetworkGameObjectId);
+	}
+
+	if (inDirtyState & ERS_Position)
+	{
+		inOutputStream.Write(mMainBody->GetPosition());
+	}
+
+	if (inDirtyState & ERS_Velocity)
+	{
+		inOutputStream.Write(mMainBody->GetVelocity());
+	}
+
+	//if (dirtyState & PRS_Rotation)
 	//{
-	//	inOutputStream.Write(mEnemyNetworkGameObjectId);
+	//	inOutputStream.Write(mRotation);
 	//}
 
-	//if (inDirtyState & ERS_Position)
-	//{
-	//	inOutputStream.Write(mMainBody->GetPosition());
-	//}
-
-	//if (inDirtyState & ERS_Velocity)
-	//{
-	//	inOutputStream.Write(mMainBody->GetVelocity());
-	//}
-
-	////if (dirtyState & PRS_Rotation)
-	////{
-	////	inOutputStream.Write(mRotation);
-	////}
-
-	//if (inDirtyState & ERS_Health)
-	//{
-	//	inOutputStream.Write(mHealth);
-	//}
+	if (inDirtyState & ERS_Health)
+	{
+		inOutputStream.Write(mHealth);
+	}
 
 	return inDirtyState;
 }

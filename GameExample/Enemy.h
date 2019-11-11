@@ -75,6 +75,6 @@ public:
 	void SetPlayerNetworkGameObjectID(int playerNetworkGameObjectId) { mEnemyNetworkGameObjectId = playerNetworkGameObjectId; }
 	int GetPlayerNetworkGameObjectId() { return mEnemyNetworkGameObjectId; }
 
-	uint32_t OnNetworkWrite(OutputMemoryBitStream & inOutputStream, uint32_t inDirtyState) const override;
+	void OnNetworkRead(InputMemoryBitStream & inInputStream, uint32_t dirtyState) override;
 	void OnNetworkDestroy() override;
 };

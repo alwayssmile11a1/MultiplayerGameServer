@@ -4,3 +4,4 @@
 #define METAL_BIT 4
 #define BOUND_BIT 8
 #define BULLET_BIT  16
+#define ENEMY_BIT 32
