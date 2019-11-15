@@ -13,7 +13,7 @@ Player::Player()
 
 	mMainBody->PutExtra(this);
 
-	mMoveSpeed = 2.0f;
+	mMoveSpeed = 1.0f;
 
 	mShootingRate = 1.0f;
 	mShootingTimer = 0.0f;
@@ -268,7 +268,7 @@ void Player::InterpolateClientSidePrediction(float roundTripTime, const Vector2&
 			if (GetPlayerId() == Proxy::GetPlayerId())
 			{
 				//Lerp by an amount of 0.1 (can be a different number but we use it for now)
-				Vector2 interpolatedPosition = Math2D::Lerp(oldPosition, mMainBody->GetPosition(), 0.1f);
+				Vector2 interpolatedPosition = Math2D::Lerp(oldPosition, mMainBody->GetPosition(), 1.0f);
 				mMainBody->SetPosition(interpolatedPosition.x, interpolatedPosition.y);
 			}
 			else
