@@ -18,8 +18,12 @@ Enemy::Enemy()
 	mSprite.SetRegion(p.GetRegion("enemy_1")[0]);
 	mSprite.SetSize(26, 30);;
 
-	mMoveSpeed = -2.0f;
+	mMoveSpeed = 1.5f;
 	mMainBody->SetVelocity(0, mMoveSpeed);
+
+	mShootingTimer = 0;
+	mShootingRate = 2;
+
 }
 
 
@@ -36,10 +40,45 @@ void Enemy::Update(float dt)
 {
 	//Get old variables
 	Vector2 oldVelocity = mMainBody->GetVelocity();
-
+	UpdateRotation();
 	mSprite.SetPosition(mMainBody->GetPosition().x, mMainBody->GetPosition().y);
+
+	mShootingTimer += dt;
+	if (mShootingTimer > mShootingRate) {
+		//Shoot
+		ServerNetworkManager::Instance->CreateBullet(GetNetworkId(), mMainBody, mSprite.GetRotation());
+		mShootingTimer = 0;
+	}
+
 	ServerNetworkManager::Instance->UpdateNetworkGameObject(GetNetworkId(), ERS_Position);
-	ServerNetworkManager::Instance->UpdateNetworkGameObject(GetNetworkId(), ERS_Velocity);
+}
+
+void Enemy::UpdateRotation()
+{
+	if (mMainBody->GetVelocity().x == 0 && mMainBody->GetVelocity().y == 0) return;
+
+	if (mMainBody->GetVelocity().x == 0)
+	{
+		if (mMainBody->GetVelocity().y > 0)
+		{
+			mSprite.SetRotation(0);
+		}
+		else
+		{
+			mSprite.SetRotation(180);
+		}
+	}
+	else
+	{
+		if (mMainBody->GetVelocity().x > 0)
+		{
+			mSprite.SetRotation(90);
+		}
+		else
+		{
+			mSprite.SetRotation(-90);
+		}
+	}
 }
 
 uint32_t Enemy::OnNetworkWrite(OutputMemoryBitStream & inOutputStream, uint32_t inDirtyState) const

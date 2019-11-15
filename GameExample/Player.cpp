@@ -281,7 +281,7 @@ void Player::InterpolateClientSidePrediction(float roundTripTime, const Vector2&
 		else
 		{
 			//since we don't lerp anymore, we are in sync with the server
-			mTimeLocationBecameOutOfSync = 0.0f;
+			mTimeLocationBecameOutOfSync = 0.0f; 
 		}
 	}
 	else

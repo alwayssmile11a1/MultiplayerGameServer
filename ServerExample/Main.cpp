@@ -1,5 +1,6 @@
 #pragma once
 #include "ServerExample.h"
+#include <time.h>
 
 // application title
 //(since we use Unicode character set, //we have to put L before "GameExample". 
@@ -25,6 +26,7 @@
 //The entry point for any Windows program
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
+	srand(time(NULL));
 	wstring title = APPTITLE;
 	ServerExample game(hInstance, &title[0], SCREEN_WIDTH, SCREEN_HEIGHT, FULLSCREENMODE, FRAME_RATE);
 	game.ShowGUILog();

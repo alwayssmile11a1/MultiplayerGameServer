@@ -13,6 +13,7 @@ Enemy::Enemy()
 	mMainBody->categoryBits = ENEMY_BIT;
 	mMainBody->maskBits = PLAYER_BIT | BRICK_BIT | METAL_BIT | BOUND_BIT | ENEMY_BIT;
 	mMainBody->PutExtra(this);
+	mMainBody->SetVelocity(0, 1.5f);
 
 	TexturePacker p = TexturePacker(&SharedTextures::BattleCityTexture, "../Resources/battlecity.xml");
 	mSprite.SetRegion(p.GetRegion("enemy_1")[0]);
@@ -33,8 +34,36 @@ void Enemy::Render(SpriteBatch * batch)
 
 void Enemy::Update(float dt)
 {
-	mMainBody->SetVelocity(0, mMoveSpeed);
+	UpdateRotation();
 	mSprite.SetPosition(mMainBody->GetPosition().x, mMainBody->GetPosition().y);
+}
+
+void Enemy::UpdateRotation() 
+{
+	if (mMainBody->GetVelocity().x == 0 && mMainBody->GetVelocity().y == 0) return;
+
+	if (mMainBody->GetVelocity().x == 0)
+	{
+		if (mMainBody->GetVelocity().y > 0)
+		{
+			mSprite.SetRotation(0);
+		}
+		else
+		{
+			mSprite.SetRotation(180);
+		}
+	}
+	else
+	{
+		if (mMainBody->GetVelocity().x > 0)
+		{
+			mSprite.SetRotation(90);
+		}
+		else
+		{
+			mSprite.SetRotation(-90);
+		}
+	}
 }
 
 void Enemy::OnNetworkRead(InputMemoryBitStream & inInputStream, uint32_t dirtyState)

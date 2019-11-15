@@ -13,7 +13,6 @@ protected:
 	int mEnemyNetworkGameObjectId;
 	int mHealth;
 	Body *mMainBody;
-	bool mIsShooting;
 	float mMoveSpeed;
 	Sprite mSprite;
 
@@ -73,6 +72,7 @@ public:
 
 	void Render(SpriteBatch *batch) override;
 	void Update(float dt) override;
+	void UpdateRotation();
 	void SetPlayerNetworkGameObjectID(int playerNetworkGameObjectId) { mEnemyNetworkGameObjectId = playerNetworkGameObjectId; }
 	int GetPlayerNetworkGameObjectId() { return mEnemyNetworkGameObjectId; }
 
