@@ -210,4 +210,9 @@
 	 <rect left="259" top = "130" width = "11" height="11" />
 	 <rect left="272" top = "129" width = "15" height="14" />
 	 <rect left="274" top = "130" width = "19" height="18" />
+	 <rect left="306" top = "130" width = "27" height="28" />
+	 <rect left="338" top = "130" width = "30" height="30s" />
 </explosion_effect>
+<item_star>
+	<rect left="304" top = "112" width = "15" height="14" />
+</item_star>

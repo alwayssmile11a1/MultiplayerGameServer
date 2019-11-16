@@ -71,68 +71,18 @@ void WorldCollisionListener::OnCollisionEnter(Body * bodyA, Body * bodyB, const 
 		}
 		break;
 	}
-	case ENEMY_BIT*METAL_BIT + ENEMY_BIT + METAL_BIT:
+	case ENEMY_BIT * METAL_BIT + ENEMY_BIT + METAL_BIT:
 	case ENEMY_BIT * BOUND_BIT + ENEMY_BIT + BOUND_BIT:
+	case ENEMY_BIT * BRICK_BIT + ENEMY_BIT + BRICK_BIT:
 	{
-		int rand = 0;
+		Enemy* enemy = nullptr;
 		if (bodyA->categoryBits == ENEMY_BIT) {
-			Enemy* enemy = (Enemy*)(bodyA->GetExtra());
-			Vector2 velocity = bodyA->GetVelocity();
-			rand = std::rand() % 4 + 1;
-			int dir = velocity.x < 0 ? 1 : velocity.x > 0 ? 3 : velocity.y > 0 ? 2 : 4;
-			while (rand == dir)
-			{
-				rand = std::rand() % 4 + 1;
-			}
-			switch (rand)
-			{
-			case 1:
-				bodyA->SetVelocity(-enemy->GetSpeed(), 0);
-				break;
-			case 2: 
-				bodyA->SetVelocity(0, enemy->GetSpeed());
-				break;
-			case 3: 
-				bodyA->SetVelocity(enemy->GetSpeed(), 0);
-				break;
-			case 4: 
-				bodyA->SetVelocity(0, -enemy->GetSpeed());
-				break;
-			default:
-				break;
-			}
-			
-			ServerNetworkManager::Instance->UpdateNetworkGameObject(enemy->GetNetworkId(), enemy->ERS_Velocity);
+			enemy = (Enemy*)(bodyA->GetExtra());
 		}
 		else if (bodyB->categoryBits == ENEMY_BIT) {
-			Enemy* enemy = (Enemy*)(bodyB->GetExtra());
-			Vector2 velocity = bodyB->GetVelocity();
-			rand = std::rand() % 4 + 1;
-			int dir = velocity.x < 0 ? 1 : velocity.x > 0 ? 3 : velocity.y > 0 ? 2 : 4;
-			while (rand == dir)
-			{
-				rand = std::rand() % 4 + 1;
-			}
-			switch (rand)
-			{
-			case 1:
-				bodyB->SetVelocity(-enemy->GetSpeed(), 0);
-				break;
-			case 2:
-				bodyB->SetVelocity(0, enemy->GetSpeed());
-				break;
-			case 3:
-				bodyB->SetVelocity(enemy->GetSpeed(), 0);
-				break;
-			case 4:
-				bodyB->SetVelocity(0, -enemy->GetSpeed());
-				break;
-			default:
-				break;
-			}
-
-			ServerNetworkManager::Instance->UpdateNetworkGameObject(enemy->GetNetworkId(), enemy->ERS_Velocity);
+			enemy = (Enemy*)(bodyB->GetExtra());
 		}
+		if (enemy != nullptr) enemy->RandomVelocity();
 		break;
 	}
 	}

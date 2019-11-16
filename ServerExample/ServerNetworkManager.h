@@ -7,6 +7,7 @@
 #include "Bound.h"
 #include "Bullet.h"
 #include "Enemy.h"
+#include "StarItem.h"
 #include "HanabiMath.h"
 #include "HanabiConsole.h"
 #include "HanabiMap.h"

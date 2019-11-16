@@ -75,6 +75,7 @@ public:
 	void UpdateRotation();
 	void SetPlayerNetworkGameObjectID(int playerNetworkGameObjectId) { mEnemyNetworkGameObjectId = playerNetworkGameObjectId; }
 	int GetPlayerNetworkGameObjectId() { return mEnemyNetworkGameObjectId; }
+	void RandomVelocity();
 
 	uint32_t OnNetworkWrite(OutputMemoryBitStream & inOutputStream, uint32_t inDirtyState) const override;
 	void OnNetworkDestroy() override;

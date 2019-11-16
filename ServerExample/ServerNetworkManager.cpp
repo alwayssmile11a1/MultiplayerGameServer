@@ -25,6 +25,7 @@ void ServerNetworkManager::Init(uint16_t inPort)
 	NetworkGameObjectRegister::RegisterCreationFunction(Bound::GetId(), Bound::CreateInstance);
 	NetworkGameObjectRegister::RegisterCreationFunction(Bullet::GetId(), Bullet::CreateInstance);
 	NetworkGameObjectRegister::RegisterCreationFunction(Enemy::GetId(), Enemy::CreateInstance);
+	NetworkGameObjectRegister::RegisterCreationFunction(StarItem::GetId(), StarItem::CreateInstance);
 
 	//Setup map
 	mapLoader.AddMap("map1", "../Resources/battlecitymap.tmx", 3.1);
@@ -71,8 +72,10 @@ void ServerNetworkManager::Init(uint16_t inPort)
 	}
 
 	NetworkGameObjectPtr enemyObject = NetworkGameObjectRegister::CreateGameObject('EN');
-	Enemy* enemy = (Enemy*)enemyObject.get();
 	RegisterGameObject(enemyObject);
+
+	NetworkGameObjectPtr starItemObject = NetworkGameObjectRegister::CreateGameObject('IS');
+	RegisterGameObject(starItemObject);
 }
 
 void ServerNetworkManager::OnSendPackets()

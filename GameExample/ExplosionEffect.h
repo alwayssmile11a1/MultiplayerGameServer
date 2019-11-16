@@ -4,7 +4,7 @@
 #include "SharedTextures.h"
 #include "HanabiConsole.h"
 
-#define EFFECTLIVETIME 0.2
+#define EFFECTLIVETIME 0.09
 class ExplosionEffect :public Sprite
 {
 private:

@@ -11,7 +11,7 @@ Enemy::Enemy()
 	bodyDef.size.Set(26, 30);
 	mMainBody = WorldCollector::GetWorld('PS')->CreateBody(bodyDef);
 	mMainBody->categoryBits = ENEMY_BIT;
-	mMainBody->maskBits = PLAYER_BIT | BRICK_BIT | METAL_BIT | BOUND_BIT | ENEMY_BIT;
+	mMainBody->maskBits = PLAYER_BIT | BRICK_BIT | METAL_BIT | BOUND_BIT | ENEMY_BIT | BULLET_BIT;
 	mMainBody->PutExtra(this);
 
 	TexturePacker p = TexturePacker(&SharedTextures::BattleCityTexture, "../Resources/battlecity.xml");
@@ -79,6 +79,35 @@ void Enemy::UpdateRotation()
 			mSprite.SetRotation(-90);
 		}
 	}
+}
+
+void Enemy::RandomVelocity()
+{
+	Vector2 velocity = mMainBody->GetVelocity();
+	int rand = std::rand() % 4 + 1;
+	int dir = velocity.x < 0 ? 1 : velocity.x > 0 ? 3 : velocity.y > 0 ? 2 : 4;
+	while (rand == dir)
+	{
+		rand = std::rand() % 4 + 1;
+	}
+	switch (rand)
+	{
+	case 1:
+		mMainBody->SetVelocity(-mMoveSpeed, 0);
+		break;
+	case 2:
+		mMainBody->SetVelocity(0, mMoveSpeed);
+		break;
+	case 3:
+		mMainBody->SetVelocity(mMoveSpeed, 0);
+		break;
+	case 4:
+		mMainBody->SetVelocity(0, -mMoveSpeed);
+		break;
+	default:
+		break;
+	}
+	ServerNetworkManager::Instance->UpdateNetworkGameObject(GetNetworkId(), ERS_Velocity);
 }
 
 uint32_t Enemy::OnNetworkWrite(OutputMemoryBitStream & inOutputStream, uint32_t inDirtyState) const
