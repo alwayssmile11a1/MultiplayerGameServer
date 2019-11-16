@@ -268,7 +268,7 @@ void Player::InterpolateClientSidePrediction(float roundTripTime, const Vector2&
 			if (GetPlayerId() == Proxy::GetPlayerId())
 			{
 				//Lerp by an amount of 0.1 (can be a different number but we use it for now)
-				Vector2 interpolatedPosition = Math2D::Lerp(oldPosition, mMainBody->GetPosition(), 1.0f);
+				Vector2 interpolatedPosition = Math2D::Lerp(oldPosition, mMainBody->GetPosition(), 0.1f);
 				mMainBody->SetPosition(interpolatedPosition.x, interpolatedPosition.y);
 			}
 			else

@@ -5,3 +5,4 @@
 #define BOUND_BIT 8
 #define BULLET_BIT  16
 #define ENEMY_BIT 32
+#define STAR_BIT 64

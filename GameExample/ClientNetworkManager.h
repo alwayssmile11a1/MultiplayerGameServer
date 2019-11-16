@@ -7,6 +7,7 @@
 #include "Brick.h"
 #include "Metal.h"
 #include "Enemy.h"
+#include "StarItem.h"
 #include "Bullet.h"
 #include "Bound.h"
 #include "Proxy.h"

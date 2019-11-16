@@ -29,6 +29,7 @@ void ClientNetworkManager::Init(const std::string &destination, const std::strin
 	NetworkGameObjectRegister::RegisterCreationFunction(Bound::GetId(), Bound::CreateInstance);
 	NetworkGameObjectRegister::RegisterCreationFunction(Bullet::GetId(), Bullet::CreateInstance);
 	NetworkGameObjectRegister::RegisterCreationFunction(Enemy::GetId(), Enemy::CreateInstance);
+	NetworkGameObjectRegister::RegisterCreationFunction(StarItem::GetId(), StarItem::CreateInstance);
 	Debug::Log("%d", Enemy::GetId());
 	//init done, now prepare to send hello packet
 	mState = NetworkClientState::SayingHello;

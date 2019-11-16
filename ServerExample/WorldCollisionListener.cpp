@@ -90,9 +90,9 @@ void WorldCollisionListener::OnCollisionEnter(Body * bodyA, Body * bodyB, const 
 
 void WorldCollisionListener::OnColliding(Body * bodyA, Body * bodyB, const Vector2 & collisionDirection)
 {
-	switch (bodyA->categoryBits * bodyB->categoryBits)
+	switch (bodyA->categoryBits * bodyB->categoryBits + bodyA->categoryBits + bodyB->categoryBits)
 	{
-	case PLAYER_BIT*BULLET_BIT:
+	case PLAYER_BIT * BULLET_BIT + PLAYER_BIT + BULLET_BIT:
 	{
 		if (bodyA->categoryBits == BULLET_BIT)
 		{
@@ -121,7 +121,7 @@ void WorldCollisionListener::OnColliding(Body * bodyA, Body * bodyB, const Vecto
 		}
 		break;
 	}
-	case BRICK_BIT*BULLET_BIT:
+	case BRICK_BIT * BULLET_BIT + BRICK_BIT + BULLET_BIT:
 	{
 		if (bodyA->categoryBits == BULLET_BIT || bodyB->categoryBits == BULLET_BIT) {
 			ServerNetworkManager::Instance->DestroyNetworkGameObject(((NetworkGameObject*)(bodyA->GetExtra()))->GetNetworkId());
@@ -129,7 +129,7 @@ void WorldCollisionListener::OnColliding(Body * bodyA, Body * bodyB, const Vecto
 		}
 		break;
 	}
-	case METAL_BIT*BULLET_BIT:
+	case METAL_BIT * BULLET_BIT + METAL_BIT + BULLET_BIT:
 	{
 		if (bodyA->categoryBits == BULLET_BIT)
 		{
@@ -144,7 +144,7 @@ void WorldCollisionListener::OnColliding(Body * bodyA, Body * bodyB, const Vecto
 		}
 		break;
 	}
-	case BULLET_BIT*BOUND_BIT:
+	case BULLET_BIT * BOUND_BIT + BULLET_BIT + BOUND_BIT:
 	{
 		if (bodyA->categoryBits == BULLET_BIT)
 		{
@@ -157,6 +157,20 @@ void WorldCollisionListener::OnColliding(Body * bodyA, Body * bodyB, const Vecto
 				ServerNetworkManager::Instance->DestroyNetworkGameObject(((NetworkGameObject*)(bodyB->GetExtra()))->GetNetworkId());
 			}
 		}
+		break;
+	}
+	case ENEMY_BIT * METAL_BIT + ENEMY_BIT + METAL_BIT:
+	case ENEMY_BIT * BOUND_BIT + ENEMY_BIT + BOUND_BIT:
+	case ENEMY_BIT * BRICK_BIT + ENEMY_BIT + BRICK_BIT:
+	{
+		Enemy* enemy = nullptr;
+		if (bodyA->categoryBits == ENEMY_BIT) {
+			enemy = (Enemy*)(bodyA->GetExtra());
+		}
+		else if (bodyB->categoryBits == ENEMY_BIT) {
+			enemy = (Enemy*)(bodyB->GetExtra());
+		}
+		if (enemy != nullptr) enemy->RandomVelocity();
 		break;
 	}
 	}

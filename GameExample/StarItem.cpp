@@ -29,11 +29,13 @@ void StarItem::OnHitPlayer()
 {
 }
 
-uint32_t StarItem::OnNetworkWrite(OutputMemoryBitStream & inOutputStream, uint32_t inDirtyState) const
+void StarItem::OnNetworkRead(InputMemoryBitStream & inInputStream, uint32_t dirtyState)
 {
-	inOutputStream.Write(mMainBody->GetPosition());
-
-	return 1;
+	Vector2 position;
+	inInputStream.Read(position);
+	//set the current position back to the position of this player on server 
+	mMainBody->SetPosition(position.x, position.y);
+	mSprite.SetPosition(position.x, position.y);
 }
 
 void StarItem::OnNetworkDestroy()
