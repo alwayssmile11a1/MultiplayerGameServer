@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Brick.h"
 #include "Metal.h"
+#include "Grass.h"
 #include "Bound.h"
 #include "Bullet.h"
 #include "Enemy.h"

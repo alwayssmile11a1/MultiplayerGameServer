@@ -26,6 +26,7 @@ void ServerNetworkManager::Init(uint16_t inPort)
 	NetworkGameObjectRegister::RegisterCreationFunction(Bullet::GetId(), Bullet::CreateInstance);
 	NetworkGameObjectRegister::RegisterCreationFunction(Enemy::GetId(), Enemy::CreateInstance);
 	NetworkGameObjectRegister::RegisterCreationFunction(StarItem::GetId(), StarItem::CreateInstance);
+	NetworkGameObjectRegister::RegisterCreationFunction(Grass::GetId(), Grass::CreateInstance);
 
 	//Setup map
 	mapLoader.AddMap("map1", "../Resources/battlecitymap.tmx", 3.1);
@@ -54,6 +55,19 @@ void ServerNetworkManager::Init(uint16_t inPort)
 		metal->SetPosition(Vector2(rect->x, rect->y));
 
 		//Register this metal
+		RegisterGameObject(gameObject);
+	}
+
+	//create grass
+	std::vector<Shape::Rectangle> grassRects = map->GetObjectGroup("Grass")->GetRects();
+	for (std::vector<Shape::Rectangle>::iterator rect = grassRects.begin(); rect != grassRects.end(); ++rect)
+	{
+		//Create grass
+		NetworkGameObjectPtr gameObject = NetworkGameObjectRegister::CreateGameObject('GR');
+		Grass* grass = (Grass*)gameObject.get();
+		grass->SetPosition(Vector2(rect->x, rect->y));
+
+		//Register this grass
 		RegisterGameObject(gameObject);
 	}
 

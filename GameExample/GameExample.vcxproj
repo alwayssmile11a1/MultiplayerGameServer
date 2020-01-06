@@ -121,6 +121,7 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="ExplosionEffect.cpp" />
+    <ClCompile Include="Grass.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Metal.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -141,6 +142,7 @@
     <ClInclude Include="CollisionBit.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="ExplosionEffect.h" />
+    <ClInclude Include="Grass.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Metal.h" />
     <ClInclude Include="PlayerAction.h" />

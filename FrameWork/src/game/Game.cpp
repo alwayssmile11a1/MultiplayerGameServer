@@ -383,7 +383,8 @@ int Game::RunGame()
 				}
 
 				//
-				UpdateGame(DeltaTime/1000.0f);
+				float deltaTime = roundf(DeltaTime / 1000.0f * 10000) / 10000;
+				UpdateGame(deltaTime);
 
 				//clear buffedInput after we has done update game
 				Input::ClearBuffedInput();

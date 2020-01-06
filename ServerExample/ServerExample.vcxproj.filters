@@ -60,6 +60,9 @@
     <ClInclude Include="StarItem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Grass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ServerExample.cpp">
@@ -105,6 +108,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="StarItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Grass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

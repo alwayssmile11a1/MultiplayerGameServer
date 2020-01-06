@@ -1,9 +1,12 @@
 #pragma once
 
+#include <iostream>
+#include <vector>
 #include "HanabiMultiplayer.h"
 #include "HanabiMath.h"
 #include "HanabiConsole.h"
 #include "Player.h"
+#include "Grass.h"
 #include "Brick.h"
 #include "Metal.h"
 #include "Enemy.h"
@@ -12,12 +15,14 @@
 #include "Bound.h"
 #include "Proxy.h"
 
-class ClientNetworkManager: public NetworkManager
+
+
+class ClientNetworkManager : public NetworkManager
 {
 private:
 
 	const float kTimeBetweenSendingHelloPacket = 1.0f;
-	const float kTimeBetweenSendingGamePacket = 1.0f/60.0f;
+	const float kTimeBetweenSendingGamePacket = 1.0f / 60.0f;
 
 	float mTimeOfLastHello;
 	float mTimeOfLastGamePacket;
@@ -37,7 +42,8 @@ private:
 	SocketAddress mDestinationAddress;
 	NetworkClientState mState;
 	ClientReplicationManager clientReplicationManager;
-	
+
+	std::vector<NetworkGameObject*> lateDrawnObjects;
 
 	void SendHelloPacket();
 	void SendGamePackets();
@@ -59,6 +65,8 @@ public:
 	void SendPacketToDestination(const OutputMemoryBitStream &outputMemoryStream) { SendPacket(outputMemoryStream, mDestinationAddress); };
 	void Update(float dt);
 	void Render(SpriteBatch* spriteBatch);
+
+	void AddToLateDrawnObjects(NetworkGameObject* gameObjectPtr);
 
 	float GetAverageRoundTripTime() { return mAverageRoundTripTime.GetValue(); }
 };

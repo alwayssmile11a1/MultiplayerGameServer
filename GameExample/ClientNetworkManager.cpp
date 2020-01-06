@@ -30,6 +30,7 @@ void ClientNetworkManager::Init(const std::string &destination, const std::strin
 	NetworkGameObjectRegister::RegisterCreationFunction(Bullet::GetId(), Bullet::CreateInstance);
 	NetworkGameObjectRegister::RegisterCreationFunction(Enemy::GetId(), Enemy::CreateInstance);
 	NetworkGameObjectRegister::RegisterCreationFunction(StarItem::GetId(), StarItem::CreateInstance);
+	NetworkGameObjectRegister::RegisterCreationFunction(Grass::GetId(), Grass::CreateInstance);
 	Debug::Log("%d", Enemy::GetId());
 	//init done, now prepare to send hello packet
 	mState = NetworkClientState::SayingHello;
@@ -182,4 +183,18 @@ void ClientNetworkManager::Render(SpriteBatch* spriteBatch)
 	{
 		pair.second->Render(spriteBatch);
 	}
+
+	for (const auto& lateDrawnObject : lateDrawnObjects)
+	{
+		Grass* grass = (Grass*)(lateDrawnObject);
+		if (grass != nullptr)
+		{
+			grass->LateRender(spriteBatch);
+		}
+	}
+}
+
+void ClientNetworkManager::AddToLateDrawnObjects(NetworkGameObject* gameObjectPtr)
+{
+	lateDrawnObjects.push_back(gameObjectPtr);
 }

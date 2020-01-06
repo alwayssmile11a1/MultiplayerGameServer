@@ -13,7 +13,7 @@ Player::Player()
 
 	mMainBody->PutExtra(this);
 
-	mMoveSpeed = 1.0f;
+	mMoveSpeed = 1.5f;
 
 	mShootingRate = 1.0f;
 	mShootingTimer = 0.0f;

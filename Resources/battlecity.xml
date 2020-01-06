@@ -206,6 +206,12 @@
 <metal>
 	 <rect left="280" top = "16" width = "8" height="8" />
 </metal>
+<grass>
+	 <rect left="273" top = "33" width = "8" height="8" />
+</grass>
+<water>
+	 <rect left="257" top = "49" width = "16" height="16" />
+</water>
 <explosion_effect>
 	 <rect left="259" top = "130" width = "11" height="11" />
 	 <rect left="272" top = "129" width = "15" height="14" />
