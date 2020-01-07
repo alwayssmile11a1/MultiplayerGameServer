@@ -94,11 +94,24 @@ void ServerNetworkManager::Init(uint16_t inPort)
 
 void ServerNetworkManager::OnSendPackets()
 {
+	bool isAllPlayerReady = true;
+	for (const auto& pair : mSocketAddressToClientProxyMap)
+	{
+		if (!pair.second->GetPlayerActions().GetPlayerReady())
+		{
+			isAllPlayerReady = false;
+			break;
+		}
+	}
+
 	for (const auto& pair : mSocketAddressToClientProxyMap)
 	{
 		//first write packet type
 		OutputMemoryBitStream packet;
 		packet.Write(PacketType::PT_State, 2);
+
+		//write IsAllPlayerReady 
+		packet.Write(isAllPlayerReady);
 
 		//write last action timestamp
 		packet.Write(pair.second->IsLastActionTimeStampDirty());
@@ -261,6 +274,11 @@ void ServerNetworkManager::HandleGamePacket(InputMemoryBitStream& inputMemoryStr
 	{
 		//Get client proxy
 		ClientProxyPtr fromClientProxy = it->second;
+
+		//Read ready state
+		bool isPlayerReady;
+		inputMemoryStream.Read(isPlayerReady);
+		fromClientProxy->GetPlayerActions().SetPlayerReady(isPlayerReady);
 
 		//Handle PlayerActions
 		uint32_t actionCount = 0;

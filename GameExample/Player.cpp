@@ -28,70 +28,86 @@ void Player::Render(SpriteBatch *batch)
 	batch->Draw(mSprite);
 }
 
+void Player::RenderLobbyPlayer(SpriteBatch *batch)
+{
+	lobbyPlayer.Render(batch);
+}
+
 void Player::Update(float dt)
 {
-	if (GetPlayerId() == Proxy::GetPlayerId())
+	if (mMainBody == nullptr) return;
+
+	if (!PlayerActions::GetInstance()->GetPlayerReady() && Input::GetKeyDown(DIK_R))
 	{
-		//if (mMainBody->GetVelocity().x == 0)
+		PlayerActions::GetInstance()->SetPlayerReady(true);
+		PlayerActions::GetInstance()->AddPlayerAction(Time::GetTimeFSinceGameStart(), dt, mMainBody->GetVelocity(), mIsShooting);
+	}
+
+	if (ClientNetworkManager::Instance->GetIsAllPlayerReady())
+	{
+		if (GetPlayerId() == Proxy::GetPlayerId())
 		{
-			if (Input::GetKey(DIK_UP))
+			//if (mMainBody->GetVelocity().x == 0)
 			{
-				mMainBody->SetVelocity(0, mMoveSpeed);
+				if (Input::GetKey(DIK_UP))
+				{
+					mMainBody->SetVelocity(0, mMoveSpeed);
+				}
+
+				if (Input::GetKey(DIK_DOWN))
+				{
+					mMainBody->SetVelocity(0, -mMoveSpeed);
+				}
+
+				if (Input::GetKeyUp(DIK_UP) || Input::GetKeyUp(DIK_DOWN))
+				{
+					mMainBody->SetVelocity(mMainBody->GetVelocity().x, 0);
+				}
 			}
 
-			if (Input::GetKey(DIK_DOWN))
+			//if (mMainBody->GetVelocity().y == 0)
 			{
-				mMainBody->SetVelocity(0, -mMoveSpeed);
+				if (Input::GetKey(DIK_RIGHT))
+				{
+					mMainBody->SetVelocity(mMoveSpeed, 0);
+				}
+
+				if (Input::GetKey(DIK_LEFT))
+				{
+					mMainBody->SetVelocity(-mMoveSpeed, 0);
+				}
+
+				if (Input::GetKeyUp(DIK_LEFT) || Input::GetKeyUp(DIK_RIGHT))
+				{
+					mMainBody->SetVelocity(0, mMainBody->GetVelocity().y);
+				}
 			}
 
-			if (Input::GetKeyUp(DIK_UP) || Input::GetKeyUp(DIK_DOWN))
+			if (Input::GetKey(DIK_SPACE) && Time::GetTimeFSinceGameStart() >= mShootingTimer + 1 / mShootingRate)
 			{
-				mMainBody->SetVelocity(mMainBody->GetVelocity().x, 0);
-			}
-		}
+				//Shoot bullets
+				mIsShooting = true;
 
-		//if (mMainBody->GetVelocity().y == 0)
-		{
-			if (Input::GetKey(DIK_RIGHT))
-			{
-				mMainBody->SetVelocity(mMoveSpeed, 0);
+				mShootingTimer = Time::GetTimeFSinceGameStart();
 			}
-
-			if (Input::GetKey(DIK_LEFT))
+			else
 			{
-				mMainBody->SetVelocity(-mMoveSpeed, 0);
+
+				mIsShooting = false;
 			}
 
-			if (Input::GetKeyUp(DIK_LEFT) || Input::GetKeyUp(DIK_RIGHT))
-			{
-				mMainBody->SetVelocity(0, mMainBody->GetVelocity().y);
-			}
-		}
-
-		if (Input::GetKey(DIK_SPACE) && Time::GetTimeFSinceGameStart() >= mShootingTimer + 1/mShootingRate)
-		{
-			//Shoot bullets
-			mIsShooting = true;
-
-			mShootingTimer = Time::GetTimeFSinceGameStart();
+			//Add playerAction to list
+			PlayerActions::GetInstance()->AddPlayerAction(Time::GetTimeFSinceGameStart(), dt, mMainBody->GetVelocity(), mIsShooting);
 		}
 		else
 		{
+			//SimulateAction(dt);
 
-			mIsShooting = false;
-		}
-
-		//Add playerAction to list
-		PlayerActions::GetInstance()->AddPlayerAction(Time::GetTimeFSinceGameStart(), dt, mMainBody->GetVelocity(), mIsShooting);
-	}
-	else
-	{
-		//SimulateAction(dt);
-
-		if (mMainBody->GetVelocity().x == 0 && mMainBody->GetVelocity().y == 0)
-		{
-			//we're in sync if our velocity is 0
-			mTimeLocationBecameOutOfSync = 0.f;
+			if (mMainBody->GetVelocity().x == 0 && mMainBody->GetVelocity().y == 0)
+			{
+				//we're in sync if our velocity is 0
+				mTimeLocationBecameOutOfSync = 0.f;
+			}
 		}
 	}
 
@@ -147,12 +163,14 @@ void Player::OnNetworkRead(InputMemoryBitStream & inInputStream, uint32_t dirtyS
 			TexturePacker p = TexturePacker(&SharedTextures::BattleCityTexture, "../Resources/battlecity.xml");
 			mSprite.SetRegion(p.GetRegion("greentank_1")[0]);
 			mSprite.SetSize(26, 26);
+			lobbyPlayer.SetPosition(Vector2(480 / 2 + 35 * mPlayerId, 480 / 2));
 		}
 		else
 		{
 			TexturePacker p = TexturePacker(&SharedTextures::BattleCityTexture, "../Resources/battlecity.xml");
 			mSprite.SetRegion(p.GetRegion("yellowtank_1")[0]);
 			mSprite.SetSize(26, 26);
+			lobbyPlayer.SetPosition(Vector2(480 / 2 + 35 * mPlayerId, 480 / 2));
 		}
 	}
 
@@ -218,6 +236,8 @@ void Player::SimulateAction(const PlayerAction& playerAction)
 	
 	//Simulate collision
 	WorldCollector::GetWorld('PS')->UpdateForBody(mMainBody, playerAction.GetDeltaTime());
+
+	if (mMainBody == nullptr) return;
 
 	UpdateRotation();
 

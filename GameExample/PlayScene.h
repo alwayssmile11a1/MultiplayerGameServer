@@ -6,7 +6,7 @@
 #include "HanabiWorld.h"
 #include "ClientNetworkManager.h"
 #include "WorldCollisionListener.h"
-#include "ExplosionEffect.h"
+
 
 class PlayScene : public Scene
 {

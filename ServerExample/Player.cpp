@@ -40,6 +40,8 @@ void Player::Render(SpriteBatch *batch)
 
 void Player::Update(float dt)
 {
+	if (mMainBody == nullptr) return;
+
 	//Get old variables
 	Vector2 oldPosition = mMainBody->GetPosition();
 	Vector2 oldVelocity = mMainBody->GetVelocity();
@@ -121,6 +123,8 @@ void Player::SimulateAction(const PlayerAction& playerAction)
 
 	//check collisions
 	WorldCollector::GetWorld('PS')->UpdateForBody(mMainBody, playerAction.GetDeltaTime());
+
+	if (mMainBody == nullptr) return;
 
 	UpdateRotation();
 

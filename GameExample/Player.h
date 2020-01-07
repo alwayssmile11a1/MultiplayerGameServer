@@ -11,6 +11,7 @@
 #include "ExplosionEffect.h"
 #include "SharedTextures.h"
 #include "CollisionBit.h"
+#include "LobbyPlayer.h"
 
 class Player : public NetworkGameObject
 {
@@ -20,12 +21,12 @@ private:
 	int mPlayerId;
 	int mHealth;
 	bool mIsShooting;
-	
 	float mShootingRate;
 	float mShootingTimer;
 
 	Body *mMainBody;
 	Sprite mSprite;
+	LobbyPlayer lobbyPlayer;
 
 	//Network stuff
 	float mTimeLocationBecameOutOfSync = 0.0f;
@@ -60,6 +61,7 @@ public:
 	void UpdateRotation();
 
 	void Render(SpriteBatch *batch) override;
+	void RenderLobbyPlayer(SpriteBatch *batch);
 	void Update(float dt) override;
 	
 	void OnNetworkRead(InputMemoryBitStream & inInputStream, uint32_t dirtyState) override;

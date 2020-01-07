@@ -34,7 +34,7 @@ class PlayerActions
 private:
 	std::deque<PlayerAction> mPlayerActions;
 	static std::unique_ptr<PlayerActions>	sInstance;
-
+	bool mIsReady;
 public:
 
 	static const std::unique_ptr<PlayerActions>& GetInstance();
@@ -49,4 +49,6 @@ public:
 	int Count();
 	const PlayerAction& AddPlayerAction(float timeStamp, float deltaTime, const Vector2& velocity, bool isShooting);
 	void RemovePlayerActions(float timeStamp);
+	void SetPlayerReady(bool isReady);
+	bool GetPlayerReady() const { return mIsReady; }
 };

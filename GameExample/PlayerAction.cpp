@@ -58,3 +58,8 @@ void PlayerActions::RemovePlayerActions(float lastestTimeStamp)
 		mPlayerActions.pop_front();
 	}
 }
+
+void PlayerActions::SetPlayerReady(bool isReady)
+{
+	mIsReady = isReady;
+}

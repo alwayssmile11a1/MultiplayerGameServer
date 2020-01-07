@@ -33,7 +33,7 @@ class PlayerActions
 private:
 	std::deque<PlayerAction> mPlayerActions;
 	float mLastActionTimeStamp;
-
+	bool mIsReady = false;
 public:
 
 	PlayerActions() { mLastActionTimeStamp = -1.0f; }
@@ -50,4 +50,6 @@ public:
 	bool AddPlayerAction(const PlayerAction &playerAction);
 	float GetLastActionTimeStamp() { return mLastActionTimeStamp; }
 	void Clear();
+	void SetPlayerReady(bool isReady) { mIsReady = isReady; }
+	bool GetPlayerReady() { return mIsReady; }
 };

@@ -14,8 +14,7 @@
 #include "Bullet.h"
 #include "Bound.h"
 #include "Proxy.h"
-
-
+#include "ExplosionEffect.h"
 
 class ClientNetworkManager : public NetworkManager
 {
@@ -26,6 +25,7 @@ private:
 
 	float mTimeOfLastHello;
 	float mTimeOfLastGamePacket;
+	bool mIsAllPlayerReady = false;
 
 	AverageFloatVariable mAverageRoundTripTime;
 
@@ -69,4 +69,6 @@ public:
 	void AddToLateDrawnObjects(NetworkGameObject* gameObjectPtr);
 
 	float GetAverageRoundTripTime() { return mAverageRoundTripTime.GetValue(); }
+
+	bool GetIsAllPlayerReady() { return mIsAllPlayerReady; }
 };

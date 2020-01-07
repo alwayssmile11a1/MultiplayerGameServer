@@ -93,6 +93,9 @@ void ClientNetworkManager::SendGamePackets()
 			}
 			auto playerAction = PlayerActions::GetInstance()->begin() + firstPlayerActionIndex;
 
+			//write isPlayerReady or not
+			inputPacket.Write(PlayerActions::GetInstance()->GetPlayerReady());
+
 			//only need two bits to write the player action count, because it's 0, 1, 2 or 3
 			inputPacket.Write(playerActionCount - firstPlayerActionIndex, 2);
 
@@ -150,6 +153,9 @@ void ClientNetworkManager::HandleGamePacket(InputMemoryBitStream& inputMemoryStr
 
 void ClientNetworkManager::ReadLastActionProcessedOnServerTimeStamp(InputMemoryBitStream& inputMemoryStream)
 {
+	//Read isAllPlayerReady
+	inputMemoryStream.Read(mIsAllPlayerReady);
+
 	//read timeStamp
 	bool isTimeStampDirty;
 	inputMemoryStream.Read(isTimeStampDirty);
@@ -175,22 +181,40 @@ void ClientNetworkManager::Update(float dt)
 	{
 		pair.second->Update(dt);
 	}
+
+	ExplosionEffectCollector::Update(dt);
 }
 
 void ClientNetworkManager::Render(SpriteBatch* spriteBatch)
 {
-	for (const auto& pair : NetworkLinkingContext::GetNetworkIdToGameObjectMap())
+	if (!mIsAllPlayerReady)
 	{
-		pair.second->Render(spriteBatch);
-	}
-
-	for (const auto& lateDrawnObject : lateDrawnObjects)
-	{
-		Grass* grass = (Grass*)(lateDrawnObject);
-		if (grass != nullptr)
+		for (const auto& pair : NetworkLinkingContext::GetNetworkIdToGameObjectMap())
 		{
-			grass->LateRender(spriteBatch);
+			Player* player = dynamic_cast<Player*>(pair.second.get());
+			if (player)
+			{
+				player->RenderLobbyPlayer(spriteBatch);
+			}
 		}
+	}
+	else
+	{
+		for (const auto& pair : NetworkLinkingContext::GetNetworkIdToGameObjectMap())
+		{
+			pair.second->Render(spriteBatch);
+		}
+
+		for (const auto& lateDrawnObject : lateDrawnObjects)
+		{
+			Grass* grass = (Grass*)(lateDrawnObject);
+			if (grass != nullptr)
+			{
+				grass->LateRender(spriteBatch);
+			}
+		}
+
+		ExplosionEffectCollector::Render(spriteBatch);
 	}
 }
 
