@@ -13,11 +13,15 @@ private:
 	Vector2 mVelocity;
 	float mDeltaTime;
 	bool mIsShooting;
+	int mTeamNumber = -1;
 
 public:
 	PlayerAction();
 	PlayerAction(float timeStamp, float deltaTime, const Vector2 &velocity, bool isShooting);
 	~PlayerAction();
+
+	void SetPlayerTeamNumber(int teamNumber) { mTeamNumber = teamNumber; }
+	int GetPlayerTeamNumber() const { return mTeamNumber; }
 
 	const Vector2& GetVelocity() const { return mVelocity;}
 	bool GetIsShooting() const { return mIsShooting; }
@@ -34,7 +38,7 @@ class PlayerActions
 private:
 	std::deque<PlayerAction> mPlayerActions;
 	static std::unique_ptr<PlayerActions>	sInstance;
-	bool mIsReady;
+	bool mIsReady = false;
 public:
 
 	static const std::unique_ptr<PlayerActions>& GetInstance();
@@ -47,6 +51,10 @@ public:
 	const_iterator	end()					const { return mPlayerActions.end(); }
 
 	int Count();
+	const void AddPlayerAction(const PlayerAction& action)
+	{
+		mPlayerActions.push_back(action);
+	}
 	const PlayerAction& AddPlayerAction(float timeStamp, float deltaTime, const Vector2& velocity, bool isShooting);
 	void RemovePlayerActions(float timeStamp);
 	void SetPlayerReady(bool isReady);

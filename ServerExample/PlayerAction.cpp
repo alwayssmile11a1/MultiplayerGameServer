@@ -22,6 +22,12 @@ PlayerAction::~PlayerAction()
 
 void PlayerAction::OnNetworkRead(InputMemoryBitStream & inInputStream)
 {
+	bool hasTeamNumber;
+	inInputStream.Read(hasTeamNumber);
+	if (hasTeamNumber)
+	{
+		inInputStream.Read(mTeamNumber);
+	}
 	inInputStream.Read(mTimeStamp);
 	inInputStream.Read(mDeltaTime);
 	inInputStream.Read(mVelocity);
@@ -44,7 +50,7 @@ bool PlayerActions::AddPlayerAction(const PlayerAction &playerAction)
 	if (timeStamp > mLastActionTimeStamp)
 	{
 		mLastActionTimeStamp = timeStamp;
-		mPlayerActions.emplace_back(playerAction.GetTimeStamp(), playerAction.GetDeltaTime(), playerAction.GetVelocity(), playerAction.GetIsShooting());
+		mPlayerActions.emplace_back(playerAction);
 		return true;
 	}
 

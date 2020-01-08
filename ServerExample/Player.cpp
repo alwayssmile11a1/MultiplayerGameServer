@@ -112,6 +112,12 @@ void Player::UpdateRotation()
 
 void Player::SimulateAction(const PlayerAction& playerAction)
 {
+	if (playerAction.GetPlayerTeamNumber() > -1)
+	{
+		mTeamNumber = playerAction.GetPlayerTeamNumber();
+		ServerNetworkManager::Instance->UpdateNetworkGameObject(GetNetworkId(), PRS_TeamNumber);
+	}
+
 	//Set velocity
 	Vector2 velocity = playerAction.GetVelocity();
 
@@ -148,6 +154,11 @@ uint32_t Player::OnNetworkWrite(OutputMemoryBitStream & inOutputStream, uint32_t
 	if (dirtyState & PRS_PlayerId)
 	{
 		inOutputStream.Write(mPlayerId);
+	}
+
+	if (dirtyState & PRS_TeamNumber)
+	{
+		inOutputStream.Write(mTeamNumber);
 	}
 
 	if (dirtyState & PRS_Position)

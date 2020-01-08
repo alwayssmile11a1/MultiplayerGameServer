@@ -5,8 +5,8 @@ class Proxy
 {
 	static int playerId;
 	static int playerNetworkGameObjectId;
+	static int teamNumber;
 public:
-
 	static int GetPlayerId() {
 		return playerId;
 	}
@@ -15,6 +15,13 @@ public:
 		playerId = id;
 	}
 
+	static int GetTeamNumber() {
+		return teamNumber;
+	}
+
+	static void SetTeamNumber(int number) {
+		teamNumber = number;
+	}
 
 	static int GetPlayerNetworkGameObjectId() {
 		return playerNetworkGameObjectId;

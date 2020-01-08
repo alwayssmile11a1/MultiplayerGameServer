@@ -16,5 +16,9 @@ public:
 
 	void Render(SpriteBatch *batch);
 
+	void SetSpriteRegion(const TextureRegion& region)
+	{
+		mSprite.SetRegion(region);
+	}
 	void SetPosition(const Vector2& position) { mSprite.SetPosition(position.x, position.y); }
 };

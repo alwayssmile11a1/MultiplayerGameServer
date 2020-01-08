@@ -115,6 +115,9 @@
 	 <rect left="113" top = "177" width = "15" height="14" />
 	</right>
 </greentank_4>
+<redtank_1>
+	 <rect left="129" top = "130" width = "13" height="13" />
+</redtank_1>
 <enemy_1>
 	<rect left="129" top = "64" width = "13" height="15" />
 	<rect left="145" top = "64" width = "13" height="15" />

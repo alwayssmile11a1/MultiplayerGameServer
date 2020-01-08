@@ -1,5 +1,7 @@
 #include "Player.h"
 
+std::vector<Player*> Player::mPlayers;
+
 Player::Player()
 {
 	//Setup body
@@ -37,10 +39,27 @@ void Player::Update(float dt)
 {
 	if (mMainBody == nullptr) return;
 
-	if (!PlayerActions::GetInstance()->GetPlayerReady() && Input::GetKeyDown(DIK_R))
+	if (!PlayerActions::GetInstance()->GetPlayerReady() && GetPlayerId() == Proxy::GetPlayerId())
 	{
-		PlayerActions::GetInstance()->SetPlayerReady(true);
-		PlayerActions::GetInstance()->AddPlayerAction(Time::GetTimeFSinceGameStart(), dt, mMainBody->GetVelocity(), mIsShooting);
+		if (Input::GetKeyDown(DIK_R))
+		{
+			PlayerActions::GetInstance()->SetPlayerReady(true);
+			PlayerActions::GetInstance()->AddPlayerAction(Time::GetTimeFSinceGameStart(), dt, mMainBody->GetVelocity(), mIsShooting);
+		}
+
+		if (Input::GetKeyDown(DIK_LEFT))
+		{
+			PlayerAction action(Time::GetTimeFSinceGameStart(), dt, mMainBody->GetVelocity(), mIsShooting);
+			action.SetPlayerTeamNumber(0);
+			PlayerActions::GetInstance()->AddPlayerAction(action);
+		}
+
+		if (Input::GetKeyDown(DIK_RIGHT))
+		{
+			PlayerAction action(Time::GetTimeFSinceGameStart(), dt, mMainBody->GetVelocity(), mIsShooting);
+			action.SetPlayerTeamNumber(1);
+			PlayerActions::GetInstance()->AddPlayerAction(action);
+		}
 	}
 
 	if (ClientNetworkManager::Instance->GetIsAllPlayerReady())
@@ -157,20 +176,89 @@ void Player::OnNetworkRead(InputMemoryBitStream & inInputStream, uint32_t dirtyS
 	if (dirtyState & PRS_PlayerId)
 	{
 		inInputStream.Read(mPlayerId);
+		mPlayers.push_back(this);
+	}
 
-		if (mPlayerId == Proxy::GetPlayerId())
+	if (dirtyState & PRS_TeamNumber)
+	{
+		inInputStream.Read(mTeamNumber);
+		if (mTeamNumber == 0)
 		{
-			TexturePacker p = TexturePacker(&SharedTextures::BattleCityTexture, "../Resources/battlecity.xml");
-			mSprite.SetRegion(p.GetRegion("greentank_1")[0]);
-			mSprite.SetSize(26, 26);
-			lobbyPlayer.SetPosition(Vector2(480 / 2 + 35 * mPlayerId, 480 / 2));
+			if (mPlayerId == Proxy::GetPlayerId())
+			{
+				Proxy::SetTeamNumber(mTeamNumber);
+
+				TexturePacker p = TexturePacker(&SharedTextures::BattleCityTexture, "../Resources/battlecity.xml");
+				mSprite.SetRegion(p.GetRegion("greentank_1")[0]);
+				mSprite.SetSize(26, 26);
+
+				lobbyPlayer.SetSpriteRegion(p.GetRegion("greentank_1")[0]);
+			}
+			else
+			{
+				TexturePacker p = TexturePacker(&SharedTextures::BattleCityTexture, "../Resources/battlecity.xml");
+				mSprite.SetRegion(p.GetRegion("yellowtank_1")[0]);
+				mSprite.SetSize(26, 26);
+
+				lobbyPlayer.SetSpriteRegion(p.GetRegion("yellowtank_1")[0]);
+			}
 		}
 		else
 		{
-			TexturePacker p = TexturePacker(&SharedTextures::BattleCityTexture, "../Resources/battlecity.xml");
-			mSprite.SetRegion(p.GetRegion("yellowtank_1")[0]);
-			mSprite.SetSize(26, 26);
-			lobbyPlayer.SetPosition(Vector2(480 / 2 + 35 * mPlayerId, 480 / 2));
+			if (mPlayerId == Proxy::GetPlayerId())
+			{
+				Proxy::SetTeamNumber(mTeamNumber);
+
+				TexturePacker p = TexturePacker(&SharedTextures::BattleCityTexture, "../Resources/battlecity.xml");
+				mSprite.SetRegion(p.GetRegion("greentank_1")[0]);
+				mSprite.SetSize(26, 26);
+
+				lobbyPlayer.SetSpriteRegion(p.GetRegion("greentank_1")[0]);
+			}
+			else
+			{
+				TexturePacker p = TexturePacker(&SharedTextures::BattleCityTexture, "../Resources/battlecity.xml");
+				mSprite.SetRegion(p.GetRegion("yellowtank_1")[0]);
+				mSprite.SetSize(26, 26);
+
+				lobbyPlayer.SetSpriteRegion(p.GetRegion("yellowtank_1")[0]);
+			}
+		}
+
+		int index = 0;
+		for (const auto& player : mPlayers)
+		{
+			if (player->mTeamNumber == 0)
+			{
+				player->lobbyPlayer.SetPosition(Vector2(520 / 2, 800 / 2 - 35 * index));
+				index++;
+			}
+
+			if (player->GetPlayerId() != Proxy::GetPlayerId())
+			{
+				if (player->mTeamNumber == Proxy::GetTeamNumber())
+				{
+					TexturePacker p = TexturePacker(&SharedTextures::BattleCityTexture, "../Resources/battlecity.xml");
+					player->mSprite.SetRegion(p.GetRegion("yellowtank_1")[0]);
+					player->mSprite.SetSize(26, 26);
+				}
+				else
+				{
+					TexturePacker p = TexturePacker(&SharedTextures::BattleCityTexture, "../Resources/battlecity.xml");
+					player->mSprite.SetRegion(p.GetRegion("redtank_1")[0]);
+					player->mSprite.SetSize(26, 26);
+				}
+			}
+		}
+
+		index = 0;
+		for (const auto& player : mPlayers)
+		{
+			if (player->mTeamNumber == 1)
+			{
+				player->lobbyPlayer.SetPosition(Vector2(520 / 2 + 100, 800 / 2 - 35 * index));
+				index++;
+			}
 		}
 	}
 
@@ -361,4 +449,7 @@ void Player::OnNetworkDestroy()
 	ExplosionEffectCollector::PlayEffect(mMainBody->GetPosition());
 	WorldCollector::GetWorld('PS')->DestroyBody(mMainBody);
 	mMainBody = nullptr;
+
+	std::vector<Player*>::iterator p = std::find(mPlayers.begin(), mPlayers.end(), this);
+	mPlayers.erase(p);
 }

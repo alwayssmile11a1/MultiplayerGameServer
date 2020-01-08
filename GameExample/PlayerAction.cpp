@@ -19,6 +19,15 @@ PlayerAction::~PlayerAction()
 
 void PlayerAction::OnNetworkWrite(OutputMemoryBitStream & inOutputStream) const
 {
+	if (mTeamNumber > -1)
+	{
+		inOutputStream.Write(true);
+		inOutputStream.Write(mTeamNumber);
+	}
+	else
+	{
+		inOutputStream.Write(false);
+	}
 	inOutputStream.Write(mTimeStamp);
 	inOutputStream.Write(mDeltaTime);
 	inOutputStream.Write(mVelocity);
