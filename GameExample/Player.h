@@ -51,8 +51,9 @@ public:
 		PRS_Velocity = 1 << 2,
 		PRS_Health = 1 << 3,
 		PRS_TeamNumber = 1 << 4,
+		PRS_Upgrade = 1 << 5,
 
-		PRS_AllState = PRS_PlayerId | PRS_Position | PRS_Velocity | PRS_Health | PRS_TeamNumber
+		PRS_AllState = PRS_PlayerId | PRS_Position | PRS_Velocity | PRS_Health | PRS_TeamNumber | PRS_Upgrade
 	};
 
 	Player();

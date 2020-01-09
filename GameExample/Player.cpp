@@ -11,7 +11,7 @@ Player::Player()
 	bodyDef.size.Set(26, 26);
 	mMainBody = WorldCollector::GetWorld('PS')->CreateBody(bodyDef);
 	mMainBody->categoryBits = PLAYER_BIT;
-	mMainBody->maskBits = BRICK_BIT | METAL_BIT | BULLET_BIT | PLAYER_BIT | BOUND_BIT;
+	mMainBody->maskBits = BRICK_BIT | METAL_BIT | BULLET_BIT | PLAYER_BIT | BOUND_BIT | STAR_BIT;
 
 	mMainBody->PutExtra(this);
 
@@ -289,6 +289,11 @@ void Player::OnNetworkRead(InputMemoryBitStream & inInputStream, uint32_t dirtyS
 	if (dirtyState & PRS_Health)
 	{
 		inInputStream.Read(mHealth);
+	}
+
+	if (dirtyState & PRS_Upgrade)
+	{
+		inInputStream.Read(mShootingRate);
 	}
 
 	//Don't do anything if it's the very first packet

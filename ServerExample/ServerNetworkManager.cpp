@@ -161,7 +161,6 @@ void ServerNetworkManager::OnSendPackets()
 	}
 }
 
-
 void ServerNetworkManager::OnPacketReceived(InputMemoryBitStream& inputMemoryStream, const SocketAddress& fromAddress)
 {
 	PacketType packetType;

@@ -6,7 +6,8 @@ StarItem::StarItem()
 {
 	//Setup body
 	BodyDef bodyDef;
-	bodyDef.bodyType = Body::BodyType::Static;
+	bodyDef.bodyType = Body::BodyType::Kinematic;
+	bodyDef.isSensor = true;
 	bodyDef.position.Set(30, 30);
 	bodyDef.size.Set(30, 28);
 	mMainBody = WorldCollector::GetWorld('PS')->CreateBody(bodyDef);
@@ -27,6 +28,7 @@ StarItem::~StarItem()
 
 void StarItem::OnHitPlayer()
 {
+
 }
 
 uint32_t StarItem::OnNetworkWrite(OutputMemoryBitStream & inOutputStream, uint32_t inDirtyState) const
@@ -38,4 +40,6 @@ uint32_t StarItem::OnNetworkWrite(OutputMemoryBitStream & inOutputStream, uint32
 
 void StarItem::OnNetworkDestroy()
 {
+	WorldCollector::GetWorld('PS')->DestroyBody(mMainBody);
+	mMainBody = nullptr;
 }

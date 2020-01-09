@@ -186,9 +186,20 @@ uint32_t Player::OnNetworkWrite(OutputMemoryBitStream & inOutputStream, uint32_t
 		inOutputStream.Write(mHealth);
 	}
 
+	if (dirtyState & PRS_Upgrade)
+	{
+		inOutputStream.Write(mShootingRate);
+	}
+
 	//Debug::Log("%f   %f %f\n\n", Time::GetTimeF(), mMainBody->GetPosition().x, mMainBody->GetPosition().y);
 
 	return dirtyState;
+}
+
+void Player::UpgradePlayer()
+{
+	mShootingRate = 2.0f;
+	ServerNetworkManager::Instance->UpdateNetworkGameObject(GetNetworkId(), PRS_Upgrade);
 }
 
 void Player::OnNetworkDestroy()

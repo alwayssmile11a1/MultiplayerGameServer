@@ -182,11 +182,82 @@ void WorldCollisionListener::OnCollisionExit(Body * bodyA, Body * bodyB, const V
 
 void WorldCollisionListener::OnSersorEnter(Body * bodyA, Body * bodyB)
 {
-
+	switch (bodyA->categoryBits * bodyB->categoryBits + bodyA->categoryBits + bodyB->categoryBits)
+	{
+	case PLAYER_BIT * STAR_BIT + PLAYER_BIT + STAR_BIT:
+	{
+		if (bodyA->categoryBits == STAR_BIT)
+		{
+			StarItem* starItem = (StarItem*)(bodyA->GetExtra());
+			Player* player = (Player*)(bodyB->GetExtra());
+			if (starItem != nullptr)
+			{
+				ServerNetworkManager::Instance->DestroyNetworkGameObject(starItem->GetNetworkId());
+			}
+			if (player != nullptr)
+			{
+				player->UpgradePlayer();
+			}
+		}
+		else
+		{
+			if (bodyB->categoryBits == STAR_BIT)
+			{
+				StarItem* starItem = (StarItem*)(bodyB->GetExtra());
+				Player* player = (Player*)(bodyA->GetExtra());
+				if (starItem != nullptr)
+				{
+					ServerNetworkManager::Instance->DestroyNetworkGameObject(starItem->GetNetworkId());
+				}
+				if (player != nullptr)
+				{
+					player->UpgradePlayer();
+				}
+			}
+		}
+		break;
+	}
+	}
 }
 
 void WorldCollisionListener::OnSersorOverlaying(Body * bodyA, Body * bodyB)
 {
+	switch (bodyA->categoryBits * bodyB->categoryBits + bodyA->categoryBits + bodyB->categoryBits)
+	{
+	case PLAYER_BIT * STAR_BIT + PLAYER_BIT + STAR_BIT:
+	{
+		if (bodyA->categoryBits == STAR_BIT)
+		{
+			StarItem* starItem = (StarItem*)(bodyA->GetExtra());
+			Player* player = (Player*)(bodyB->GetExtra());
+			if (starItem != nullptr)
+			{
+				ServerNetworkManager::Instance->DestroyNetworkGameObject(starItem->GetNetworkId());
+			}
+			if (player != nullptr)
+			{
+				player->UpgradePlayer();
+			}
+		}
+		else
+		{
+			if (bodyB->categoryBits == STAR_BIT)
+			{
+				StarItem* starItem = (StarItem*)(bodyB->GetExtra());
+				Player* player = (Player*)(bodyA->GetExtra());
+				if (starItem != nullptr)
+				{
+					ServerNetworkManager::Instance->DestroyNetworkGameObject(starItem->GetNetworkId());
+				}
+				if (player != nullptr)
+				{
+					player->UpgradePlayer();
+				}
+			}
+		}
+		break;
+	}
+	}
 }
 
 void WorldCollisionListener::OnSensorExit(Body * bodyA, Body * bodyB)
