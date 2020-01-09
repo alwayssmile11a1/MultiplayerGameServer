@@ -25,10 +25,13 @@ private:
 	float mShootingRate;
 	float mShootingTimer;
 	int mTeamNumber = 0;
-
+	bool hasShield = false;
 	Body *mMainBody;
 	Sprite mSprite;
+	Sprite mShieldSprite;
 	LobbyPlayer lobbyPlayer;
+
+
 
 	//Network stuff
 	float mTimeLocationBecameOutOfSync = 0.0f;
@@ -52,8 +55,9 @@ public:
 		PRS_Health = 1 << 3,
 		PRS_TeamNumber = 1 << 4,
 		PRS_Upgrade = 1 << 5,
+		PRS_Shield = 1 << 6,
 
-		PRS_AllState = PRS_PlayerId | PRS_Position | PRS_Velocity | PRS_Health | PRS_TeamNumber | PRS_Upgrade
+		PRS_AllState = PRS_PlayerId | PRS_Position | PRS_Velocity | PRS_Health | PRS_TeamNumber | PRS_Upgrade | PRS_Shield
 	};
 
 	Player();

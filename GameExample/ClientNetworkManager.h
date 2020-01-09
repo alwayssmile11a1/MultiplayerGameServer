@@ -11,6 +11,7 @@
 #include "Metal.h"
 #include "Enemy.h"
 #include "StarItem.h"
+#include "ShieldItem.h"
 #include "Bullet.h"
 #include "Bound.h"
 #include "Proxy.h"

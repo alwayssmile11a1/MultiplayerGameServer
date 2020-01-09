@@ -30,6 +30,7 @@ void ClientNetworkManager::Init(const std::string &destination, const std::strin
 	NetworkGameObjectRegister::RegisterCreationFunction(Bullet::GetId(), Bullet::CreateInstance);
 	NetworkGameObjectRegister::RegisterCreationFunction(Enemy::GetId(), Enemy::CreateInstance);
 	NetworkGameObjectRegister::RegisterCreationFunction(StarItem::GetId(), StarItem::CreateInstance);
+	NetworkGameObjectRegister::RegisterCreationFunction(ShieldItem::GetId(), ShieldItem::CreateInstance);
 	NetworkGameObjectRegister::RegisterCreationFunction(Grass::GetId(), Grass::CreateInstance);
 
 	//init done, now prepare to send hello packet

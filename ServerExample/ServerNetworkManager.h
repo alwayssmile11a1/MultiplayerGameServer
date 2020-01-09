@@ -9,6 +9,7 @@
 #include "Bullet.h"
 #include "Enemy.h"
 #include "StarItem.h"
+#include "ShieldItem.h"
 #include "HanabiMath.h"
 #include "HanabiConsole.h"
 #include "HanabiMap.h"

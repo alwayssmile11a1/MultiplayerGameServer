@@ -9,7 +9,7 @@ Bullet::Bullet()
 	bodyDef.size.Set(4, 4);
 	mMainBody = WorldCollector::GetWorld('PS')->CreateBody(bodyDef);
 	mMainBody->categoryBits = BULLET_BIT;
-	mMainBody->maskBits = PLAYER_BIT | BRICK_BIT | METAL_BIT | BOUND_BIT;
+	mMainBody->maskBits = PLAYER_BIT | BRICK_BIT | METAL_BIT | BOUND_BIT | ENEMY_BIT;
 	mMainBody->PutExtra(this);
 
 	TexturePacker p = TexturePacker(&SharedTextures::BattleCityTexture, "../Resources/battlecity.xml");

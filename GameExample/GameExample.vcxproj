@@ -133,6 +133,7 @@
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="Proxy.cpp" />
     <ClCompile Include="SharedTextures.cpp" />
+    <ClCompile Include="ShieldItem.cpp" />
     <ClCompile Include="StarItem.cpp" />
     <ClCompile Include="WorldCollisionListener.cpp" />
   </ItemGroup>
@@ -150,6 +151,7 @@
     <ClInclude Include="PlayerAction.h" />
     <ClInclude Include="Proxy.h" />
     <ClInclude Include="SharedTextures.h" />
+    <ClInclude Include="ShieldItem.h" />
     <ClInclude Include="StarItem.h" />
     <ClInclude Include="WorldCollisionListener.h" />
     <ClInclude Include="Player.h" />

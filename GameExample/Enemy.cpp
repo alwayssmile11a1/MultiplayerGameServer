@@ -11,7 +11,7 @@ Enemy::Enemy()
 	bodyDef.size.Set(26, 30);
 	mMainBody = WorldCollector::GetWorld('PS')->CreateBody(bodyDef);
 	mMainBody->categoryBits = ENEMY_BIT;
-	mMainBody->maskBits = PLAYER_BIT | BRICK_BIT | METAL_BIT | BOUND_BIT | ENEMY_BIT;
+	mMainBody->maskBits = PLAYER_BIT | BRICK_BIT | METAL_BIT | BOUND_BIT | ENEMY_BIT | BULLET_BIT;
 	mMainBody->PutExtra(this);
 	mMainBody->SetVelocity(0, 1.5f);
 

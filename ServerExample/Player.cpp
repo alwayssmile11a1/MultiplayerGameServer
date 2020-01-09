@@ -17,7 +17,7 @@ Player::Player()
 	mMainBody = WorldCollector::GetWorld('PS')->CreateBody(bodyDef);
 
 	mMainBody->categoryBits = PLAYER_BIT;
-	mMainBody->maskBits = BRICK_BIT | METAL_BIT | BULLET_BIT | PLAYER_BIT | BOUND_BIT | ENEMY_BIT | STAR_BIT;
+	mMainBody->maskBits = BRICK_BIT | METAL_BIT | BULLET_BIT | PLAYER_BIT | BOUND_BIT | ENEMY_BIT | STAR_BIT | SHIELD_BIT;
 
 	mMainBody->PutExtra(this);
 
@@ -191,6 +191,11 @@ uint32_t Player::OnNetworkWrite(OutputMemoryBitStream & inOutputStream, uint32_t
 		inOutputStream.Write(mShootingRate);
 	}
 
+	if (dirtyState & PRS_Shield)
+	{
+		inOutputStream.Write(mHasShield);
+	}
+
 	//Debug::Log("%f   %f %f\n\n", Time::GetTimeF(), mMainBody->GetPosition().x, mMainBody->GetPosition().y);
 
 	return dirtyState;
@@ -200,6 +205,12 @@ void Player::UpgradePlayer()
 {
 	mShootingRate = 2.0f;
 	ServerNetworkManager::Instance->UpdateNetworkGameObject(GetNetworkId(), PRS_Upgrade);
+}
+
+void Player::SetHasShield(bool hasShield)
+{
+	mHasShield = hasShield;
+	ServerNetworkManager::Instance->UpdateNetworkGameObject(GetNetworkId(), PRS_Shield);
 }
 
 void Player::OnNetworkDestroy()
@@ -212,3 +223,4 @@ void Player::OnNetworkDestroy()
 		mPlayers.erase(p);
 	}
 }
+

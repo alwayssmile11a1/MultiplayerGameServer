@@ -13,8 +13,15 @@ void WorldCollisionListener::OnCollisionEnter(Body * bodyA, Body * bodyB, const 
 
 			if (bullet->GetPlayerNetworkGameObjectId() != player->GetNetworkId())
 			{
-				ServerNetworkManager::Instance->DestroyNetworkGameObject(((NetworkGameObject*)(bodyA->GetExtra()))->GetNetworkId());
-				ServerNetworkManager::Instance->DestroyNetworkGameObject(((NetworkGameObject*)(bodyB->GetExtra()))->GetNetworkId());
+				ServerNetworkManager::Instance->DestroyNetworkGameObject(bullet->GetNetworkId());
+				if (player->HasShield())
+				{
+					player->SetHasShield(false);
+				}
+				else
+				{
+					ServerNetworkManager::Instance->DestroyNetworkGameObject(player->GetNetworkId());
+				}
 			}
 		}
 		else
@@ -26,8 +33,15 @@ void WorldCollisionListener::OnCollisionEnter(Body * bodyA, Body * bodyB, const 
 
 				if (bullet->GetPlayerNetworkGameObjectId() != player->GetNetworkId())
 				{
-					ServerNetworkManager::Instance->DestroyNetworkGameObject(((NetworkGameObject*)(bodyA->GetExtra()))->GetNetworkId());
-					ServerNetworkManager::Instance->DestroyNetworkGameObject(((NetworkGameObject*)(bodyB->GetExtra()))->GetNetworkId());
+					ServerNetworkManager::Instance->DestroyNetworkGameObject(bullet->GetNetworkId());
+					if (player->HasShield())
+					{
+						player->SetHasShield(false);
+					}
+					else
+					{
+						ServerNetworkManager::Instance->DestroyNetworkGameObject(player->GetNetworkId());
+					}
 				}
 			}
 		}
@@ -85,6 +99,14 @@ void WorldCollisionListener::OnCollisionEnter(Body * bodyA, Body * bodyB, const 
 		if (enemy != nullptr) enemy->RandomVelocity();
 		break;
 	}
+	case ENEMY_BIT * BULLET_BIT + ENEMY_BIT + BULLET_BIT:
+	{
+		if (bodyA->categoryBits == BULLET_BIT || bodyB->categoryBits == BULLET_BIT) {
+			ServerNetworkManager::Instance->DestroyNetworkGameObject(((NetworkGameObject*)(bodyA->GetExtra()))->GetNetworkId());
+			ServerNetworkManager::Instance->DestroyNetworkGameObject(((NetworkGameObject*)(bodyB->GetExtra()))->GetNetworkId());
+		}
+		break;
+	}
 	}
 }
 
@@ -101,8 +123,15 @@ void WorldCollisionListener::OnColliding(Body * bodyA, Body * bodyB, const Vecto
 
 			if (bullet->GetPlayerNetworkGameObjectId() != player->GetNetworkId())
 			{
-				ServerNetworkManager::Instance->DestroyNetworkGameObject(((NetworkGameObject*)(bodyA->GetExtra()))->GetNetworkId());
-				ServerNetworkManager::Instance->DestroyNetworkGameObject(((NetworkGameObject*)(bodyB->GetExtra()))->GetNetworkId());
+				ServerNetworkManager::Instance->DestroyNetworkGameObject(bullet->GetNetworkId());
+				if (player->HasShield())
+				{
+					player->SetHasShield(false);
+				}
+				else
+				{
+					ServerNetworkManager::Instance->DestroyNetworkGameObject(player->GetNetworkId());
+				}
 			}
 		}
 		else
@@ -114,8 +143,15 @@ void WorldCollisionListener::OnColliding(Body * bodyA, Body * bodyB, const Vecto
 
 				if (bullet->GetPlayerNetworkGameObjectId() != player->GetNetworkId())
 				{
-					ServerNetworkManager::Instance->DestroyNetworkGameObject(((NetworkGameObject*)(bodyA->GetExtra()))->GetNetworkId());
-					ServerNetworkManager::Instance->DestroyNetworkGameObject(((NetworkGameObject*)(bodyB->GetExtra()))->GetNetworkId());
+					ServerNetworkManager::Instance->DestroyNetworkGameObject(bullet->GetNetworkId());
+					if (player->HasShield())
+					{
+						player->SetHasShield(false);
+					}
+					else
+					{
+						ServerNetworkManager::Instance->DestroyNetworkGameObject(player->GetNetworkId());
+					}
 				}
 			}
 		}
@@ -173,6 +209,14 @@ void WorldCollisionListener::OnColliding(Body * bodyA, Body * bodyB, const Vecto
 		if (enemy != nullptr) enemy->RandomVelocity();
 		break;
 	}
+	case ENEMY_BIT * BULLET_BIT + ENEMY_BIT + BULLET_BIT:
+	{
+		if (bodyA->categoryBits == BULLET_BIT || bodyB->categoryBits == BULLET_BIT) {
+			ServerNetworkManager::Instance->DestroyNetworkGameObject(((NetworkGameObject*)(bodyA->GetExtra()))->GetNetworkId());
+			ServerNetworkManager::Instance->DestroyNetworkGameObject(((NetworkGameObject*)(bodyB->GetExtra()))->GetNetworkId());
+		}
+		break;
+	}
 	}
 }
 
@@ -217,6 +261,39 @@ void WorldCollisionListener::OnSersorEnter(Body * bodyA, Body * bodyB)
 		}
 		break;
 	}
+	case PLAYER_BIT * SHIELD_BIT + PLAYER_BIT + SHIELD_BIT:
+	{
+		if (bodyA->categoryBits == SHIELD_BIT)
+		{
+			ShieldItem* shieldItem = (ShieldItem*)(bodyA->GetExtra());
+			Player* player = (Player*)(bodyB->GetExtra());
+			if (shieldItem != nullptr)
+			{
+				ServerNetworkManager::Instance->DestroyNetworkGameObject(shieldItem->GetNetworkId());
+			}
+			if (player != nullptr)
+			{
+				player->SetHasShield(true);
+			}
+		}
+		else
+		{
+			if (bodyB->categoryBits == SHIELD_BIT)
+			{
+				ShieldItem* shieldItem = (ShieldItem*)(bodyB->GetExtra());
+				Player* player = (Player*)(bodyA->GetExtra());
+				if (shieldItem != nullptr)
+				{
+					ServerNetworkManager::Instance->DestroyNetworkGameObject(shieldItem->GetNetworkId());
+				}
+				if (player != nullptr)
+				{
+					player->SetHasShield(true);
+				}
+			}
+		}
+		break;
+	}
 	}
 }
 
@@ -252,6 +329,39 @@ void WorldCollisionListener::OnSersorOverlaying(Body * bodyA, Body * bodyB)
 				if (player != nullptr)
 				{
 					player->UpgradePlayer();
+				}
+			}
+		}
+		break;
+	}
+	case PLAYER_BIT * SHIELD_BIT + PLAYER_BIT + SHIELD_BIT:
+	{
+		if (bodyA->categoryBits == SHIELD_BIT)
+		{
+			ShieldItem* shieldItem = (ShieldItem*)(bodyA->GetExtra());
+			Player* player = (Player*)(bodyB->GetExtra());
+			if (shieldItem != nullptr)
+			{
+				ServerNetworkManager::Instance->DestroyNetworkGameObject(shieldItem->GetNetworkId());
+			}
+			if (player != nullptr)
+			{
+				player->SetHasShield(true);
+			}
+		}
+		else
+		{
+			if (bodyB->categoryBits == SHIELD_BIT)
+			{
+				ShieldItem* shieldItem = (ShieldItem*)(bodyB->GetExtra());
+				Player* player = (Player*)(bodyA->GetExtra());
+				if (shieldItem != nullptr)
+				{
+					ServerNetworkManager::Instance->DestroyNetworkGameObject(shieldItem->GetNetworkId());
+				}
+				if (player != nullptr)
+				{
+					player->SetHasShield(true);
 				}
 			}
 		}

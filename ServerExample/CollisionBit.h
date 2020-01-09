@@ -6,3 +6,4 @@
 #define BULLET_BIT  16
 #define ENEMY_BIT 32
 #define STAR_BIT 64
+#define SHIELD_BIT 128

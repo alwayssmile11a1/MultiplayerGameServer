@@ -20,7 +20,7 @@ private:
 	int mTeamNumber = 0;
 	float mShootingRate;
 	float mShootingTimer;
-
+	bool mHasShield = false;
 	void SimulateAction(const PlayerAction& playerAction);
 
 public:
@@ -36,8 +36,9 @@ public:
 		PRS_Health = 1 << 3,
 		PRS_TeamNumber = 1 << 4,
 		PRS_Upgrade = 1 << 5,
+		PRS_Shield = 1 << 6,
 
-		PRS_AllState = PRS_PlayerId | PRS_Position | PRS_Velocity | PRS_Health | PRS_TeamNumber | PRS_Upgrade
+		PRS_AllState = PRS_PlayerId | PRS_Position | PRS_Velocity | PRS_Health | PRS_TeamNumber | PRS_Upgrade | PRS_Shield
 	};
 
 	Player();
@@ -56,4 +57,8 @@ public:
 		return mTeamNumber;
 	}
 	void UpgradePlayer();
+	void SetHasShield(bool hasShield);
+	bool HasShield() {
+		return mHasShield;
+	}
 };

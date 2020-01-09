@@ -26,6 +26,7 @@ void ServerNetworkManager::Init(uint16_t inPort)
 	NetworkGameObjectRegister::RegisterCreationFunction(Bullet::GetId(), Bullet::CreateInstance);
 	NetworkGameObjectRegister::RegisterCreationFunction(Enemy::GetId(), Enemy::CreateInstance);
 	NetworkGameObjectRegister::RegisterCreationFunction(StarItem::GetId(), StarItem::CreateInstance);
+	NetworkGameObjectRegister::RegisterCreationFunction(ShieldItem::GetId(), ShieldItem::CreateInstance);
 	NetworkGameObjectRegister::RegisterCreationFunction(Grass::GetId(), Grass::CreateInstance);
 
 	//Setup map
@@ -71,6 +72,45 @@ void ServerNetworkManager::Init(uint16_t inPort)
 		RegisterGameObject(gameObject);
 	}
 
+	//create shield
+	std::vector<Shape::Rectangle> shieldRects = map->GetObjectGroup("Shield")->GetRects();
+	for (std::vector<Shape::Rectangle>::iterator rect = shieldRects.begin(); rect != shieldRects.end(); ++rect)
+	{
+		//Create grass
+		NetworkGameObjectPtr gameObject = NetworkGameObjectRegister::CreateGameObject('SI');
+		ShieldItem* shield = (ShieldItem*)gameObject.get();
+		shield->SetPosition(Vector2(rect->x, rect->y));
+
+		//Register this grass
+		RegisterGameObject(gameObject);
+	}
+
+	//create star
+	std::vector<Shape::Rectangle> starRects = map->GetObjectGroup("Star")->GetRects();
+	for (std::vector<Shape::Rectangle>::iterator rect = starRects.begin(); rect != starRects.end(); ++rect)
+	{
+		//Create grass
+		NetworkGameObjectPtr gameObject = NetworkGameObjectRegister::CreateGameObject('IS');
+		StarItem* star = (StarItem*)gameObject.get();
+		star->SetPosition(Vector2(rect->x, rect->y));
+
+		//Register this grass
+		RegisterGameObject(gameObject);
+	}
+
+	//create enemy
+	std::vector<Shape::Rectangle> enemyRects = map->GetObjectGroup("Enemy")->GetRects();
+	for (std::vector<Shape::Rectangle>::iterator rect = enemyRects.begin(); rect != enemyRects.end(); ++rect)
+	{
+		//Create grass
+		NetworkGameObjectPtr gameObject = NetworkGameObjectRegister::CreateGameObject('EN');
+		Enemy* enemy = (Enemy*)gameObject.get();
+		enemy->SetPosition(Vector2(rect->x, rect->y));
+
+		//Register this grass
+		RegisterGameObject(gameObject);
+	}
+
 	//create bound
 	std::vector<Shape::Rectangle> boundRects = map->GetObjectGroup("Bound")->GetRects();
 	for (std::vector<Shape::Rectangle>::iterator rect = boundRects.begin(); rect != boundRects.end(); ++rect)
@@ -84,12 +124,6 @@ void ServerNetworkManager::Init(uint16_t inPort)
 		//Register this bound
 		RegisterGameObject(gameObject);
 	}
-
-	NetworkGameObjectPtr enemyObject = NetworkGameObjectRegister::CreateGameObject('EN');
-	RegisterGameObject(enemyObject);
-
-	NetworkGameObjectPtr starItemObject = NetworkGameObjectRegister::CreateGameObject('IS');
-	RegisterGameObject(starItemObject);
 }
 
 void ServerNetworkManager::OnSendPackets()

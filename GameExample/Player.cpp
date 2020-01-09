@@ -11,7 +11,7 @@ Player::Player()
 	bodyDef.size.Set(26, 26);
 	mMainBody = WorldCollector::GetWorld('PS')->CreateBody(bodyDef);
 	mMainBody->categoryBits = PLAYER_BIT;
-	mMainBody->maskBits = BRICK_BIT | METAL_BIT | BULLET_BIT | PLAYER_BIT | BOUND_BIT | STAR_BIT;
+	mMainBody->maskBits = BRICK_BIT | METAL_BIT | BULLET_BIT | PLAYER_BIT | BOUND_BIT | STAR_BIT | SHIELD_BIT;
 
 	mMainBody->PutExtra(this);
 
@@ -19,6 +19,10 @@ Player::Player()
 
 	mShootingRate = 1.0f;
 	mShootingTimer = 0.0f;
+
+	TexturePacker p = TexturePacker(&SharedTextures::BattleCityTexture, "../Resources/battlecity.xml");
+	mShieldSprite.SetRegion(p.GetRegion("shield")[0]);
+	mShieldSprite.SetSize(30, 30);
 }
 
 Player::~Player()
@@ -27,6 +31,11 @@ Player::~Player()
 
 void Player::Render(SpriteBatch *batch)
 {
+	if (hasShield)
+	{
+		batch->Draw(mShieldSprite);
+	}
+
 	batch->Draw(mSprite);
 }
 
@@ -132,6 +141,11 @@ void Player::Update(float dt)
 
 	//update sprite position
 	mSprite.SetPosition(mMainBody->GetPosition().x, mMainBody->GetPosition().y);
+
+	if (hasShield)
+	{
+		mShieldSprite.SetPosition(mMainBody->GetPosition().x, mMainBody->GetPosition().y);
+	}
 
 	//update rotation
 	UpdateRotation();
@@ -294,6 +308,11 @@ void Player::OnNetworkRead(InputMemoryBitStream & inInputStream, uint32_t dirtyS
 	if (dirtyState & PRS_Upgrade)
 	{
 		inInputStream.Read(mShootingRate);
+	}
+
+	if (dirtyState & PRS_Shield)
+	{
+		inInputStream.Read(hasShield);
 	}
 
 	//Don't do anything if it's the very first packet

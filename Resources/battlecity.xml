@@ -225,3 +225,9 @@
 <item_star>
 	<rect left="304" top = "112" width = "15" height="14" />
 </item_star>
+<item_shield>
+	<rect left="256" top = "112" width = "15" height="14" />
+</item_shield>
+<shield>
+	<rect left="256" top = "144" width = "16" height="16" />
+</shield>
