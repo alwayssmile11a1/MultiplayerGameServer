@@ -26,6 +26,8 @@ private:
 public:
 	CLASS_IDENTIFICATION('PL', Player);
 
+	static std::vector<Player*> mPlayers;
+
 	enum PlayerReplicationState
 	{
 		PRS_PlayerId = 1 << 0,
@@ -49,5 +51,7 @@ public:
 	void UpdateRotation();
 	uint32_t OnNetworkWrite(OutputMemoryBitStream & inOutputStream, uint32_t inDirtyState) const override;
 	void OnNetworkDestroy() override;
-
+	int GetTeamNumber() {
+		return mTeamNumber;
+	}
 };

@@ -14,18 +14,25 @@
 #include "Bullet.h"
 #include "Bound.h"
 #include "Proxy.h"
+#include "HanabiLabel.h"
 #include "ExplosionEffect.h"
 
 class ClientNetworkManager : public NetworkManager
 {
 private:
-
+	Camera* mCamera;
 	const float kTimeBetweenSendingHelloPacket = 1.0f;
 	const float kTimeBetweenSendingGamePacket = 1.0f / 60.0f;
 
 	float mTimeOfLastHello;
 	float mTimeOfLastGamePacket;
 	bool mIsAllPlayerReady = false;
+	Font font;
+	Label lobbyLabel;
+	Label readyLabel;
+	Label wonLabel;
+
+	int mTeamWon = -1;
 
 	AverageFloatVariable mAverageRoundTripTime;
 
@@ -60,6 +67,10 @@ public:
 	~ClientNetworkManager();
 
 	void Init(const std::string &destination, const std::string &playerName);
+	void SetCamera(Camera* camera)
+	{
+		mCamera = camera;
+	}
 	void OnPacketReceived(InputMemoryBitStream& inputMemoryStream, const SocketAddress& fromAddress) override;
 	void OnSendPackets() override;
 	void SendPacketToDestination(const OutputMemoryBitStream &outputMemoryStream) { SendPacket(outputMemoryStream, mDestinationAddress); };
@@ -71,4 +82,6 @@ public:
 	float GetAverageRoundTripTime() { return mAverageRoundTripTime.GetValue(); }
 
 	bool GetIsAllPlayerReady() { return mIsAllPlayerReady; }
+
+	void Release();
 };

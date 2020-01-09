@@ -104,6 +104,27 @@ void ServerNetworkManager::OnSendPackets()
 		}
 	}
 
+	int teamWon = -1;
+	if (isAllPlayerReady)
+	{
+		for (const auto& player : Player::mPlayers)
+		{
+			if (teamWon == -1)
+			{
+				teamWon = player->GetTeamNumber();
+			}
+			else
+			{
+				//there is still another team
+				if (teamWon != player->GetTeamNumber())
+				{
+					teamWon = -1;
+					break;
+				}
+			}
+		}
+	}
+
 	for (const auto& pair : mSocketAddressToClientProxyMap)
 	{
 		//first write packet type
@@ -112,6 +133,17 @@ void ServerNetworkManager::OnSendPackets()
 
 		//write IsAllPlayerReady 
 		packet.Write(isAllPlayerReady);
+
+		//write IsGameEnded
+		if (teamWon > -1)
+		{
+			packet.Write(true);
+			packet.Write(teamWon);
+		}
+		else
+		{
+			packet.Write(false);
+		}
 
 		//write last action timestamp
 		packet.Write(pair.second->IsLastActionTimeStampDirty());

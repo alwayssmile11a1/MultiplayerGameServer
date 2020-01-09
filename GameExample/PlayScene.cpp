@@ -24,6 +24,7 @@ void PlayScene::SetBatch(SpriteBatch* batch)
 void PlayScene::SetClientNetworkManager(ClientNetworkManager* networkManager)
 {
 	this->networkManager = networkManager;
+	this->networkManager->SetCamera(&camera);
 }
 
 //create stuff here
@@ -70,5 +71,5 @@ void PlayScene::Render()
 //release scene here
 void PlayScene::Release()
 {
-
+	networkManager->Release();
 }

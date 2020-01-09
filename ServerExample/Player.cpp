@@ -1,5 +1,7 @@
 #include "Player.h"
 
+std::vector<Player*> Player::mPlayers;
+
 Player::Player()
 {
 	mHealth = 10;
@@ -27,6 +29,8 @@ Player::Player()
 	TexturePacker p = TexturePacker(&SharedTextures::BattleCityTexture, "../Resources/battlecity.xml");
 	mSprite.SetRegion(p.GetRegion("yellowtank_1")[0]);
 	mSprite.SetSize(26, 26);
+
+	mPlayers.push_back(this);
 }
 
 Player::~Player()
@@ -191,4 +195,9 @@ void Player::OnNetworkDestroy()
 {
 	WorldCollector::GetWorld('PS')->DestroyBody(mMainBody);
 	mMainBody = nullptr;
+	std::vector<Player*>::iterator p = std::find(mPlayers.begin(), mPlayers.end(), this);
+	if (p != mPlayers.end())
+	{
+		mPlayers.erase(p);
+	}
 }

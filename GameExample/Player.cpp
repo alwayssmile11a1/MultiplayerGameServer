@@ -451,5 +451,8 @@ void Player::OnNetworkDestroy()
 	mMainBody = nullptr;
 
 	std::vector<Player*>::iterator p = std::find(mPlayers.begin(), mPlayers.end(), this);
-	mPlayers.erase(p);
+	if (p != mPlayers.end())
+	{
+		mPlayers.erase(p);
+	}
 }

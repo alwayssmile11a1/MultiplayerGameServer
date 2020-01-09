@@ -31,9 +31,18 @@ void ClientNetworkManager::Init(const std::string &destination, const std::strin
 	NetworkGameObjectRegister::RegisterCreationFunction(Enemy::GetId(), Enemy::CreateInstance);
 	NetworkGameObjectRegister::RegisterCreationFunction(StarItem::GetId(), StarItem::CreateInstance);
 	NetworkGameObjectRegister::RegisterCreationFunction(Grass::GetId(), Grass::CreateInstance);
-	Debug::Log("%d", Enemy::GetId());
+
 	//init done, now prepare to send hello packet
 	mState = NetworkClientState::SayingHello;
+
+
+	mTimeOfLastHello = Time::GetTimeFSinceGameStart();
+	mTimeOfLastGamePacket = Time::GetTimeFSinceGameStart();
+
+	font = Font("Arial", 10, 30);
+	lobbyLabel = Label("Lobby", &font, 560 / 2, 500, 640, 480);
+	readyLabel = Label("Ready", &font, 560 / 2, 200, 640, 480);
+	wonLabel = Label("Team Won", &font, 560 / 2, 400, 640, 480);
 }
 
 
@@ -156,6 +165,14 @@ void ClientNetworkManager::ReadLastActionProcessedOnServerTimeStamp(InputMemoryB
 	//Read isAllPlayerReady
 	inputMemoryStream.Read(mIsAllPlayerReady);
 
+	//Read teamWon
+	bool isGameEnded;
+	inputMemoryStream.Read(isGameEnded);
+	if (isGameEnded)
+	{
+		inputMemoryStream.Read(mTeamWon);
+	}
+
 	//read timeStamp
 	bool isTimeStampDirty;
 	inputMemoryStream.Read(isTimeStampDirty);
@@ -189,6 +206,7 @@ void ClientNetworkManager::Render(SpriteBatch* spriteBatch)
 {
 	if (!mIsAllPlayerReady)
 	{
+		lobbyLabel.Draw(mCamera);
 		for (const auto& pair : NetworkLinkingContext::GetNetworkIdToGameObjectMap())
 		{
 			Player* player = dynamic_cast<Player*>(pair.second.get());
@@ -196,6 +214,11 @@ void ClientNetworkManager::Render(SpriteBatch* spriteBatch)
 			{
 				player->RenderLobbyPlayer(spriteBatch);
 			}
+		}
+
+		if (PlayerActions::GetInstance()->GetPlayerReady())
+		{
+			readyLabel.Draw(mCamera);
 		}
 	}
 	else
@@ -216,9 +239,21 @@ void ClientNetworkManager::Render(SpriteBatch* spriteBatch)
 
 		ExplosionEffectCollector::Render(spriteBatch);
 	}
+
+	if (mTeamWon > -1)
+	{
+		std::string text = "Team " + std::to_string(mTeamWon) + " Won";
+		wonLabel.SetText(text);
+		wonLabel.Draw(mCamera);
+	}
 }
 
 void ClientNetworkManager::AddToLateDrawnObjects(NetworkGameObject* gameObjectPtr)
 {
 	lateDrawnObjects.push_back(gameObjectPtr);
+}
+
+void ClientNetworkManager::Release()
+{
+	font.Release();
 }
