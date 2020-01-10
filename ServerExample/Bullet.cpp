@@ -30,6 +30,9 @@ void Bullet::Render(SpriteBatch *batch)
 
 void Bullet::Update(float dt)
 {
+	if (mMainBody == nullptr) return;
+	WorldCollector::GetWorld('PS')->UpdateForBody(mMainBody, dt);
+	if (mMainBody == nullptr) return;
 	mSprite.SetPosition(mMainBody->GetPosition().x, mMainBody->GetPosition().y);
 	//ServerNetworkManager::Instance->UpdateNetworkGameObject(GetNetworkId(), BRS_Position);
 }

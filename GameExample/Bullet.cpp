@@ -32,6 +32,10 @@ void Bullet::Render(SpriteBatch *batch)
 
 void Bullet::Update(float dt)
 {
+	//WorldCollector::GetWorld('PS')->UpdateForBody(mMainBody, dt);
+
+	if (mMainBody == nullptr) return;
+
 	mSprite.SetPosition(mMainBody->GetPosition().x, mMainBody->GetPosition().y);
 
 	if (mFakeExplosion)

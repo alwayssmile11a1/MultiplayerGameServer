@@ -24,6 +24,8 @@ private:
 	std::unordered_map<SocketAddress, ClientProxyPtr> mSocketAddressToClientProxyMap;
 	std::unordered_map<int, ClientProxyPtr> mPlayerIdToClientProxyMap;
 
+	std::vector<int> mDestroyList;
+
 	TMXLoader mapLoader;
 	TMXMap* map;
 
@@ -40,6 +42,7 @@ private:
 
 	const Vector2& GetNewSpawnPosition();
 	void CreateNewPlayer(ClientProxyPtr clientProxy);
+
 
 public:
 	static ServerNetworkManager* Instance;

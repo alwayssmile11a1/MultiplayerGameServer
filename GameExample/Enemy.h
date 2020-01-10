@@ -1,5 +1,6 @@
 #pragma once
 
+#include "ClientNetworkManager.h"
 #include "HanabiMultiplayer.h"
 #include "HanabiBody.h"
 #include "HanabiWorld.h"
@@ -15,9 +16,12 @@ protected:
 	bool mIsShooting;
 	float mMoveSpeed;
 	Sprite mSprite;
-
+	float mTimeLocationBecameOutOfSync = 0.0f;
 	float mShootingRate;
 	float mShootingTimer;
+
+	void SimulateAction(float totalTime);
+	void InterpolateClientSidePrediction(float roundTripTime, const Vector2& oldPosition, const Vector2& oldVelocity);
 public:
 	CLASS_IDENTIFICATION('EN', Enemy);
 

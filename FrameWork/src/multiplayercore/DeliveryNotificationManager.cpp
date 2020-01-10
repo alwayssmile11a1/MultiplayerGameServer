@@ -178,7 +178,7 @@ void DeliveryNotificationManager::ProcessAcks(InputMemoryBitStream& inInputStrea
 
 void DeliveryNotificationManager::ProcessTimedOutPackets()
 {
-	float timeoutTime = Time::GetTimeFSinceGameStart() - kDelayBeforeAckTimeout;
+	float timeoutTime = Time::sInstance.GetFrameStartTime() - kDelayBeforeAckTimeout;
 
 	while (!mInFlightPackets.empty())
 	{

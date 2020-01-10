@@ -26,7 +26,7 @@ public:
 		mMainBody->SetPosition(inPosition.x, inPosition.y);
 		mSprite.SetPosition(mMainBody->GetPosition().x, mMainBody->GetPosition().y);
 	};
-
+	void Update(float dt) override;
 	void Render(SpriteBatch *batch) override;
 	virtual void OnHitPlayer() {}
 	uint32_t OnNetworkWrite(OutputMemoryBitStream & inOutputStream, uint32_t inDirtyState) const override;

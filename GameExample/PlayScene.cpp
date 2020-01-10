@@ -43,16 +43,20 @@ void PlayScene::Create()
 //update scene here
 void PlayScene::Update(float dt)
 {
-	networkManager->ReceiveIncomingPackets();
-	
+	//Debug::Log("Start Update\n");
+
 	world->Update(dt);
 
+	networkManager->ReceiveIncomingPackets();
+	
 	networkManager->Update(dt);
 
 	networkManager->SendOutgoingPackets();
 
 	//draw everything
 	Render();
+
+	//Debug::Log("End Update\n");
 }
 
 void PlayScene::Render()

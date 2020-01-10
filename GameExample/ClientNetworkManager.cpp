@@ -5,8 +5,8 @@ ClientNetworkManager* ClientNetworkManager:: Instance;
 ClientNetworkManager::ClientNetworkManager()
 {
 	mState = NetworkClientState::Uninitialized;
-	mTimeOfLastHello = Time::GetTimeFSinceGameStart();
-	mTimeOfLastGamePacket = Time::GetTimeFSinceGameStart();
+	mTimeOfLastHello = Time::sInstance.GetFrameStartTime();
+	mTimeOfLastGamePacket = Time::sInstance.GetFrameStartTime();
 	Instance = this;
 }
 
@@ -37,8 +37,8 @@ void ClientNetworkManager::Init(const std::string &destination, const std::strin
 	mState = NetworkClientState::SayingHello;
 
 
-	mTimeOfLastHello = Time::GetTimeFSinceGameStart();
-	mTimeOfLastGamePacket = Time::GetTimeFSinceGameStart();
+	mTimeOfLastHello = Time::sInstance.GetFrameStartTime();
+	mTimeOfLastGamePacket = Time::sInstance.GetFrameStartTime();
 
 	font = Font("Arial", 10, 30);
 	lobbyLabel = Label("Lobby", &font, 560 / 2, 500, 640, 480);
@@ -65,7 +65,7 @@ void ClientNetworkManager::OnSendPackets()
 
 void ClientNetworkManager::SendHelloPacket()
 {
-	float currentTime = Time::GetTimeFSinceGameStart();
+	float currentTime = Time::sInstance.GetFrameStartTime();
 
 	if (currentTime > mTimeOfLastHello + kTimeBetweenSendingHelloPacket)
 	{
@@ -81,7 +81,7 @@ void ClientNetworkManager::SendHelloPacket()
 
 void ClientNetworkManager::SendGamePackets()
 {
-	float currentTime = Time::GetTimeFSinceGameStart();
+	float currentTime = Time::sInstance.GetFrameStartTime();
 
 	if (currentTime > mTimeOfLastGamePacket + kTimeBetweenSendingGamePacket)
 	{
@@ -187,7 +187,7 @@ void ClientNetworkManager::ReadLastActionProcessedOnServerTimeStamp(InputMemoryB
 	PlayerActions::GetInstance()->RemovePlayerActions(lastActionProcessedByServerTimestamp);
 
 	//Update averageRoundTripTime
-	float rtt = Time::GetTimeFSinceGameStart() - lastActionProcessedByServerTimestamp;
+	float rtt = Time::sInstance.GetFrameStartTime() - lastActionProcessedByServerTimestamp;
 	mAverageRoundTripTime.Update(rtt);
 	//Debug::Log("%f - %f\n", rtt, mAverageRoundTripTime.GetValue());
 }

@@ -3,7 +3,7 @@
 InFlightPacket::InFlightPacket(PacketSequenceNumber inSequenceNumber)
 {
 	mSequenceNumber = inSequenceNumber;
-	mTimeDispatched = Time::GetTimeFSinceGameStart();
+	mTimeDispatched = Time::sInstance.GetFrameStartTime();
 }
 
 

@@ -38,6 +38,8 @@ void Enemy::Render(SpriteBatch * batch)
 
 void Enemy::Update(float dt)
 {
+	WorldCollector::GetWorld('PS')->UpdateForBody(mMainBody, dt);
+
 	//Get old variables
 	Vector2 oldVelocity = mMainBody->GetVelocity();
 	UpdateRotation();
@@ -46,7 +48,7 @@ void Enemy::Update(float dt)
 	mShootingTimer += dt;
 	if (mShootingTimer > mShootingRate) {
 		//Shoot
-		ServerNetworkManager::Instance->CreateBullet(GetNetworkId(), mMainBody, mSprite.GetRotation());
+		//ServerNetworkManager::Instance->CreateBullet(GetNetworkId(), mMainBody, mSprite.GetRotation());
 		mShootingTimer = 0;
 	}
 

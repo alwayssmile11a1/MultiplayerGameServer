@@ -45,9 +45,9 @@ void ServerExample::CreateGame()
 //update game here
 void ServerExample::UpdateGame(float dt)
 {
-	mServerNetworkManager.ReceiveIncomingPackets();
+	//mWorld->Update(dt);
 
-	mWorld->Update(dt);
+	mServerNetworkManager.ReceiveIncomingPackets();
 
 	mServerNetworkManager.Update(dt);
 

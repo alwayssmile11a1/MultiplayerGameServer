@@ -1,5 +1,5 @@
 #include "Body.h"
-
+#include "HanabiConsole.h"
 Body::Body()
 {
 	_Size.Set(0, 0);

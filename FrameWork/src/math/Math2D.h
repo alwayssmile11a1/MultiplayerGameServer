@@ -6,7 +6,7 @@ class Math2D
 {
 public:
 
-	static const Vector2& Lerp(const Vector2& vectorA, const Vector2& vectorB, float t);
+	static Vector2 Lerp(const Vector2& vectorA, const Vector2& vectorB, float t);
 	static float Clamp(float value, float min, float max);
 
 };

@@ -11,11 +11,11 @@ Player::Player()
 	bodyDef.size.Set(26, 26);
 	mMainBody = WorldCollector::GetWorld('PS')->CreateBody(bodyDef);
 	mMainBody->categoryBits = PLAYER_BIT;
-	mMainBody->maskBits = BRICK_BIT | METAL_BIT | BULLET_BIT | PLAYER_BIT | BOUND_BIT | STAR_BIT | SHIELD_BIT;
+	mMainBody->maskBits = BRICK_BIT | METAL_BIT | BULLET_BIT | PLAYER_BIT | ENEMY_BIT | BOUND_BIT | STAR_BIT | SHIELD_BIT;
 
 	mMainBody->PutExtra(this);
 
-	mMoveSpeed = 1.5f;
+	mMoveSpeed = 2.0f;
 
 	mShootingRate = 1.0f;
 	mShootingTimer = 0.0f;
@@ -46,6 +46,8 @@ void Player::RenderLobbyPlayer(SpriteBatch *batch)
 
 void Player::Update(float dt)
 {
+	//Debug::Log("%f\n", Time::sInstance.GetFrameStartTime());
+
 	if (mMainBody == nullptr) return;
 
 	if (!PlayerActions::GetInstance()->GetPlayerReady() && GetPlayerId() == Proxy::GetPlayerId())
@@ -53,19 +55,19 @@ void Player::Update(float dt)
 		if (Input::GetKeyDown(DIK_R))
 		{
 			PlayerActions::GetInstance()->SetPlayerReady(true);
-			PlayerActions::GetInstance()->AddPlayerAction(Time::GetTimeFSinceGameStart(), dt, mMainBody->GetVelocity(), mIsShooting);
+			PlayerActions::GetInstance()->AddPlayerAction(Time::sInstance.GetFrameStartTime(), dt, mMainBody->GetVelocity(), mIsShooting);
 		}
 
 		if (Input::GetKeyDown(DIK_LEFT))
 		{
-			PlayerAction action(Time::GetTimeFSinceGameStart(), dt, mMainBody->GetVelocity(), mIsShooting);
+			PlayerAction action(Time::sInstance.GetFrameStartTime(), dt, mMainBody->GetVelocity(), mIsShooting);
 			action.SetPlayerTeamNumber(0);
 			PlayerActions::GetInstance()->AddPlayerAction(action);
 		}
 
 		if (Input::GetKeyDown(DIK_RIGHT))
 		{
-			PlayerAction action(Time::GetTimeFSinceGameStart(), dt, mMainBody->GetVelocity(), mIsShooting);
+			PlayerAction action(Time::sInstance.GetFrameStartTime(), dt, mMainBody->GetVelocity(), mIsShooting);
 			action.SetPlayerTeamNumber(1);
 			PlayerActions::GetInstance()->AddPlayerAction(action);
 		}
@@ -111,12 +113,12 @@ void Player::Update(float dt)
 				}
 			}
 
-			if (Input::GetKey(DIK_SPACE) && Time::GetTimeFSinceGameStart() >= mShootingTimer + 1 / mShootingRate)
+			if (Input::GetKey(DIK_SPACE) && Time::sInstance.GetFrameStartTime() >= mShootingTimer + 1 / mShootingRate)
 			{
 				//Shoot bullets
 				mIsShooting = true;
 
-				mShootingTimer = Time::GetTimeFSinceGameStart();
+				mShootingTimer = Time::sInstance.GetFrameStartTime();
 			}
 			else
 			{
@@ -125,7 +127,7 @@ void Player::Update(float dt)
 			}
 
 			//Add playerAction to list
-			PlayerActions::GetInstance()->AddPlayerAction(Time::GetTimeFSinceGameStart(), dt, mMainBody->GetVelocity(), mIsShooting);
+			PlayerActions::GetInstance()->AddPlayerAction(Time::sInstance.GetFrameStartTime(), dt, mMainBody->GetVelocity(), mIsShooting);
 		}
 		else
 		{
@@ -282,8 +284,6 @@ void Player::OnNetworkRead(InputMemoryBitStream & inInputStream, uint32_t dirtyS
 		inInputStream.Read(position);
 		//set the current position back to the position of this player on server 
 		mMainBody->SetPosition(position.x, position.y);
-
-		//Debug::Log("DIRTY: %f   %f %f\n", Time::GetTimeF(), mMainBody->GetPosition().x, mMainBody->GetPosition().y);
 	}
 
 	if (dirtyState & PRS_Velocity)
@@ -316,7 +316,7 @@ void Player::OnNetworkRead(InputMemoryBitStream & inInputStream, uint32_t dirtyS
 	}
 
 	//Don't do anything if it's the very first packet
-	if (dirtyState & PRS_PlayerId == 0)
+	if ((dirtyState & PRS_PlayerId) == 0)
 	{
 		if (GetPlayerId() == Proxy::GetPlayerId())
 		{
@@ -329,13 +329,21 @@ void Player::OnNetworkRead(InputMemoryBitStream & inInputStream, uint32_t dirtyS
 				SimulateAction(playerAction);
 			}
 
-			InterpolateClientSidePrediction(ClientNetworkManager::Instance->GetAverageRoundTripTime(), oldPosition, oldVelocity);
+			InterpolateClientSidePrediction(ClientNetworkManager::Instance->GetAverageRoundTripTime(), oldPosition, oldVelocity, false);
 		}
 		else
 		{
-			//Simulate movement with round trip time for remote players
-			SimulateAction(ClientNetworkManager::Instance->GetAverageRoundTripTime());
-			InterpolateClientSidePrediction(ClientNetworkManager::Instance->GetAverageRoundTripTime(), oldPosition, oldVelocity);
+			if ((mMainBody->GetVelocity().x != 0 || mMainBody->GetVelocity().y != 0) && (mMainBody->GetVelocity().x == oldVelocity.x && mMainBody->GetVelocity().y == oldVelocity.y))
+			{
+				//Simulate movement with round trip time for remote players
+				SimulateAction(ClientNetworkManager::Instance->GetAverageRoundTripTime());
+				InterpolateClientSidePrediction(ClientNetworkManager::Instance->GetAverageRoundTripTime(), oldPosition, oldVelocity, true);
+			}
+			//else
+			//{
+			//	SimulateAction(ClientNetworkManager::Instance->GetAverageRoundTripTime());
+			//	InterpolateClientSidePrediction(ClientNetworkManager::Instance->GetAverageRoundTripTime(), oldPosition, oldVelocity, 0.3f);
+			//}
 		}
 	}
 }
@@ -363,6 +371,8 @@ void Player::SimulateAction(float totalTime)
 	//Predict that the current player will continue moving in the direction that it did previously
 	//let's break into framerate sized chunks though so that we don't run through walls and do crazy things...
 	float chunkTime = 1.0f/60.0f;
+	
+	//Debug::Log("%f\n", totalTime);
 
 	while (true)
 	{
@@ -381,21 +391,21 @@ void Player::SimulateAction(float totalTime)
 	}
 }
 
-void Player::InterpolateClientSidePrediction(float roundTripTime, const Vector2& oldPosition, const Vector2& oldVelocity)
+void Player::InterpolateClientSidePrediction(float roundTripTime, const Vector2& oldPosition, const Vector2& oldVelocity, bool alwaysInterpolate)
 {
 
 	//Different. Interpolate the old position towards the simulated position and set it to the current player
 	if (oldPosition.x != mMainBody->GetPosition().x || oldPosition.y != mMainBody->GetPosition().y)
 	{
 		//have we been out of sync, or did we just become out of sync?
-		float time = Time::GetTimeFSinceGameStart();
+		float startTime = Time::sInstance.GetFrameStartTime();
 		if (mTimeLocationBecameOutOfSync == 0.0f)
 		{
-			mTimeLocationBecameOutOfSync = time;
+			mTimeLocationBecameOutOfSync = startTime;
 		}
 
-		float durationOutOfSync = time - mTimeLocationBecameOutOfSync;
-		if (durationOutOfSync < roundTripTime)
+		float durationOutOfSync = startTime - mTimeLocationBecameOutOfSync;
+		if (durationOutOfSync < roundTripTime || alwaysInterpolate)
 		{
 			if (GetPlayerId() == Proxy::GetPlayerId())
 			{

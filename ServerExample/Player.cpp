@@ -21,7 +21,7 @@ Player::Player()
 
 	mMainBody->PutExtra(this);
 
-	mMoveSpeed = 1.5f;
+	mMoveSpeed = 2.0f;
 
 	mShootingRate = 1.0f;
 	mShootingTimer = 0.0f;
@@ -66,15 +66,16 @@ void Player::Update(float dt)
 	Vector2 newPosition = mMainBody->GetPosition();
 	Vector2 newVelocity = mMainBody->GetVelocity();
 
-	if (oldPosition.x != newPosition.x || oldPosition.y != newPosition.y)
+	if (oldPosition.x != newPosition.x || oldPosition.y != newPosition.y || oldVelocity.x != newVelocity.x || oldVelocity.y != newVelocity.y)
 	{
 		ServerNetworkManager::Instance->UpdateNetworkGameObject(GetNetworkId(), PRS_Position);
-	}
-
-	if (oldVelocity.x != newVelocity.x || oldVelocity.y != newVelocity.y)
-	{
 		ServerNetworkManager::Instance->UpdateNetworkGameObject(GetNetworkId(), PRS_Velocity);
 	}
+
+	//if (oldVelocity.x != newVelocity.x || oldVelocity.y != newVelocity.y)
+	//{
+	//	ServerNetworkManager::Instance->UpdateNetworkGameObject(GetNetworkId(), PRS_Velocity);
+	//}
 
 	//if (oldRotation != newRotation)
 	//{
@@ -168,7 +169,8 @@ uint32_t Player::OnNetworkWrite(OutputMemoryBitStream & inOutputStream, uint32_t
 	if (dirtyState & PRS_Position)
 	{
 		inOutputStream.Write(mMainBody->GetPosition());
-		//Debug::Log("DIRTY: %f   %f %f\n", Time::GetTimeF(), mMainBody->GetPosition().x, mMainBody->GetPosition().y);
+		//Debug::Log("%f %f\n", mMainBody->GetVelocity().x, mMainBody->GetVelocity().y);
+		//Debug::Log("%f %f\n", mMainBody->GetPosition().x, mMainBody->GetPosition().y);
 	}
 	
 	if (dirtyState & PRS_Velocity)

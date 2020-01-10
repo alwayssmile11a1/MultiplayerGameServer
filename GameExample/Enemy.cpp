@@ -34,8 +34,13 @@ void Enemy::Render(SpriteBatch * batch)
 
 void Enemy::Update(float dt)
 {
+	//WorldCollector::GetWorld('PS')->UpdateForBody(mMainBody, dt);
+
 	UpdateRotation();
 	mSprite.SetPosition(mMainBody->GetPosition().x, mMainBody->GetPosition().y);
+
+	//Debug::Log("dt %f\n", dt);
+	//Debug::Log("origin %f %f\n", mMainBody->GetPosition().x, mMainBody->GetPosition().y);
 }
 
 void Enemy::UpdateRotation() 
@@ -68,11 +73,13 @@ void Enemy::UpdateRotation()
 
 void Enemy::OnNetworkRead(InputMemoryBitStream & inInputStream, uint32_t dirtyState)
 {
+	//Save the current position on client
+	Vector2 oldPosition = mMainBody->GetPosition();
+	Vector2 oldVelocity = mMainBody->GetVelocity();
+
 	if (dirtyState & ERS_EnemyID)
 	{
 		inInputStream.Read(mEnemyNetworkGameObjectId);
-
-
 	}
 
 	if (dirtyState & ERS_Position)
@@ -94,6 +101,73 @@ void Enemy::OnNetworkRead(InputMemoryBitStream & inInputStream, uint32_t dirtySt
 	if (dirtyState & ERS_Health) 
 	{
 		inInputStream.Read(mHealth);
+	}
+
+	if ((dirtyState & ERS_EnemyID) == 0)
+	{
+		//Simulate movement with round trip time for remote players
+		//Debug::Log("rtt %f\n", ClientNetworkManager::Instance->GetAverageRoundTripTime());
+		SimulateAction(ClientNetworkManager::Instance->GetAverageRoundTripTime());
+		InterpolateClientSidePrediction(ClientNetworkManager::Instance->GetAverageRoundTripTime(), oldPosition, oldVelocity);
+	}
+}
+
+void Enemy::SimulateAction(float totalTime)
+{
+	//simulate movement for an additional totalTime
+	//Predict that the current player will continue moving in the direction that it did previously
+	//let's break into framerate sized chunks though so that we don't run through walls and do crazy things...
+	float chunkTime = 1.0f / 60.0f;
+
+	while (true)
+	{
+		if (totalTime < chunkTime)
+		{
+			//Update word to simulate the current player action (also check collisions)
+			WorldCollector::GetWorld('PS')->UpdateForBody(mMainBody, totalTime);
+			break;
+		}
+		else
+		{
+			//Update word to simulate the current player action (also check collisions)
+			WorldCollector::GetWorld('PS')->UpdateForBody(mMainBody, chunkTime);
+			totalTime -= chunkTime;
+		}
+	}
+}
+
+void Enemy::InterpolateClientSidePrediction(float roundTripTime, const Vector2& oldPosition, const Vector2& oldVelocity)
+{
+
+	//Different. Interpolate the old position towards the simulated position and set it to the current player
+	if (oldPosition.x != mMainBody->GetPosition().x || oldPosition.y != mMainBody->GetPosition().y)
+	{
+		//have we been out of sync, or did we just become out of sync?
+		float time = Time::sInstance.GetFrameStartTime();
+		if (mTimeLocationBecameOutOfSync == 0.0f)
+		{
+			mTimeLocationBecameOutOfSync = time;
+		}
+
+		float durationOutOfSync = time - mTimeLocationBecameOutOfSync;
+		if (durationOutOfSync < roundTripTime)
+		{
+			//Lerp by an amount of durationOutOfSync / roundTripTime
+			//Debug::Log("old %f %f\n", oldPosition.x, oldPosition.y);
+			//Debug::Log("new %f %f\n", mMainBody->GetPosition().x, mMainBody->GetPosition().y);
+			Vector2 interpolatedPosition = Math2D::Lerp(oldPosition, mMainBody->GetPosition(), /*durationOutOfSync / roundTripTime*/0.1f);
+			mMainBody->SetPosition(interpolatedPosition.x, interpolatedPosition.y);
+			//Debug::Log("result2: %f %f\n", interpolatedPosition.x, interpolatedPosition.y);
+		}
+		else
+		{
+			//since we don't lerp anymore, we are in sync with the server
+			mTimeLocationBecameOutOfSync = 0.0f;
+		}
+	}
+	else
+	{
+		mTimeLocationBecameOutOfSync = 0.0f;
 	}
 }
 

@@ -298,7 +298,7 @@ bool Game::InitGame()
 	Sound::DirectSound_Init(_HWnd);
 
 	//Init Time
-	Time::Init();
+	/*Time::Init();*/
 
 	//Init networking 
 	NetworkManager::StaticInit();
@@ -383,7 +383,9 @@ int Game::RunGame()
 				}
 
 				//
-				float deltaTime = roundf(DeltaTime / 1000.0f * 10000) / 10000;
+				float deltaTime = roundf(DeltaTime / 1000.0f * 1000000) / 1000000;
+				//float deltaTime = DeltaTime / 1000.0f;
+				Time::sInstance.Update(deltaTime);
 				UpdateGame(deltaTime);
 
 				//clear buffedInput after we has done update game

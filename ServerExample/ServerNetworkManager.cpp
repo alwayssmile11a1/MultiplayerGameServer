@@ -381,7 +381,6 @@ void ServerNetworkManager::OnConnectionReset(const SocketAddress& inFromAddress)
 		//unregister
 		UnregisterGameObject(gameObject);
 	}
-
 }
 
 void ServerNetworkManager::Update(float dt)
@@ -390,6 +389,12 @@ void ServerNetworkManager::Update(float dt)
 	{
 		pair.second->Update(dt);
 	}
+
+	for (const auto& id : mDestroyList)
+	{
+		UnregisterGameObject(NetworkLinkingContext::GetGameObject(id));
+	}
+	mDestroyList.clear();
 }
 
 void ServerNetworkManager::Render(SpriteBatch* spriteBatch)
@@ -425,6 +430,8 @@ void ServerNetworkManager::RegisterGameObject(NetworkGameObjectPtr inGameObject)
 //this should be put somewhere inside Framework rather than here
 void ServerNetworkManager::UnregisterGameObject(NetworkGameObjectPtr inGameObject)
 {
+	if (inGameObject == nullptr) return;
+
 	inGameObject->OnNetworkDestroy();
 
 	//int networkId = inGameObject->GetNetworkId();
@@ -462,5 +469,5 @@ void ServerNetworkManager::UpdateNetworkGameObject(int networkId, uint32_t dirty
 
 void ServerNetworkManager::DestroyNetworkGameObject(int networkId)
 {
-	UnregisterGameObject(NetworkLinkingContext::GetGameObject(networkId));
+	mDestroyList.push_back(networkId);
 }
