@@ -1,4 +1,5 @@
 #include "Time.h"
+#include "HanabiConsole.h"
 
 //float Time::start;
 //void Time::Init()
@@ -80,10 +81,11 @@ Time::Time()
 
 void Time::Update(float dt)
 {
-	//mFrameStartTimef += dt;
+	mFrameStartTimef += dt + 0.001f;
 }
 
 float Time::GetFrameStartTime() const
 {
-	return (clock() - start) / CLOCKS_PER_SEC;
+	return mFrameStartTimef;
+	//return (clock() - start) / CLOCKS_PER_SEC;
 }
