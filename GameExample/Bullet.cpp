@@ -49,7 +49,7 @@ void Bullet::OnNetworkRead(InputMemoryBitStream & inInputStream, uint32_t dirtyS
 {
 	Vector2 oldPosition = mMainBody->GetPosition();
 
-	if (dirtyState & BRS_PlayerID)
+	if (dirtyState & BRS_IgnoredID)
 	{
 		int playerID;
 		inInputStream.Read(playerID);
@@ -57,9 +57,19 @@ void Bullet::OnNetworkRead(InputMemoryBitStream & inInputStream, uint32_t dirtyS
 		//Debug::Log("%d\n", playerID);
 		if (networkGameObjectPtr != nullptr)
 		{
-			Player* player = (Player*)networkGameObjectPtr.get();
-			mMainBody->SetIgnoredCollisionBody(player->GetBody());
-			//Debug::Log("%f\n", player->GetBody()->GetPosition().x);
+			Player* player = dynamic_cast<Player*>(networkGameObjectPtr.get());
+			if (player != nullptr)
+			{
+				mMainBody->SetIgnoredCollisionBody(player->GetBody());
+			}
+			else
+			{
+				Enemy* enemy = dynamic_cast<Enemy*>(networkGameObjectPtr.get());
+				if (enemy != nullptr)
+				{
+					mMainBody->SetIgnoredCollisionBody(enemy->GetBody());
+				}
+			}
 		}
 	}
 

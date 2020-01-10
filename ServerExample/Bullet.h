@@ -17,18 +17,17 @@ private:
 
 	float mSpeed;
 
-	int mPlayerNetworkGameObjectId;
+	int mIgnoredNetworkGameObjectId;
 
 public:
 	CLASS_IDENTIFICATION('BU', Bullet);
 
 	enum BulletReplicationState
 	{
-		BRS_PlayerID = 1 << 0,
+		BRS_IgnoredID = 1 << 0,
 		BRS_Position = 1 << 1,
 		BRS_Velocity = 1 << 2,
-
-		BRS_AllState = BRS_PlayerID| BRS_Position | BRS_Velocity
+		BRS_AllState = BRS_IgnoredID| BRS_Position | BRS_Velocity
 	};
 
 	Bullet();
@@ -71,8 +70,8 @@ public:
 
 	void Render(SpriteBatch *batch) override;
 	void Update(float dt) override;
-	void SetPlayerNetworkGameObjectID(int playerNetworkGameObjectId){mPlayerNetworkGameObjectId = playerNetworkGameObjectId;}
-	int GetPlayerNetworkGameObjectId() { return mPlayerNetworkGameObjectId;}
+	void SetIgnoredNetworkGameObjectID(int ignoredNetworkGameObjectId){mIgnoredNetworkGameObjectId = ignoredNetworkGameObjectId;}
+	int GetIgnoredNetworkGameObjectId() { return mIgnoredNetworkGameObjectId;}
 
 	uint32_t OnNetworkWrite(OutputMemoryBitStream & inOutputStream, uint32_t inDirtyState) const override;
 	void OnNetworkDestroy() override;

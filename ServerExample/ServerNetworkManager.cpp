@@ -323,7 +323,7 @@ void ServerNetworkManager::CreateBullet(int playerNetworkGameObjectId, Body* pla
 	bullet->SetPosition(position);
 
 	bullet->SetIgnoredCollisionBody(playerBody);
-	bullet->SetPlayerNetworkGameObjectID(playerNetworkGameObjectId);
+	bullet->SetIgnoredNetworkGameObjectID(playerNetworkGameObjectId);
 
 	//Register this bullet
 	RegisterGameObject(gameObject);

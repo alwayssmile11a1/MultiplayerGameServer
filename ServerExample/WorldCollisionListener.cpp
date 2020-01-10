@@ -11,7 +11,7 @@ void WorldCollisionListener::OnCollisionEnter(Body * bodyA, Body * bodyB, const 
 			Bullet* bullet = (Bullet*)(bodyA->GetExtra());
 			Player* player = (Player*)(bodyB->GetExtra());
 
-			if (bullet->GetPlayerNetworkGameObjectId() != player->GetNetworkId())
+			if (bullet->GetIgnoredNetworkGameObjectId() != player->GetNetworkId())
 			{
 				ServerNetworkManager::Instance->DestroyNetworkGameObject(bullet->GetNetworkId());
 				if (player->HasShield())
@@ -31,7 +31,7 @@ void WorldCollisionListener::OnCollisionEnter(Body * bodyA, Body * bodyB, const 
 				Bullet* bullet = (Bullet*)(bodyB->GetExtra());
 				Player* player = (Player*)(bodyA->GetExtra());
 
-				if (bullet->GetPlayerNetworkGameObjectId() != player->GetNetworkId())
+				if (bullet->GetIgnoredNetworkGameObjectId() != player->GetNetworkId())
 				{
 					ServerNetworkManager::Instance->DestroyNetworkGameObject(bullet->GetNetworkId());
 					if (player->HasShield())
@@ -121,7 +121,7 @@ void WorldCollisionListener::OnColliding(Body * bodyA, Body * bodyB, const Vecto
 			Bullet* bullet = (Bullet*)(bodyA->GetExtra());
 			Player* player = (Player*)(bodyB->GetExtra());
 
-			if (bullet->GetPlayerNetworkGameObjectId() != player->GetNetworkId())
+			if (bullet->GetIgnoredNetworkGameObjectId() != player->GetNetworkId())
 			{
 				ServerNetworkManager::Instance->DestroyNetworkGameObject(bullet->GetNetworkId());
 				if (player->HasShield())
@@ -141,7 +141,7 @@ void WorldCollisionListener::OnColliding(Body * bodyA, Body * bodyB, const Vecto
 				Bullet* bullet = (Bullet*)(bodyB->GetExtra());
 				Player* player = (Player*)(bodyA->GetExtra());
 
-				if (bullet->GetPlayerNetworkGameObjectId() != player->GetNetworkId())
+				if (bullet->GetIgnoredNetworkGameObjectId() != player->GetNetworkId())
 				{
 					ServerNetworkManager::Instance->DestroyNetworkGameObject(bullet->GetNetworkId());
 					if (player->HasShield())

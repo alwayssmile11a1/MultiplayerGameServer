@@ -48,7 +48,7 @@ void Enemy::Update(float dt)
 	mShootingTimer += dt;
 	if (mShootingTimer > mShootingRate) {
 		//Shoot
-		//ServerNetworkManager::Instance->CreateBullet(GetNetworkId(), mMainBody, mSprite.GetRotation());
+		ServerNetworkManager::Instance->CreateBullet(GetNetworkId(), mMainBody, mSprite.GetRotation());
 		mShootingTimer = 0;
 	}
 

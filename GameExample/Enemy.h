@@ -79,7 +79,7 @@ public:
 	void UpdateRotation();
 	void SetPlayerNetworkGameObjectID(int playerNetworkGameObjectId) { mEnemyNetworkGameObjectId = playerNetworkGameObjectId; }
 	int GetPlayerNetworkGameObjectId() { return mEnemyNetworkGameObjectId; }
-
+	Body* GetBody() { return mMainBody; }
 	void OnNetworkRead(InputMemoryBitStream & inInputStream, uint32_t dirtyState) override;
 	void OnNetworkDestroy() override;
 };
