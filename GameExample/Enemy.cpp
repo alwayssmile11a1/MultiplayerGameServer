@@ -105,10 +105,13 @@ void Enemy::OnNetworkRead(InputMemoryBitStream & inInputStream, uint32_t dirtySt
 
 	if ((dirtyState & ERS_EnemyID) == 0)
 	{
-		//Simulate movement with round trip time for remote players
-		//Debug::Log("rtt %f\n", ClientNetworkManager::Instance->GetAverageRoundTripTime());
-		SimulateAction(ClientNetworkManager::Instance->GetAverageRoundTripTime());
-		InterpolateClientSidePrediction(ClientNetworkManager::Instance->GetAverageRoundTripTime(), oldPosition, oldVelocity);
+		if ((mMainBody->GetVelocity().x != 0 || mMainBody->GetVelocity().y != 0) && (mMainBody->GetVelocity().x == oldVelocity.x && mMainBody->GetVelocity().y == oldVelocity.y))
+		{
+			//Simulate movement with round trip time for remote players
+			//Debug::Log("rtt %f\n", ClientNetworkManager::Instance->GetAverageRoundTripTime());
+			SimulateAction(ClientNetworkManager::Instance->GetAverageRoundTripTime());
+			InterpolateClientSidePrediction(ClientNetworkManager::Instance->GetAverageRoundTripTime(), oldPosition, oldVelocity);
+		}
 	}
 }
 
@@ -150,7 +153,7 @@ void Enemy::InterpolateClientSidePrediction(float roundTripTime, const Vector2& 
 		}
 
 		float durationOutOfSync = time - mTimeLocationBecameOutOfSync;
-		if (durationOutOfSync < roundTripTime)
+		//if (durationOutOfSync < roundTripTime)
 		{
 			//Lerp by an amount of durationOutOfSync / roundTripTime
 			//Debug::Log("old %f %f\n", oldPosition.x, oldPosition.y);
@@ -159,7 +162,7 @@ void Enemy::InterpolateClientSidePrediction(float roundTripTime, const Vector2& 
 			mMainBody->SetPosition(interpolatedPosition.x, interpolatedPosition.y);
 			//Debug::Log("result2: %f %f\n", interpolatedPosition.x, interpolatedPosition.y);
 		}
-		else
+		//else
 		{
 			//since we don't lerp anymore, we are in sync with the server
 			mTimeLocationBecameOutOfSync = 0.0f;
