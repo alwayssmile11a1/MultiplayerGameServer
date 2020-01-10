@@ -66,7 +66,7 @@ void Player::Update(float dt)
 	Vector2 newPosition = mMainBody->GetPosition();
 	Vector2 newVelocity = mMainBody->GetVelocity();
 
-	if (oldPosition.x != newPosition.x || oldPosition.y != newPosition.y || oldVelocity.x != newVelocity.x || oldVelocity.y != newVelocity.y)
+	//if (oldPosition.x != newPosition.x || oldPosition.y != newPosition.y || oldVelocity.x != newVelocity.x || oldVelocity.y != newVelocity.y)
 	{
 		ServerNetworkManager::Instance->UpdateNetworkGameObject(GetNetworkId(), PRS_Position);
 		ServerNetworkManager::Instance->UpdateNetworkGameObject(GetNetworkId(), PRS_Velocity);

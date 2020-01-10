@@ -39,7 +39,7 @@ private:
 
 	void SimulateAction(const PlayerAction& playerAction);
 	void SimulateAction(float totalTime);
-	void InterpolateClientSidePrediction(float roundTripTime, const Vector2& oldPosition, const Vector2& oldVelocity, bool alwaysInterpolate);
+	void InterpolateClientSidePrediction(float roundTripTime, const Vector2& oldPosition, const Vector2& oldVelocity, bool alwaysInterpolate, float speed);
 
 	static std::vector<Player*> mPlayers;
 

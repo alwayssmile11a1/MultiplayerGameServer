@@ -329,21 +329,24 @@ void Player::OnNetworkRead(InputMemoryBitStream & inInputStream, uint32_t dirtyS
 				SimulateAction(playerAction);
 			}
 
-			InterpolateClientSidePrediction(ClientNetworkManager::Instance->GetAverageRoundTripTime(), oldPosition, oldVelocity, false);
+			InterpolateClientSidePrediction(ClientNetworkManager::Instance->GetAverageRoundTripTime(), oldPosition, oldVelocity, false, 0.1f);
 		}
 		else
 		{
-			if ((mMainBody->GetVelocity().x != 0 || mMainBody->GetVelocity().y != 0) && (mMainBody->GetVelocity().x == oldVelocity.x && mMainBody->GetVelocity().y == oldVelocity.y))
+			if (!(mMainBody->GetVelocity().x == 0 && mMainBody->GetVelocity().y == 0))
 			{
-				//Simulate movement with round trip time for remote players
-				SimulateAction(ClientNetworkManager::Instance->GetAverageRoundTripTime());
-				InterpolateClientSidePrediction(ClientNetworkManager::Instance->GetAverageRoundTripTime(), oldPosition, oldVelocity, true);
+				if ((mMainBody->GetVelocity().x == oldVelocity.x && mMainBody->GetVelocity().y == oldVelocity.y))
+				{
+					//Simulate movement with round trip time for remote players
+					SimulateAction(ClientNetworkManager::Instance->GetAverageRoundTripTime());
+					InterpolateClientSidePrediction(ClientNetworkManager::Instance->GetAverageRoundTripTime(), oldPosition, oldVelocity, true, 0.1f);
+				}
 			}
-			//else
-			//{
-			//	SimulateAction(ClientNetworkManager::Instance->GetAverageRoundTripTime());
-			//	InterpolateClientSidePrediction(ClientNetworkManager::Instance->GetAverageRoundTripTime(), oldPosition, oldVelocity, 0.3f);
-			//}
+			else
+			{
+				SimulateAction(ClientNetworkManager::Instance->GetAverageRoundTripTime());
+				InterpolateClientSidePrediction(ClientNetworkManager::Instance->GetAverageRoundTripTime(), oldPosition, oldVelocity, true, 0.5f);
+			}
 		}
 	}
 }
@@ -391,7 +394,7 @@ void Player::SimulateAction(float totalTime)
 	}
 }
 
-void Player::InterpolateClientSidePrediction(float roundTripTime, const Vector2& oldPosition, const Vector2& oldVelocity, bool alwaysInterpolate)
+void Player::InterpolateClientSidePrediction(float roundTripTime, const Vector2& oldPosition, const Vector2& oldVelocity, bool alwaysInterpolate, float speed)
 {
 
 	//Different. Interpolate the old position towards the simulated position and set it to the current player
@@ -410,13 +413,13 @@ void Player::InterpolateClientSidePrediction(float roundTripTime, const Vector2&
 			if (GetPlayerId() == Proxy::GetPlayerId())
 			{
 				//Lerp by an amount of 0.1 (can be a different number but we use it for now)
-				Vector2 interpolatedPosition = Math2D::Lerp(oldPosition, mMainBody->GetPosition(), 0.1f);
+				Vector2 interpolatedPosition = Math2D::Lerp(oldPosition, mMainBody->GetPosition(), speed);
 				mMainBody->SetPosition(interpolatedPosition.x, interpolatedPosition.y);
 			}
 			else
 			{
 				//Lerp by an amount of durationOutOfSync / roundTripTime
-				Vector2 interpolatedPosition = Math2D::Lerp(oldPosition, mMainBody->GetPosition(), /*durationOutOfSync / roundTripTime*/0.1f);
+				Vector2 interpolatedPosition = Math2D::Lerp(oldPosition, mMainBody->GetPosition(), /*durationOutOfSync / roundTripTime*/speed);
 				mMainBody->SetPosition(interpolatedPosition.x, interpolatedPosition.y);
 			}
 		}
